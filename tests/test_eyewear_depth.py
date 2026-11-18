@@ -10,14 +10,14 @@ class EyewearDepthResearchTests(unittest.TestCase):
         r=audit_eyewear.inspect()
         self.assertTrue(r["structure_valid"],r["errors"])
         self.assertEqual(r["total_tree_nodes"],382)
-        self.assertEqual(r["nodes_with_dossiers"],8)
-        self.assertEqual(r["nodes_without_dossiers"],374)
+        self.assertEqual(r["nodes_with_dossiers"],16)
+        self.assertEqual(r["nodes_without_dossiers"],366)
         self.assertEqual(r["semantic_approved_dossiers"],0)
         self.assertFalse(r["semantic_truth_verified"])
     def test_public_snapshot_has_eight_linked_dossiers(self):
         x=build_site.unpack_seed()
         records=build_site.read_public_research("eyewear",{n["node_id"] for n in x["tree_node"]})
-        self.assertEqual(len(records),8)
+        self.assertEqual(len(records),16)
         self.assertTrue(all(r["semantic_review_status"]=="pending" for r in records))
         self.assertTrue(all("sources" in r and "claims" in r for r in records))
     def test_markets_never_treat_sponge_tonnes_as_share(self):
@@ -29,8 +29,8 @@ class EyewearDepthResearchTests(unittest.TestCase):
     def test_backlog_tracks_research_without_certifying_claims(self):
         import argparse,research_cli
         b=research_cli.seed_backlog(argparse.Namespace(product="eyewear"))
-        self.assertEqual(b["dossier_count"],8)
-        self.assertEqual(b["unreviewed_count"],374)
+        self.assertEqual(b["dossier_count"],16)
+        self.assertEqual(b["unreviewed_count"],366)
         self.assertTrue(all(n["verified_claims"]==0 for n in b["nodes"]))
 
 if __name__=="__main__":unittest.main()

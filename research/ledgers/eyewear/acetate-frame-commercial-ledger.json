@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0162",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Eastman and Marchon 2020 announcement",
+      "url": "https://www.eastman.com/en/media-center/news-stories/2020/marchon-eyewear-inc-partners-with-eastman-produce-eyewear",
+      "publisher": "Eastman",
+      "origin_group": "eastman",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "produce and sell frames using Eastman Acetate Renew",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "Eastman and MYKITA 2022 announcement",
+      "url": "https://www.eastman.com/en/media-center/news-stories/2022/mykita-first-pivot-sustainable-acetate",
+      "publisher": "Eastman",
+      "origin_group": "eastman",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "exclusively source the sustainable Acetate Renew",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Eastman与Marchon在2020年宣布合作使用Acetate Renew制作镜架。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "produce and sell frames using Eastman Acetate Renew",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "MYKITA在2022年公告计划独家采购Eastman的Acetate Renew。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "exclusively source the sustainable Acetate Renew",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}

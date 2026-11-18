@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0034",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Covestro 2022 INEOS phenol acetone press release",
+      "url": "https://www.covestro.com/press/ineos-supplies-covestro-with-mass-balanced-raw-materials-for-polycarbonate-plastics/",
+      "publisher": "Covestro",
+      "origin_group": "covestro_announcement",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "mass-balanced raw materials phenol and acetone",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "INEOS 2022 press release",
+      "url": "https://www.ineos.com/es/news/shared-news/ineos-supplies-covestro-with-mass-balanced-raw-materials-for-polycarbonate-plastics/",
+      "publisher": "INEOS",
+      "origin_group": "covestro_announcement",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "phenol and acetone",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "科思创2022年披露INEOS向其供应质量平衡苯酚和丙酮。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "mass-balanced raw materials phenol and acetone",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "INEOS官网在2022年发布相应合作消息，同属一个事件来源簇。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "phenol and acetone",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}

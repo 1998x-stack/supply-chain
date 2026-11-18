@@ -1,0 +1,76 @@
+{
+  "node_id": "N0074",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "加硬耐磨层（hard coat）",
+  "node_type": "functional_layer",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Ophthalmic hard coating layer",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "用于增强镜片表面耐刮擦性能，并配合AR镀膜提高膜层附着/耐久性",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "有机硅或其它可固化加硬涂层配方",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "旋涂/浸涂与固化设备",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "矫正镜片的多层功能涂层",
+        "relation": "technological"
+      }
+    ],
+    "companies": [
+      {
+        "name": "PPG",
+        "relationship": "coating_material_supplier",
+        "confirmed_specific_customer": false
+      },
+      {
+        "name": "Satisloh",
+        "relationship": "coating_equipment_provider",
+        "confirmed_specific_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "PPG Hi-Gard的厂商声明不能代表全部加硬涂层的可靠性；设备商不必然是涂料制造商"
+      }
+    ],
+    "open_questions": [
+      "不同基材/配方的涂层耐磨标准与测试重复性如何？",
+      "涂料厂商TOP3与镀膜设备TOP3能否按独立口径列出？",
+      "镜片厂是否公开采购具体Hi-Gard与设备型号？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}

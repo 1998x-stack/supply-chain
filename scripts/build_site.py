@@ -27,10 +27,11 @@ def check_seed(x):
         if not r['supplier_identity_disclosed']:assert r['supplier_public_name']=='未披露名称'
     return {'nodes':len(nodes),'companies':len(company),'materials':len(materials),'sources':len(x['source'])}
 
-def compact(x,research=None):
+def compact(x,research=None,resolution=None):
     # Array encoding reduces Pages payload size; unpacked using a versioned field dictionary in frontend.
     return {
      'research':research or [],
+     'identity':[[r['view_node_id'],r['canonical_material_entity_id'],r['identity_state'],r['label_key']] for r in (resolution or {}).get('view_nodes',[])],
      'n':[[t['node_id'],t['name'],t['parent_id'],t['kind'],t['branch'],t['description'] or ''] for t in x['tree_node']],
      'm':[[v['material_id'],v['name'],v['representative_node_id']] for v in x['material']],
      'c':[[v['company_id'],v['name_zh'],v['name_en'],v['official_website']] for v in x['company']],
@@ -181,7 +182,7 @@ def add_sqlite(x,out):
         db.execute('INSERT INTO entity(entity_id,entity_type,name_zh) VALUES (?,?,?)',(mid,'material',m['name']))
         # Explicit curated equivalence; no automatic name-merging.
         if m['representative_node_id']:
-            db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id,notes) VALUES (?,?,?,?,?,?,?)',('ALIAS:'+m['material_id'],mid,'NODE:EYE:'+m['representative_node_id'],'processed_into','technological','PRODUCT:EYEWEAR','Curated material representative mapping'))
+            db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id,notes) VALUES (?,?,?,?,?,?,?)',('ALIAS:'+m['material_id'],mid,'NODE:EYE:'+m['representative_node_id'],'associated_with','technological','PRODUCT:EYEWEAR','Legacy contextual material linkage; NOT a verified identity or purchase'))
     for c in x['company']:
         eid='COMP:'+c['company_id']
         db.execute('INSERT INTO entity(entity_id,entity_type,name_zh,name_en) VALUES (?,?,?,?)',(eid,'company',c['name_zh'] or c['name_en'],c['name_en']))
@@ -313,6 +314,9 @@ def add_additional_products(products,out):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',default='dist');a=parser.parse_args()
     products=discover_products()
+    from normalize_eyewear import resolve as resolve_eyewear,persist as persist_eyewear
+    eyeseed=next((x for m,x in products if m['slug']=='eyewear'),None)
+    identity=resolve_eyewear(eyeseed) if eyeseed is not None else None
     reverse=reverse_catalog(products)
     dist=(ROOT/a.output).resolve();shutil.rmtree(dist,ignore_errors=True);shutil.copytree(ROOT/'web',dist)
     d=dist/'data';d.mkdir(parents=True,exist_ok=True)
@@ -320,14 +324,26 @@ def main():
     for meta,x in products:
         slug=meta['slug']
         research=read_public_research(slug,{n['node_id'] for n in x['tree_node']})
-        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,research),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
+        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,research,identity if slug=='eyewear' else None),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
         catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node']),'research_dossiers':len(research)})
     (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
     (d/'reverse_index.json').write_text(json.dumps(reverse,ensure_ascii=False,indent=2),encoding='utf-8')
+    if identity is not None:
+        (d/'eyewear_identity.json').write_text(json.dumps(identity,ensure_ascii=False,indent=2),encoding='utf-8')
+        catalog['stats']['curated_eyewear_identities']=identity['summary']['curated_exact_links']
+        catalog['stats']['unresolved_eyewear_nodes']=identity['summary']['provisional_nodes']
+        (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
+    if eyeseed is not None:
+        from build_priority import prioritize, load_dossiers
+        priority=prioritize(eyeseed,load_dossiers())
+        (d/'eyewear_priority.json').write_text(json.dumps(priority,ensure_ascii=False,indent=2),encoding='utf-8')
+        catalog['stats']['eyewear_dossiers']=priority['nodes_with_dossiers']
+        (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
     (dist/'.nojekyll').write_text('',encoding='utf-8')
     eyewear=next((x for m,x in products if m['slug']=='eyewear'),None)
     if eyewear is not None:
         add_sqlite(eyewear,ROOT/'build'/'supply_chain.sqlite')
+        persist_eyewear(ROOT/'build'/'supply_chain.sqlite',identity)
         add_additional_products(products,ROOT/'build'/'supply_chain.sqlite')
         from ingest_research import ingest
         ingest(ROOT/'build'/'supply_chain.sqlite')

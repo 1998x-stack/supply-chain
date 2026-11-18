@@ -1,0 +1,84 @@
+{
+  "node_id": "N0266",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "铰链/弹簧铰链",
+  "node_type": "component",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Eyewear spring hinges",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "连接镜腿与框体并提供开合、弹性、耐久性要求",
+      "properties": [
+        {
+          "attribute": "company_reported_hinge_components_per_year",
+          "value": 500000000,
+          "unit": "components_per_year",
+          "test_condition": "OBE group website self-report, no independent audit",
+          "source_id": "S001"
+        }
+      ]
+    },
+    "upstream": [
+      {
+        "name": "不锈钢、镍银、钛合金及铜基合金",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "冲压、微型CNC、金属注射成型、表面加工",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "眼镜镜架",
+        "relation": "technological"
+      },
+      {
+        "product": "eyewear",
+        "component": "智能眼镜镜腿",
+        "relation": "technological"
+      }
+    ],
+    "companies": [
+      {
+        "name": "OBE",
+        "relationship": "eyewear_hinge_component_manufacturer",
+        "confirmed_specific_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "企业自报年产零件数量不是全球市占率；实际客户名单需要合同证据"
+      }
+    ],
+    "open_questions": [
+      "OBE披露的5亿是铰链部件而非完整铰链，销量与产能如何界定？",
+      "铰链行业按出货量/营业额TOP3是否有可靠市场总量？",
+      "2026越南工厂产线、实际产量与企业集团归属如何复核？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}

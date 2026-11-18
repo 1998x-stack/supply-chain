@@ -1,0 +1,71 @@
+{
+  "node_id": "N0316",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "镜片清洗与真空镀膜设备",
+  "node_type": "equipment",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Lens washing and vacuum coating equipment",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "镜片清洗、真空多层膜沉积和后续顶层涂层装备",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "真空泵、离子源、腔体、控制器",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "蒸镀耗材、工艺气体和高纯膜料",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "镜片车房和镀膜工厂",
+        "relation": "technological"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Satisloh",
+        "relationship": "equipment_manufacturer",
+        "confirmed_specific_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "单台设备批次容量不是厂商行业市占率；设备与耗材必须分别建模"
+      }
+    ],
+    "open_questions": [
+      "Satisloh、OptoTech等企业是否公开设备年度出货量？",
+      "各镀膜设备按镜片工厂容量如何定义可比市场？",
+      "真实镜片厂设备采购及维护合同公开程度如何？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}

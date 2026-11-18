@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0266",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "OBE group facts",
+      "url": "https://obe.de/en/about-us",
+      "publisher": "OBE",
+      "origin_group": "obe",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "500,000,000",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "OBE hinge materials and processes",
+      "url": "https://obe.de/en/solutions",
+      "publisher": "OBE",
+      "origin_group": "obe",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Nickel Silver",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "OBE官网披露每年约5亿件铰链组件，为企业自报而非市场份额。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "500,000,000",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "OBE将镍银列入其组件材料选项。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "Nickel Silver",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}
