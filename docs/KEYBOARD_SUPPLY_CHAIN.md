@@ -63,3 +63,6 @@ python scripts/verify_pages_release.py --dist dist
 - 原子证据台账：`research/ledgers/keyboard/*.json`
 - 专业技能：`.agents/skills/keyboard-supply-chain/`（同步至Codex/Pi/Claude）
 - 网页：`#/products/keyboard`，会显示节点成熟度、已有来源、研究任务及反向技术关联。
+
+## 页面构型高亮（非完整BOM）
+新增四个典型方案选择：USB机械接点、USB霍尔磁轴、USB薄膜橡胶碗、BLE机械键盘。页面在图谱上高亮对应的关键节点、保留所有其他技术分支以便对比，不隐藏未证实的材料方案；该高亮不代表某品牌厂商已实际采购、也不能用于成本总和计算。

@@ -17,10 +17,12 @@ jobs:
       - name: Verify Pages release includes both product snapshots and versioned assets
         run: python scripts/verify_pages_release.py --dist dist
       - name: Validate frontend syntax
-        run: node --check web/assets/app.js && node --check web/assets/node_panel.js && node --test tests/test_node_panel.mjs tests/test_catalog_cache.mjs tests/test_research_status_ui.mjs
+        run: node --check web/assets/app.js && node --check web/assets/node_panel.js && node --test tests/test_node_panel.mjs tests/test_catalog_cache.mjs tests/test_research_status_ui.mjs tests/test_keyboard_atlas.mjs
 
       - name: Validate all Henkel node intelligence sources
         run: python scripts/validate_intelligence.py data/products/henkel-adhesives/graph.json
+      - name: Validate keyboard material, configuration and source assertions
+        run: python scripts/validate_intelligence.py data/products/keyboard/graph.json
       - name: Validate research skills
         run: python scripts/research_cli.py validate-skills
       - name: Audit synthetic research fixtures
