@@ -24,7 +24,7 @@ def ingest(db_path: Path,slug: str="eyewear"):
         nid=d["node_id"]
         if nid in ledgers:raise ValueError("Repeated evidence ledger for "+nid)
         ledgers[nid]=d
-    stats={"dossiers":0,"claims":0,"sources":0,"claim_citations":0,"gaps":0}
+    stats={"dossiers":0,"claims":0,"sources":0,"claim_citations":0,"gaps":0,"observations":0}
     try:
         for path in sorted(dossier_dir.glob("*.json")):
             doc=json.loads(path.read_text(encoding="utf-8"));nid=doc["node_id"]
@@ -84,6 +84,38 @@ def ingest(db_path: Path,slug: str="eyewear"):
                         ev["polarity"],hashlib.sha256(snippet.get("content","").encode()).hexdigest(),
                         snippet.get("origin_group")))
                     stats["claim_citations"]+=1
+            # Keep physical test results and production statistics as separate observations.
+            for i,p in enumerate(doc.get("sections",{}).get("technical",{}).get("properties",[]),1):
+                sid=p.get("source_id")
+                if sid not in local_sources:raise ValueError("Unknown technical observation source "+str(sid))
+                value=p.get("value")
+                if value is None:continue
+                numeric=isinstance(value,(int,float)) and not isinstance(value,bool)
+                db.execute("""INSERT INTO research_observation
+                    (observation_id,entity_id,dossier_id,observation_type,metric,value_num,value_text,unit,grade,test_condition,source_id,origin_field)
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    ("OBS:EYE:"+nid+":TECH:"+str(i),entity_id,ds_id,"technical_spec",p["attribute"],
+                     value if numeric else None,None if numeric else json.dumps(value,ensure_ascii=False),
+                     p.get("unit"),p.get("grade"),p.get("test_condition"),local_sources[sid],
+                     "sections.technical.properties["+str(i-1)+"]"))
+                stats["observations"]+=1
+            for i,m in enumerate(doc.get("sections",{}).get("market",[]),1):
+                sid=m.get("source_id")
+                if sid not in local_sources:raise ValueError("Unknown market observation source "+str(sid))
+                value=m.get("share") if m.get("share") is not None else m.get("value")
+                if value is None:continue
+                numeric=isinstance(value,(int,float)) and not isinstance(value,bool)
+                db.execute("""INSERT INTO research_observation
+                    (observation_id,entity_id,dossier_id,observation_type,metric,value_num,value_text,unit,
+                     geography,observation_year,denominator,source_id,origin_field)
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    ("OBS:EYE:"+nid+":MARKET:"+str(i),entity_id,ds_id,
+                     "market_share" if m.get("share") is not None else "production_or_capacity",
+                     m["metric"],value if numeric else None,
+                     None if numeric else json.dumps(value,ensure_ascii=False),
+                     m.get("unit"),m.get("geography"),m.get("year"),
+                     m.get("denominator"),local_sources[sid],"sections.market["+str(i-1)+"]"))
+                stats["observations"]+=1
             for i,q in enumerate(doc.get("sections",{}).get("open_questions",[]),1):
                 db.execute("""INSERT INTO research_gap
                    (gap_id,entity_id,dossier_id,question,priority,blocking,status,evidence_needed)
@@ -91,8 +123,6 @@ def ingest(db_path: Path,slug: str="eyewear"):
                    ("GAP:EYE:"+nid+":"+str(i).zfill(2),entity_id,ds_id,q,"P1",0,"open",
                     "Further primary-source research and semantic review"))
                 stats["gaps"]+=1
-        if set(ledgers)!={str(p.stem).replace("-draft","") for p in []}:
-            pass  # Ledger coverage is enforced by the standalone audit tool.
         problems=db.execute("PRAGMA foreign_key_check").fetchall()
         if problems:raise ValueError("Research import foreign key errors "+repr(problems))
         db.commit()
