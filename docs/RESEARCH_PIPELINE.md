@@ -77,3 +77,7 @@ deep-search证据JSON需要包含sources和claims及原文content；本仓库aud
 ## Cross-platform skill mirrors
 
 Canonical: .agents/skills. macOS/Linux Git checkout supports symlinked skill directories. Windows without symlink privileges may run python tools/sync_skill_mirrors.py --copy to materialize identical copies; the validator accepts byte-identical copies. Running --check is read-only. --symlink restores links. The copy command refuses overwriting divergent local edits; back them up first. Pi can discover both .agents and .pi, and may show duplicate names depending on its version; prefer the canonical entry.
+
+## Deep Search外部执行适配
+
+研究计划生成不自动联网。在本地另行克隆 deep-search 并设置TAVILY_API_KEY后，由操作者显式运行 python3 scripts/deep_search_adapter.py --action search --deep-search-root ../deep-search --input build/research/pc-plan.json --output build/research/search.json --allow-network 。可用 --dry-run 先查看命令。验证台账或审计引用分别用 --action validate 和 --action audit；该CLI从不自动声称多源事实语义审核已完成。
