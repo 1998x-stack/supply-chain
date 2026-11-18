@@ -22,3 +22,11 @@ description: 设计多产品供应链节点研究面板，将TDS物性、公司�
 
 ## 输出
 `web/assets/node_panel.js`、`web/assets/node_panel.css`、数据模型与测试；对于缺失市场份额、客户名单、SDS的情况显式保留“未核实”。
+
+
+## 节点面板状态及审查
+- structural_only：只含技术树路径与描述，不能称为深度研究。
+- annotated：有无来源笔记；source_note：有来源笔记。
+- dossier_pending：八维档案与证据台账，但缺语义审查。
+- reviewed：通过审阅人/日期的完成档案。
+- NAV目录节点单列，不计入强制市场调查分母。应优先展示路径和上下游，而非简单标注“尚未研究”。

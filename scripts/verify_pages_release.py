@@ -40,7 +40,27 @@ def audit_release(root:Path):
             nodes=len(graph.get("n",[]))
             expected=next(p["nodes"] for p in catalog["products"] if p["slug"]==slug)
             if nodes != expected:errors.append(f"{slug} node count mismatch {nodes}!={expected}")
-            counts[slug]={"nodes":nodes,"dossiers":len(graph.get("research",[]))}
+            context=graph.get("coverage",[])
+            if len(context)!=nodes:errors.append(f"{slug} coverage count {len(context)}!={nodes}")
+            if len({r.get("node_id") for r in context})!=len(context):
+                errors.append(slug+" coverage node IDs are not unique")
+            ids={row[0] for row in graph.get("n",[]) if row}
+            if any(r.get("node_id") not in ids for r in context):
+                errors.append(slug+" coverage contains unknown node IDs")
+            summary=next((p.get("coverage",{}) for p in catalog["products"] if p["slug"]==slug),{})
+            if summary.get("nodes")!=nodes:errors.append(slug+" missing or inconsistent coverage summary")
+            if summary.get("dossiers")!=len(graph.get("research",[])):
+                errors.append(slug+" dossier counts inconsistent")
+            if summary.get("approved_dossiers",0)>summary.get("dossiers",0):
+                errors.append(slug+" approved dossier count exceeds dossier count")
+            queue_path=root/"data"/(slug+"_research_queue.json")
+            if not queue_path.is_file():errors.append(slug+" missing research queue export")
+            else:
+                queue=json.loads(queue_path.read_text(encoding="utf-8"))
+                if queue.get("product_slug")!=slug or queue.get("semantic_review")!="not_started":
+                    errors.append(slug+" malformed research queue")
+            counts[slug]={"nodes":nodes,"dossiers":len(graph.get("research",[])),
+                          "source_notes":summary.get("source_notes_without_dossier",0)}
         except (OSError,ValueError,TypeError,KeyError) as exc:
             errors.append(slug+" gzip snapshot failed: "+str(exc))
     if counts.get("henkel-adhesives",{}).get("nodes",0)<70:

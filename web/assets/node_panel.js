@@ -7,14 +7,16 @@
 window.SupplyNodePanel=(()=>{
  const e=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const link=url=>/^https:\/\//i.test(String(url||''))?e(url):'#';
- const TABS=[['summary','总览'],['technical','技术与原料'],['market','市场与企业'],['trace','上下游'],['evidence','原始证据'],['gaps','风险与待办']];
+ const TABS=[['summary','总览'],['technical','技术与原料'],['market','市场与企业'],['trace','上下游'],['evidence','原始证据'],['gaps','研究任务']];
+ const STAGE_LABELS={reviewed:'语义审核完成',dossier_pending:'有深度档案 · 待复核',source_note:'已有来源记录 · 待深研',annotated:'已有研究笔记 · 待取证',structural_only:'结构资料 · 待深研'};
  function empty(text){return '<div class="sc-empty">'+e(text)+'</div>';}
  function badge(text,tone='muted'){return '<span class="sc-badge '+e(tone)+'">'+e(text)+'</span>';}
  function tagSource(id){return id?'<span class="sc-source-id">'+e(id)+'</span>':'';}
- function sources(insight,dossier,data){
+ function sources(insight,dossier,data,coverage){
   const ids=new Set([...(insight?.source_ids||[])]);
   for(const v of [...(insight?.facts||[]),...(insight?.metrics||[])])if(v.source_id)ids.add(v.source_id);
-  const own=(data.src||[]).filter(v=>ids.has(v.id)).map(v=>({id:v.id,title:v.title,url:v.url,publisher:'研究来源'}));
+  const related=new Set(coverage?.material_source_ids||[]);
+  const own=(data.src||[]).filter(v=>ids.has(v.id)||related.has(v.id)).map(v=>({id:v.id,title:v.title,url:v.url,publisher:related.has(v.id)?'规范材料相关来源（仅背景关联）':'研究来源'}));
   const fromDossier=(dossier?.sources||[]);
   const merged=new Map([...own,...fromDossier].map(v=>[v.id,v]));
   return [...merged.values()];
@@ -31,21 +33,39 @@ window.SupplyNodePanel=(()=>{
   return '<p class="sc-value">'+e(value)+'</p>';
  }
  function panelHeader(ctx){
-  const {node,product,identity,dossier,insight}=ctx;
-  const approved=dossier?.review_state==='publishable'&&dossier?.semantic_review_status==='approved';
-  const hasResearch=Boolean(dossier||insight);
+  const {node,product,identity,dossier,insight,coverage}=ctx;
+  const approved=coverage?.stage==='reviewed';
   const scope=product.spec.slug==='henkel-adhesives'?'企业产品组合视图':'产品技术视图';
-  return '<header class="sc-header"><div class="sc-eyebrow">NODE / '+e(product.spec.slug)+' / '+e(node.id)+'</div><h2>'+e(node.name)+'</h2><div class="sc-header-pills">'+badge(node.kind||'未分类')+badge(node.branch||scope)+badge(approved?'已审核可发布':hasResearch?'研究草稿 · 待复核':'尚未研究',approved?'good':hasResearch?'draft':'muted')+'</div><p>'+e(node.description||'仅有供应链结构节点，尚无充分研究证据。')+'</p><div class="sc-status"><span>实体身份：</span><code>'+e(identity?.canonical||('NODE:'+product.spec.slug+':'+node.id))+'</code><span>'+e(identity?.state==='curated_exact'?'严格映射':'本产品上下文节点')+'</span></div><p class="sc-warn">技术分类与可能原料 ≠ 已确认采购。品牌、配方和工艺不能按名称推断实际合同。</p></header>';
+  const stage=coverage?.facet==='navigation'?'目录/分组节点':STAGE_LABELS[coverage?.stage]||'结构资料 · 待深研';
+  const priority=coverage?.priority;
+  return '<header class="sc-header"><div class="sc-eyebrow">NODE / '+e(product.spec.slug)+' / '+e(node.id)+'</div><h2>'+e(node.name)+'</h2><div class="sc-header-pills">'+
+    badge(node.kind||'未分类')+badge(node.branch||scope)+badge(stage,approved?'good':coverage?.stage==='dossier_pending'?'draft':'muted')+
+    (priority&&priority!=='NAV'?badge('研究优先级 '+priority):'')+'</div>'+
+    '<p>'+e(node.description||'此节点目前只有供应链位置与名称，需要原始资料支持独立技术结论。')+'</p>'+
+    '<div class="sc-status"><span>实体身份：</span><code>'+e(identity?.canonical||('NODE:'+product.spec.slug+':'+node.id))+
+    '</code><span>'+e(identity?.state==='curated_exact'?'严格材料身份映射':'产品视图中的独立节点')+'</span></div>'+
+    '<div class="sc-status"><span>当前节点</span><b>'+e(coverage?.claims||0)+'</b>条原子论断 · <b>'+e(coverage?.sources||0)+'</b>条来源引用 · <b>'+e(coverage?.children||0)+'</b>个下一层节点</div>'+
+    '<p class="sc-warn">结构已建立不等于研究完成。技术关联≠真实采购，厂商产品宣传≠独立市场核验。</p></header>';
  }
  function renderSummary(ctx){
-  const {insight,dossier,node,product}=ctx;
+  const {insight,dossier,node,product,coverage}=ctx;
   const allFacts=facts(insight);
-  const summary= allFacts.length ? factCards(allFacts):dossier?.sections?.technical?.properties?.length?
-     factCards(dossier.sections.technical.properties.map(x=>({label:x.attribute,value:x.value,unit:x.unit,source_id:x.source_id,condition:x.test_condition||x.grade}))):empty('暂未整理量化指标或同条件物性。');
+  const summary=allFacts.length?factCards(allFacts):dossier?.sections?.technical?.properties?.length?
+    factCards(dossier.sections.technical.properties.map(x=>({label:x.attribute,value:x.value,unit:x.unit,source_id:x.source_id,condition:x.test_condition||x.grade}))):
+    empty('当前节点没有可附带完整来源、单位和口径的量化事实；不自动推算市场份额。');
   const claims=[...(insight?.claims||[]),...(dossier?.claims||[])];
-  return '<section><h3>关键指标与来源</h3>'+summary+'</section><section><h3>研究结论</h3>'+
-    (claims.length?claims.map(c=>'<article class="sc-claim"><div>'+badge(c.status||'待复核','draft')+' '+(c.source_ids||[]).map(tagSource).join(' ')+'</div><p>'+e(c.text)+'</p></article>').join(''):empty('尚无成文的原子论断；请从一手来源开始研究。'))+
-    '</section><section><h3>覆盖与限制</h3><div class="sc-record"><b>关联内容</b><p>该节点属于 '+e(product.spec.title)+' 的技术/业务视图；图谱边可能是材料、分类、设备或行业应用关系。</p><p>源数据状态：'+e(insight?.review_status||dossier?.review_state||'unreviewed')+'。机器结构校验不代表事实已完成语义审核。</p></div></section>';
+  const path=coverage?.path||[node.name];
+  const structural='<section><h3>已建立的产业链结构信息</h3><article class="sc-record"><b>产品内路径</b><p>'+e(path.join(' / '))+'</p>'+
+    '<p>节点类型：'+e(coverage?.facet||node.kind||'未分类')+' · 技术树分支：'+e(node.branch||'')+' · 下级节点：'+e(coverage?.children||0)+'</p>'+
+    '<p class="sc-note">来自供应链结构数据；可帮助导航，但不作为已验证的技术/市场事实计入档案。</p></article></section>';
+  return structural+'<section><h3>技术指标与独立来源</h3>'+summary+'</section>'+
+    '<section><h3>已经记录的论断</h3>'+
+    (claims.length?claims.map(c=>'<article class="sc-claim"><div>'+badge(c.status||'待复核','draft')+' '+(c.source_ids||[]).map(tagSource).join(' ')+'</div><p>'+e(c.text)+'</p></article>').join(''):
+      empty('尚未形成带原始来源的原子论断。请查看“研究任务”标签生成下一轮Deep Search计划。'))+'</section>'+
+    '<section><h3>证据审查状态</h3><article class="sc-record"><p>研究状态：'+
+    e(STAGE_LABELS[coverage?.stage]||'待深研')+'。资料独立性和具体企业采购合同仍需逐项核实。</p>'+
+    '<p>当前档案数：'+e(dossier?1:0)+'；来源记录：'+e(coverage?.sources||0)+
+    '。节点说明、上下游和类别只代表结构信息。</p></article></section>';
  }
  function renderTechnical(ctx){
   const {insight,dossier,node}=ctx;
@@ -98,19 +118,40 @@ window.SupplyNodePanel=(()=>{
     '<section><h3>跨产品反向查询</h3>'+products.map(p=>'<a class="sc-trace-link" href="#/products/'+e(p.slug)+'"><span>'+e(p.icon)+' '+e(p.title)+'</span><small>技术关联</small></a>').join('')+'</section>';
  }
  function renderEvidence(ctx){
-  const {insight,dossier,data}=ctx, refs=sources(insight,dossier,data);
+  const {insight,dossier,data,coverage}=ctx, refs=sources(insight,dossier,data,coverage);
   const claims=[...(insight?.claims||[]),...(dossier?.claims||[])];
   let out='<section><h3>原子论断</h3>'+(claims.length?claims.map(c=>'<div class="sc-claim"><div>'+badge(c.status||'pending','draft')+(c.source_ids||[]).map(tagSource).join(' ')+'</div><p>'+e(c.text)+'</p><small>'+e(c.analysis||'')+'</small></div>').join(''):empty('尚无证据论断'))+'</section>';
-  out+='<section><h3>原始来源与位置</h3><p class="sc-note">查看厂商原文/TDS。多个汉高官网页面不是相互独立的市场验证来源。</p>';
+  out+='<section><h3>原始来源与位置</h3><p class="sc-note">查看厂商原文/TDS。多个同一集团网页不算独立第三方交叉核证。</p>';
+  if(coverage?.material_source_ids?.length)out+='<p class="sc-warn">以下部分来源来自已校对的标准材料对应的公司/市场记录，仅能作为该材料的背景，不证明当前镜片牌号或最终客户的具体采购。</p>';
   out+=refs.length?refs.map(s=>'<article class="sc-source"><div class="sc-source-top">'+tagSource(s.id)+badge(s.published_at||'日期未录入')+'</div><a href="'+link(s.url)+'" rel="noopener noreferrer" target="_blank">'+e(s.title||s.url)+' ↗</a><small>'+e(s.publisher||'官方或公开资料')+'</small></article>').join(''):empty('暂无附着在本节点的独立来源');
   return out+'</section>';
  }
  function renderGaps(ctx){
-  const {insight,dossier}=ctx;
-  const gaps=[...(insight?.gaps||[]),...(dossier?.sections?.open_questions||[])];
+  const {insight,dossier,coverage,node,product}=ctx;
   const risks=dossier?.sections?.risk||[];
-  return '<section><h3>下一轮 Deep Search 任务</h3>'+(gaps.length?gaps.map((g,i)=>'<article class="sc-task"><b>P'+(i<3?'0':'1')+'</b><span>'+e(g)+'</span></article>').join(''):empty('未研究的节点应先建立身份、工艺与市场分母的问题清单。'))+'</section>'+
-    '<section><h3>风险、冲突与不确定性</h3>'+(risks.length?renderValues(risks):empty('不代表无风险；只是尚未做专门的供应链风险研究。'))+'</section>';
+  const custom=[...(insight?.gaps||[]),...(dossier?.sections?.open_questions||[])];
+  const gaps=[...new Set([...custom,...(coverage?.questions||[])].filter(Boolean))];
+  const priority=coverage?.priority||'P2';
+  const isNav=coverage?.facet==='navigation';
+  const prompt=['你是供应链产业研究Agent。研究以下节点，必须打开原始来源并做反证核验。',
+    '产品：'+product.spec.title+' ('+product.spec.slug+')',
+    '节点：'+node.name+' ['+node.id+']',
+    '产业链位置：'+(coverage?.path||[]).join(' > '),
+    '现有证据等级：'+(coverage?.stage||'structural_only'),
+    '研究优先级：'+priority,
+    '调查问题：',...gaps.map((q,i)=>(i+1)+'. '+q),
+    '交付：逐来源证据台账、身份/技术/上游/下游/公司/市场/风险八维档案。',
+    '严格保留年份、地区、单位、分母、牌号、测试条件和来源，区分商业采购与技术关系。',
+    '禁止编造市场TOP3、企业采购合同和报告原文。未知项写UNKNOWN。'].join('\n');
+  const tasks=isNav?empty('这是产品导航/分类节点；无需为每个目录项单独调查供应商，请深入具体材料、牌号或工艺节点。'):
+    gaps.length?gaps.map((g)=>'<article class="sc-task">'+badge(priority,'draft')+'<span>'+e(g)+'</span></article>').join(''):
+      empty('暂无优先问题，先验证节点身份和原始来源。');
+  return '<section><h3>可执行研究计划</h3>'+tasks+'</section>'+
+    (isNav?'':'<section><h3>交给本地 Codex / Pi / Claude</h3><p class="sc-note">以下是待执行的Deep Search任务，不代表已联网检索或完成调查。</p>'+
+      '<details class="sc-research-prompt"><summary>展开研究指令</summary><pre class="sc-task-text">'+e(prompt)+'</pre>'+
+      '<button type="button" class="sc-copy-task" data-sc-copy-task>复制研究指令</button></details></section>')+
+    '<section><h3>已记录风险与分歧</h3>'+
+      (risks.length?renderValues(risks):empty('风险尚未充分调查，不等于风险不存在。'))+'</section>';
  }
  function render(ctx){
   const {node,product}=ctx,data=product.data;
@@ -119,7 +160,8 @@ window.SupplyNodePanel=(()=>{
     (product.spec.slug!=='eyewear'?(data.m||[]).filter(m=>m.node===node.id):[]);
   const dossier=(data.research||[]).find(v=>v.node_id===node.id);
   const insight=(data.insights||[]).find(v=>v.node_id===node.id);
-  const state={...ctx,data,identity,dossier,insight,matIds:new Set(matches.map(x=>x.id))};
+  const coverage=(data.coverage||[]).find(v=>v.node_id===node.id);
+  const state={...ctx,data,identity,dossier,insight,coverage,matIds:new Set(matches.map(x=>x.id))};
   const tabs=TABS.map(([id,name],i)=>'<button class="sc-tab'+(i===0?' is-active':'')+'" data-sc-tab="'+id+'" role="tab" aria-selected="'+(i===0?'true':'false')+'">'+name+'</button>').join('');
   const sections={summary:renderSummary,technical:renderTechnical,market:renderMarket,trace:renderTrace,evidence:renderEvidence,gaps:renderGaps};
   const html=panelHeader(state)+'<nav class="sc-tabs" role="tablist" aria-label="节点研究内容">'+tabs+'</nav>'+
@@ -129,6 +171,15 @@ window.SupplyNodePanel=(()=>{
  }
  function bind(root,actions){
   root.addEventListener('click',event=>{
+   const copy=event.target.closest('[data-sc-copy-task]');
+   if(copy){
+     const content=root.querySelector('.sc-task-text')?.textContent||'';
+     if(typeof navigator!=='undefined'&&navigator.clipboard?.writeText){
+       navigator.clipboard.writeText(content).then(()=>{copy.textContent='研究任务已复制';},
+         ()=>{copy.textContent='复制失败，请手动选择文本';});
+     }else{copy.textContent='请手动选择文本复制';}
+     return;
+   }
    const tab=event.target.closest('[data-sc-tab]');
    if(tab){const id=tab.getAttribute('data-sc-tab');root.querySelectorAll('[data-sc-tab]').forEach(b=>{const active=b.getAttribute('data-sc-tab')===id;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',active?'true':'false')});root.querySelectorAll('[data-sc-panel]').forEach(p=>p.hidden=p.getAttribute('data-sc-panel')!==id);return;}
    const hit=event.target.closest('[data-node],[data-company]');

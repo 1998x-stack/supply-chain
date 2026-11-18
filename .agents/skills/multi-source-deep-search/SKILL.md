@@ -40,3 +40,11 @@ description: 利用deep-search项目进行多轮多语言检索、原文阅读�
 - 必须检查最新TDS版本、地域变体和产品是否停产；同一SKU不同年份不能静默拼接测试数据。
 - 专门搜索“厂商宣称领先”是否提供可计算分母；没有同口径第三名就报告 `TOP3_UNKNOWN`。
 - 每轮写 `negative_evidence` 与 `search_budget`，明确无法访问的原始PDF和未取得的实际采购合同。
+
+
+## 五级研究覆盖与批量调查规范
+- 使用 python scripts/research_coverage.py --product {slug} --priority P0 --limit 12 输出可执行调查队列。
+- structural_only为树状结构，不是已证实的材料/客户；source_note仅是有原始来源的笔记，dossier_pending仍需人工审核。
+- 导航/分类NAV节点不强制做厂家市场TOP3；对应具体材料或牌号应独立建档。
+- 每批先真实读取TDS/SDS、公告/年报、独立报告，再进行反证与统计口径审计。不能凭模板产生“已核实”结果。
+- 只有有原始来源、Claim审查和人工签名日期才能提升为reviewed。
