@@ -27,7 +27,8 @@ def sync(root:Path,mode:str):
         originals=snapshot(skill)
         for host in HOSTS:
             mirror=root/host/"skills"/skill.name
-            mirror.parent.mkdir(parents=True,exist_ok=True)
+            if mode!="check":
+                mirror.parent.mkdir(parents=True,exist_ok=True)
             if mode=="check":
                 if not mirror.is_dir() or not (mirror/"SKILL.md").is_file():
                     errors.append(str(mirror)+" missing or broken");continue
