@@ -1,0 +1,39 @@
+{
+  "node_id": "SYNTHETIC_TEST_NODE",
+  "product_slug": "synthetic-example",
+  "configuration_id": null,
+  "name": "Fictional material (not real supply research)",
+  "node_type": "material",
+  "as_of": "2026-11-18",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "grade": "unknown",
+      "aliases": []
+    },
+    "technical": {
+      "specifications": "unknown"
+    },
+    "upstream": [
+      "mock upstream placeholder"
+    ],
+    "downstream": [
+      "mock component placeholder"
+    ],
+    "companies": [],
+    "market": [],
+    "risk": [
+      "not assessed"
+    ],
+    "open_questions": [
+      "Find primary evidence before publishing"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null
+  },
+  "disclaimer": "SYNTHETIC TEST FIXTURE. Not actual product or verified supply data."
+}

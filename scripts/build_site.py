@@ -114,7 +114,8 @@ def add_sqlite(x,out):
     out.parent.mkdir(parents=True,exist_ok=True)
     if out.exists():out.unlink()
     db=sqlite3.connect(out)
-    db.executescript((ROOT/'schema'/'001_core.sql').read_text())
+    for migration in sorted((ROOT/'schema').glob('*.sql')):
+        db.executescript(migration.read_text(encoding='utf-8'))
     db.execute('INSERT INTO category(category_id,name_zh,icon) VALUES (?,?,?)',('optical','光学与消费医疗','👓'))
     db.execute("INSERT INTO entity(entity_id,entity_type,name_zh) VALUES ('PRODUCT:EYEWEAR','product','眼镜')")
     db.execute("INSERT INTO product(product_id,slug,category_id,summary,icon,published) VALUES (?,?,?,?,?,1)",('PRODUCT:EYEWEAR','eyewear','optical','眼镜产业链：镜片、镜架、膜层、精密配件、设备和原料','👓'))

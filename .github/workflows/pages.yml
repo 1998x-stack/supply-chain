@@ -21,7 +21,7 @@ jobs:
       - name: Validate research data
         run: python -m unittest discover -s tests -v
       - name: Build static site and SQLite database
-        run: python scripts/build_site.py
+        run: python scripts/research_cli.py validate-skills && python -m unittest discover -s tests -v && python scripts/build_site.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

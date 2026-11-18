@@ -1,0 +1,24 @@
+{
+  "skill": "industrial-process-tracing",
+  "product_slug": "eyewear",
+  "configuration_id": null,
+  "node_id": "NODE_ID_TO_RESEARCH",
+  "research_scope": {
+    "geography": "China and global",
+    "as_of": "2026-11-18",
+    "grade": "unspecified",
+    "time_window": "2024-2026"
+  },
+  "source_budget": {
+    "max_queries": 12,
+    "max_results_per_query": 5,
+    "max_fetch": 15
+  },
+  "outputs": [
+    "claim_ledger.json",
+    "node_dossier.json",
+    "research_gaps.md"
+  ],
+  "status": "draft",
+  "notes": "This is a planning template, not real research or verified supplier data."
+}
