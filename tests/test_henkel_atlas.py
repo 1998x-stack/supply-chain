@@ -31,14 +31,14 @@ class HenkelPortfolioTests(unittest.TestCase):
   self.assertEqual(next(n for n in a["tree_node"] if n["node_id"]=="reactors")["relation_type"],"uses_equipment")
  def test_second_product_in_shared_sqlite(self):
   reg=build_site.discover_products()
-  self.assertEqual({meta["slug"] for meta,_ in reg},{"eyewear","henkel-adhesives"})
+  self.assertEqual({meta["slug"] for meta,_ in reg},{"eyewear","henkel-adhesives","keyboard"})
   henkel=next(x for meta,x in reg if meta["slug"]=="henkel-adhesives")
   with tempfile.TemporaryDirectory() as td:
    path=Path(td)/"test.sqlite"
    build_site.add_sqlite(build_site.unpack_seed(),path)
    build_site.add_additional_products(reg,path)
    with sqlite3.connect(path) as db:
-    self.assertEqual(db.execute("SELECT COUNT(*) FROM product").fetchone()[0],2)
+    self.assertEqual(db.execute("SELECT COUNT(*) FROM product").fetchone()[0],3)
     self.assertEqual(db.execute("SELECT COUNT(*) FROM product_view_node WHERE product_id='PRODUCT:HENKEL_ADHESIVES'").fetchone()[0],73)
     self.assertFalse(db.execute("PRAGMA foreign_key_check").fetchall())
     self.assertEqual(db.execute("SELECT relation_type FROM edge WHERE edge_id='EDGE:henkel-adhesives:brand'").fetchone()[0],"associated_with")

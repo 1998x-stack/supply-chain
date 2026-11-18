@@ -10,7 +10,7 @@ class PagesReleaseValidatorTests(unittest.TestCase):
   for asset in ("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css"):
    p=root/asset;p.parent.mkdir(parents=True,exist_ok=True);p.write_text("ok")
   products=[]
-  for slug,n in [("eyewear",382),("henkel-adhesives",73)]:
+  for slug,n in [("eyewear",382),("henkel-adhesives",73),("keyboard",165)]:
    nodes=[["node-"+str(i)] for i in range(n)]
    coverage=[{"node_id":v[0],"stage":"structural_only","priority":"P2","facet":"material"} for v in nodes]
    with gzip.open(root/"data"/(slug+".json.gz"),"wt",encoding="utf-8") as f:

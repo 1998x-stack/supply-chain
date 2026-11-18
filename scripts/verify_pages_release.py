@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse,gzip,json,sys
 from pathlib import Path
 
-REQUIRED_PRODUCTS={"eyewear","henkel-adhesives"}
+REQUIRED_PRODUCTS={"eyewear","henkel-adhesives","keyboard"}
 REQUIRED_ASSETS=("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css")
 
 def audit_release(root:Path):
@@ -63,6 +63,8 @@ def audit_release(root:Path):
                           "source_notes":summary.get("source_notes_without_dossier",0)}
         except (OSError,ValueError,TypeError,KeyError) as exc:
             errors.append(slug+" gzip snapshot failed: "+str(exc))
+    if counts.get("keyboard",{}).get("nodes",0)<160:
+        errors.append("Keyboard graph absent or unexpectedly truncated")
     if counts.get("henkel-adhesives",{}).get("nodes",0)<70:
         errors.append("Henkel graph absent or unexpectedly truncated")
     if counts.get("eyewear",{}).get("nodes",0)<300:
