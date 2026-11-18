@@ -15,7 +15,7 @@ class ResearchCliTests(unittest.TestCase):
     def test_skill_mirrors_and_metadata(self):
         r=research_cli.validate_skills()
         self.assertTrue(r["structure_valid"],r["errors"])
-        self.assertEqual(r["skill_count"],11)
+        self.assertEqual(r["skill_count"],12)
         self.assertFalse(r["semantic_truth_verified"])
 
     def test_plan_deep_search_schema_shape(self):

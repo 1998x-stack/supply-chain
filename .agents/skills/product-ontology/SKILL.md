@@ -40,3 +40,7 @@ PC镜片→光学级PC树脂→双酚A等→苯酚/丙酮→苯、丙烯→油�
 - 品牌→牌号、牌号→技术族、技术族→应用行业是 `associated_with` 分类关系，不能自动转换为 `material_input`。
 - 若原料确认为某牌号必需，应有具体 TDS/SDS/专利或技术资料；候选组分只作为 `associated_with` 和 open_question。
 - TEROSON 的密封、BONDERITE 的金属前处理等跨品类能力，不能被全部合并进“胶黏剂出货吨数”。
+
+## 键盘多构型研究
+- 外接键盘必须先固定触发方案、连接协议、供电模式、键帽材料和结构附件，再分解BOM；Hall与机械金触点、薄膜银浆互为可选，不可全算为必需料。
+- 详见keyboard-supply-chain专用Skill。
