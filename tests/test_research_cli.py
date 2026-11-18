@@ -81,11 +81,13 @@ class ResearchCliTests(unittest.TestCase):
         r=research_cli.audit_dossier(d)
         self.assertFalse(r["structure_valid"])
 
-    def test_full_eyewear_backlog_is_unreviewed(self):
+    def test_backlog_reflects_existing_dossiers_but_not_semantic_approval(self):
         args=argparse.Namespace(product="eyewear")
         b=research_cli.seed_backlog(args)
         self.assertEqual(b["count"],382)
-        self.assertTrue(all(n["research_state"]=="unreviewed" for n in b["nodes"]))
+        self.assertEqual(b["dossier_count"],8)
+        self.assertEqual(b["unreviewed_count"],374)
+        self.assertTrue(all(n["verified_claims"]==0 for n in b["nodes"]))
         self.assertTrue(all(n["priority"]=="unrated" for n in b["nodes"]))
 
     def test_sqlite_research_migration_applied(self):

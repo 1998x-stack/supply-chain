@@ -50,11 +50,19 @@ def read_public_research(slug, node_ids):
     for path in sorted((root/'ledgers'/slug).glob('*.json')):
         data=json.loads(path.read_text(encoding='utf-8'))
         if data['node_id'] in ledgers:raise ValueError('Duplicate node research ledger')
-        ledgers[data['node_id']]=data
+        from research_cli import audit_ledger
+        qa=audit_ledger(data)
+        if not qa["structure_valid"]:
+            raise ValueError("Invalid evidence ledger "+str(path)+": "+repr(qa["errors"]))
+        ledgers[data["node_id"]]=data
     out=[]
     for path in sorted((root/'dossiers'/slug).glob('*.json')):
         doc=json.loads(path.read_text(encoding='utf-8'))
-        node=doc['node_id']
+        from research_cli import audit_dossier
+        qa=audit_dossier(doc)
+        if not qa["structure_valid"]:
+            raise ValueError("Invalid research dossier "+str(path)+": "+repr(qa["errors"]))
+        node=doc["node_id"]
         if node not in node_ids:raise ValueError('Dossier node not in product: '+node)
         ledger=ledgers.get(node)
         if ledger is None:raise ValueError('Missing node evidence ledger: '+node)
