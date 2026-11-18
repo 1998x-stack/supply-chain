@@ -15,8 +15,10 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python scripts/build_site.py
       - name: Validate frontend syntax
-        run: node --check web/assets/app.js
+        run: node --check web/assets/app.js && node --check web/assets/node_panel.js
 
+      - name: Validate all Henkel node intelligence sources
+        run: python scripts/validate_intelligence.py data/products/henkel-adhesives/graph.json
       - name: Validate research skills
         run: python scripts/research_cli.py validate-skills
       - name: Audit synthetic research fixtures

@@ -22,6 +22,11 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Audit all evidence-linked eyewear dossiers
         run: python scripts/audit_eyewear.py --output build/research/eyewear_audit.json
+      - name: Validate second product evidence and frontend
+        run: |
+          python scripts/validate_intelligence.py data/products/henkel-adhesives/graph.json
+          node --check web/assets/node_panel.js
+          node --check web/assets/app.js
       - name: Build static site and SQLite database
         run: python scripts/research_cli.py validate-skills && python -m unittest discover -s tests -v && python scripts/build_site.py
       - uses: actions/configure-pages@v5
