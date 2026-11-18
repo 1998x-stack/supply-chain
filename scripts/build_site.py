@@ -71,6 +71,38 @@ def add_sqlite(x,out):
         eid='COMP:'+c['company_id']
         db.execute('INSERT INTO entity(entity_id,entity_type,name_zh,name_en) VALUES (?,?,?,?)',(eid,'company',c['name_zh'] or c['name_en'],c['name_en']))
         db.execute('INSERT INTO company(company_id,website,headquarters_country) VALUES (?,?,?)',(eid,c['official_website'],c['geo']))
+    for row in x['company_material']:
+        role=row['role']
+        edge_type='manufactures' if role in ('manufacturer','lens_maker','optic_grade_product_family') else 'associated_with'
+        eid='CM:'+row['company_id']+':'+row['material_id']
+        db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,notes) VALUES (?,?,?,?,?,?)',
+                   (eid,'COMP:'+row['company_id'],'MAT:'+row['material_id'],edge_type,'verified','Related business category: '+role+'; not evidence of procurement by eyewear brand'))
+        if row['source_id'] in source_ids:
+            db.execute('INSERT INTO edge_source(edge_id,source_id,assessment) VALUES (?,?,?)',(eid,row['source_id'],'product or industry relationship, not a customer contract'))
+    relationship_types={'announced_supply':'supplied_to','announced_sourcing':'announced_sourcing',
+        'commercial_collaboration':'commercial_collaboration','joint_development':'joint_development',
+        'confirmed_collection_material':'confirmed_material_adoption','joint_research_production':'joint_research_production'}
+    for row in x['company_relation']:
+        eid='REL:'+str(row['relation_id'])
+        db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,valid_from,notes) VALUES (?,?,?,?,?,?,?)',
+                   (eid,'COMP:'+row['upstream_company_id'],'COMP:'+row['downstream_company_id'],relationship_types[row['relation_type']],
+                    'verified',row['event_date'],row['scope_note']))
+        db.execute('INSERT INTO edge_source(edge_id,source_id,assessment) VALUES (?,?,?)',
+                   (eid,row['source_id'],'historical publicly disclosed event; not proof of present-day purchasing'))
+    for row in x['capacity_observation']:
+        db.execute('INSERT INTO capacity(observation_id,entity_id,company_id,year,value,unit,metric,scope,source_id,notes) VALUES (?,?,?,?,?,?,?,?,?,?)',
+                   ('CAP:'+str(row['capacity_id']),'MAT:'+row['material_id'],
+                    'COMP:'+row['company_id'] if row['company_id'] else None,row['year'],row['value'],row['unit'],
+                    row['measurement'],row['geography'] or 'unknown',row['source_id'],row['note']))
+    for row in x['company_kpi']:
+        db.execute('INSERT INTO company_kpi(observation_id,company_id,year,metric,value,unit,source_id,notes) VALUES (?,?,?,?,?,?,?,?)',
+                   ('KPI:'+str(row['kpi_id']),'COMP:'+row['company_id'],row['year'],row['metric'],row['value'],row['unit'],row['source_id'],row['note']))
+    for row in x['substitution_opportunity']:
+        db.execute('INSERT INTO substitution_candidate(candidate_id,target_entity_id,candidate_company_id,incumbent_company_id,status,validation_gap,source_id) VALUES (?,?,?,?,?,?,?)',
+                   ('SUB:'+str(row['opportunity_id']),'MAT:'+row['material_id'],
+                    'COMP:'+row['china_candidate_company_id'] if row['china_candidate_company_id'] else None,
+                    'COMP:'+row['benchmark_company_id'] if row['benchmark_company_id'] else None,
+                    'idea',row['validation_gap'],row['source_id']))
     for m in x['market']:
         db.execute('INSERT INTO market(market_id,subject_entity_id,name_zh,geography,year,metric,denominator,unit,source_id) VALUES (?,?,?,?,?,?,?,?,?)',
         (m['market_id'],'MAT:'+m['material_id'],m['name'],m['geography'],m['year'],m['metric'],m['denominator_scope'],m['unit'],m['source_id']))
@@ -94,6 +126,7 @@ def main():
     (d/'eyewear.json.gz').write_bytes(gzip.compress(json.dumps(compact(x),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
     catalog={'version':1,'stats':{'nodes':stats['nodes'],'companies':stats['companies'],'sources':stats['sources']},'products':[{'slug':'eyewear','title':'眼镜','category':'光学与消费医疗','icon':'👓','description':'镜片、镜架、五金、功能镀膜、制造装备，以及直至石油、天然气和矿产的上游路径。','nodes':stats['nodes']}]}
     (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
+    (d/'reverse_index.json').write_text(json.dumps({'version':1,'material_to_products':{v['material_id']:['eyewear'] for v in x['material']},'company_to_materials':{c['company_id']:[v['material_id'] for v in x['company_material'] if v['company_id']==c['company_id']] for c in x['company']}},ensure_ascii=False,indent=2),encoding='utf-8')
     (dist/'.nojekyll').write_text('',encoding='utf-8')
     add_sqlite(x,ROOT/'build'/'supply_chain.sqlite')
     print('BUILD_OK',json.dumps(stats,ensure_ascii=False), 'dist=',dist)

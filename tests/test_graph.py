@@ -19,6 +19,11 @@ class SupplyChainTest(unittest.TestCase):
    self.assertEqual(db.execute('PRAGMA integrity_check').fetchone()[0],'ok')
    self.assertFalse(db.execute('PRAGMA foreign_key_check').fetchall())
    self.assertEqual(db.execute('SELECT count(*) FROM product_view_node').fetchone()[0],382)
+   self.assertEqual(db.execute("SELECT count(*) FROM edge WHERE edge_id LIKE 'REL:%'").fetchone()[0],11)
+   self.assertEqual(db.execute("SELECT count(*) FROM edge WHERE edge_id LIKE 'CM:%'").fetchone()[0],46)
+   self.assertEqual(db.execute('SELECT count(*) FROM market_share').fetchone()[0],52)
+   self.assertEqual(db.execute('SELECT count(*) FROM capacity').fetchone()[0],12)
+   self.assertEqual(db.execute('SELECT count(*) FROM substitution_candidate').fetchone()[0],6)
  def test_market_scoping(self):
   data=build_site.unpack_seed()
   self.assertTrue(all(x['denominator_scope'] for x in data['market']))

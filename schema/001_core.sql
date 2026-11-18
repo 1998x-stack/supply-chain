@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS source (
 CREATE TABLE IF NOT EXISTS edge (
   edge_id TEXT PRIMARY KEY, upstream_id TEXT NOT NULL REFERENCES entity(entity_id),
   downstream_id TEXT NOT NULL REFERENCES entity(entity_id),
-  relation_type TEXT NOT NULL CHECK(relation_type IN ('material_input','component_of','produced_by','processed_into','supplied_to','uses_equipment','located_at','owns','alternative_to','potential_substitute')),
+  relation_type TEXT NOT NULL CHECK(relation_type IN ('material_input','component_of','manufactures','market_participant','associated_with','produced_by','processed_into','supplied_to','announced_sourcing','commercial_collaboration','joint_development','joint_research_production','confirmed_material_adoption','uses_equipment','located_at','owns','alternative_to','potential_substitute')),
   evidence_status TEXT NOT NULL CHECK(evidence_status IN ('verified','technological','hypothesis','disputed','unknown')),
   valid_from TEXT, valid_to TEXT, geography TEXT, context_product_id TEXT REFERENCES product(product_id),
   condition TEXT, notes TEXT, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -96,3 +96,9 @@ CREATE INDEX IF NOT EXISTS idx_market_subject ON market(subject_entity_id,year,m
 CREATE INDEX IF NOT EXISTS idx_alias_text ON entity_alias(alias);
 -- Upstream-to-product trace: only material_input/component_of/processed_into edges here.
 -- Separately query supplied_to with evidence_status=verified for proven commercial relationships.
+
+CREATE TABLE IF NOT EXISTS company_kpi (
+  observation_id TEXT PRIMARY KEY,company_id TEXT NOT NULL REFERENCES company(company_id),
+  year INTEGER NOT NULL,metric TEXT NOT NULL,value REAL NOT NULL,unit TEXT,
+  source_id TEXT NOT NULL REFERENCES source(source_id),notes TEXT
+);
