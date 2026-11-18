@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "slug": "henkel-adhesives",
+  "title": "汉高胶黏剂与密封材料",
+  "category_id": "industrial",
+  "category": "工业装备",
+  "icon": "🧪",
+  "description": "LOCTITE、TECHNOMELT、AQUENCE、TEROSON、BONDERITE：品牌、牌号、化学体系、工业原料、应用及证据图谱。属企业产品组合研究，非单一SKU。",
+  "adapter": "atlas_v1",
+  "source": "graph.json",
+  "published": true
+}
