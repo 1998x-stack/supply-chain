@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "categories": [
+    {"id":"optical","name":"光学与消费医疗","icon":"👓","parent":null},
+    {"id":"electronics","name":"消费电子","icon":"📱","parent":null},
+    {"id":"transportation","name":"汽车与交通","icon":"🚗","parent":null},
+    {"id":"industrial","name":"工业装备","icon":"🏭","parent":null},
+    {"id":"household","name":"家居与日用品","icon":"🏠","parent":null},
+    {"id":"food","name":"食品与农业","icon":"🌾","parent":null},
+    {"id":"fashion","name":"服饰与配件","icon":"👕","parent":null},
+    {"id":"energy","name":"能源与材料","icon":"⚡","parent":null},
+    {"id":"healthcare","name":"医疗器械","icon":"🩺","parent":null},
+    {"id":"other","name":"其他","icon":"🧩","parent":null}
+  ]
+}

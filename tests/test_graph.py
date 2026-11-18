@@ -29,3 +29,34 @@ class SupplyChainTest(unittest.TestCase):
   self.assertTrue(all(x['denominator_scope'] for x in data['market']))
   self.assertTrue(all(x['source_id'] for x in data['market_share']))
 if __name__=='__main__':unittest.main()
+
+class ProductExtensionTest(unittest.TestCase):
+ def test_generic_product_import_and_global_reverse_path(self):
+  import json,tempfile
+  p=ROOT/'examples'/'new-product'
+  meta=json.loads((p/'product.json').read_text());meta['published']=True
+  graph=json.loads((p/'graph.json').read_text())
+  normalized=build_site.convert_atlas_v1(graph)
+  build_site.check_seed(normalized)
+  base=build_site.unpack_seed()
+  rev=build_site.reverse_catalog([({'slug':'eyewear'},base),(meta,normalized)])
+  self.assertIn('example-product',rev['material_to_products']['EXAMPLE_MATERIAL'])
+  with tempfile.TemporaryDirectory() as d:
+   target=Path(d)/'graph.sqlite'
+   build_site.add_sqlite(base,target)
+   build_site.add_additional_products([(meta,normalized)],target)
+   db=sqlite3.connect(target)
+   self.assertEqual(db.execute('SELECT count(*) FROM product').fetchone()[0],2)
+   self.assertFalse(db.execute('PRAGMA foreign_key_check').fetchall())
+   trace=db.execute('''WITH RECURSIVE path(node,depth) AS (
+     SELECT 'MAT:EXAMPLE_MATERIAL',0 UNION ALL
+     SELECT edge.downstream_id,path.depth+1 FROM edge JOIN path ON edge.upstream_id=path.node
+     WHERE edge.relation_type IN ('material_input','component_of','processed_into') AND path.depth<12)
+     SELECT COUNT(*) FROM path WHERE node='PRODUCT:EXAMPLE_PRODUCT' ''').fetchone()[0]
+   self.assertGreaterEqual(trace,1)
+
+class TaxonomyTest(unittest.TestCase):
+ def test_product_catalog_has_valid_categories(self):
+  reg=build_site.discover_products()
+  self.assertEqual([meta['slug'] for meta,_ in reg],['eyewear'])
+  self.assertEqual(len(build_site.reverse_catalog(reg)['material_to_products']),29)

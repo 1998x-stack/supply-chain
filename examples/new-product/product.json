@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "slug": "example-product",
+  "title": "演示产品（不会发布）",
+  "category_id": "other",
+  "category": "其他",
+  "icon": "🧩",
+  "description": "说明新的产品需要哪些字段；请替换为有来源的实际研究内容。",
+  "adapter": "atlas_v1",
+  "source": "graph.json",
+  "published": false
+}

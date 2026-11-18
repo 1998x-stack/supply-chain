@@ -1,35 +1,62 @@
-# 增加一个新产品
+# 新增一个产品：不用修改前端或专门适配脚本
 
-最小流程：注册分类 → 产出独立研究包 → 规范化材料/企业ID → 完成证据审查 → 构建快照 → PR发布。
+## 1. 生成产品目录
 
-## 建议的产品文件目录
-
-~~~text
-data/products/{slug}/
-  product.json        # id/slug/title/category/icon/status/versions
-  components.csv      # 部件、工艺、物料，优先引用已有entity_id
-  view_nodes.csv      # 可折叠产品树专属布局；可多次引用一个实体
-  links.csv           # upstream_id,downstream_id,relation_type,confidence,source_id
-  market_share.csv    # market_id,company_id,share,rank,year,denominator
-  company.csv         # 新公司属性，仅新增，已有公司ID必须复用
-  evidence.csv        # 披露原文、日期、URL、位置、可信度
-  images/             # 产品照片和节点示意图（保留版权/来源）
+~~~bash
+python3 scripts/new_product.py smartphone --title 智能手机 --category electronics --icon 📱
 ~~~
 
-## 质量检查门槛
+该命令创建 data/products/smartphone/product.json 与 graph.json，且默认 published=false；**不会生成任何未经核实的供应链事实**。
 
-1. slug全站唯一，分类从taxonomy读取，产品封面/图标拥有许可。
-2. 每个新实体赋予持久ID；已存在的PC、苯酚或三井化学应复用全站entity_id。
-3. 依赖图不得发生无解释的环路；工艺的替代路线不可误画成全需材料。
-4. 任何TOP3都需明确年份、地理范围、出货量/金额/产能、分母、来源；缺第三名时不可标CR3。
-5. 实际采购关系要求公开公告/合同/年报佐证；行业原理只能作为技术关系。
-6. 自动构建审查通过并有预览截图后再合并PR。
+## 2. product.json
 
-## 后续功能
+~~~json
+{"schema_version":1,"slug":"smartphone","title":"智能手机","category_id":"electronics","category":"消费电子","icon":"📱","description":"研究范围简介","adapter":"atlas_v1","source":"graph.json","published":false}
+~~~
 
-原料节点「查看下游产品」必须对整个数据库递归查询，而不是简单关键词搜索。
-企业节点「关联产品」要区分：明确商业供货（有来源）、技术上可能相关（未证实采购）、品牌直接销售。
+category_id 必须在 data/taxonomy/categories.json 中存在，且分类名称必须匹配。发布前将 published 改为 true。
 
-## 当前版本限制
+## 3. graph.json 结构
 
-首发UI从压缩的眼镜研究快照构建；通用 schema 已就绪。新增产品的生成器将逐步替换眼镜专用 build_site.py，不应复制眼镜的数据表与前端代码。
+~~~json
+{
+  "nodes":[
+    {"id":"root","name":"智能手机","parent":null,"kind":"产品","branch":"根节点","description":""},
+    {"id":"screen","name":"显示模组","parent":"root","kind":"部件","branch":"显示系统","description":""},
+    {"id":"glass","name":"盖板玻璃","parent":"screen","kind":"材料","branch":"显示系统","description":""}
+  ],
+  "materials":[{"id":"COVER_GLASS","name":"盖板玻璃","node":"glass"}],
+  "companies":[],
+  "company_material":[],
+  "company_relations":[],
+  "markets":[],"shares":[],"sources":[],"opportunities":[],"capacity":[],"procurement":[]
+}
+~~~
+
+- nodes 是该产品专属的树状视图，必须唯一根节点、父节点存在、不得出现环。
+- materials 的 id 是全站标准材料标识。**与已有材料相同则使用已有ID和精确相同名称**；名称相似但规格不同不可自动合并。
+- companies 的 id 是全站企业ID，中文/英文名必须一致；相同公司多产品引用相同ID。
+- company_material 用 {company,material,role,source}；只证明公司从事材料相关业务，不代表公司向具体品牌供货。
+- company_relations 必须含 {id,upstream,downstream,material,type,source,scope,date}；历史关系不能自动标为持续供货。
+- markets 必须含 {id,name,geo,year,metric,denominator,material,source}；shares 含 {market,company,label,pct,rank,source}。
+- sources 含 {id,title,url,type,checked_on}；未知数据缺失，不要填造0。
+
+## 4. 上线流程
+
+~~~bash
+# 编辑并审核数据，把 product.json 的 published 改为 true 后：
+python3 -m unittest discover -s tests -v
+python3 scripts/build_site.py
+python3 -m http.server 8000 --directory dist
+~~~
+
+Pages 读取由构建器生成的 data/catalog.json、各产品 .json.gz 与 data/reverse_index.json。
+新产品上线后，主页分类卡片会自动出现；已有材料ID会自动被反向索引映射到所有使用它的产品。
+
+## 5. 证据与质量规则
+
+- 任何TOP3都需年份、地理范围、出货量/金额/产能、分母、来源；缺第三名时不可标CR3。
+- 技术路径不等于实际企业供货；所有历史合作需要带生效/公告日期和说明。
+- 产能足够不等于具有镜片级、医疗级等特殊牌号认证。
+- 为每条重要观察记录权威公开来源与查阅日期。不能把国家产量和公司市场份额混算。
+- 所有新增产品采用PR审核，不在网页端直接编辑数据库。
