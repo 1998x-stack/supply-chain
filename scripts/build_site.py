@@ -27,9 +27,10 @@ def check_seed(x):
         if not r['supplier_identity_disclosed']:assert r['supplier_public_name']=='未披露名称'
     return {'nodes':len(nodes),'companies':len(company),'materials':len(materials),'sources':len(x['source'])}
 
-def compact(x):
+def compact(x,research=None):
     # Array encoding reduces Pages payload size; unpacked using a versioned field dictionary in frontend.
     return {
+     'research':research or [],
      'n':[[t['node_id'],t['name'],t['parent_id'],t['kind'],t['branch'],t['description'] or ''] for t in x['tree_node']],
      'm':[[v['material_id'],v['name'],v['representative_node_id']] for v in x['material']],
      'c':[[v['company_id'],v['name_zh'],v['name_en'],v['official_website']] for v in x['company']],
@@ -41,6 +42,43 @@ def compact(x):
      'src':[[v['source_id'],v['title'],v['url']] for v in x['source']],
      'pc':[[v['buyer_company_id'],v['supplier_rank'],v['share_of_buyer_procurement_pct'],v['supplier_identity_disclosed']] for v in x['procurement_concentration']]
     }
+
+def read_public_research(slug, node_ids):
+    """Public curated research summary. Source full text stays in research ledger."""
+    root=ROOT/'research'
+    ledgers={}
+    for path in sorted((root/'ledgers'/slug).glob('*.json')):
+        data=json.loads(path.read_text(encoding='utf-8'))
+        if data['node_id'] in ledgers:raise ValueError('Duplicate node research ledger')
+        ledgers[data['node_id']]=data
+    out=[]
+    for path in sorted((root/'dossiers'/slug).glob('*.json')):
+        doc=json.loads(path.read_text(encoding='utf-8'))
+        node=doc['node_id']
+        if node not in node_ids:raise ValueError('Dossier node not in product: '+node)
+        ledger=ledgers.get(node)
+        if ledger is None:raise ValueError('Missing node evidence ledger: '+node)
+        review=doc.get('semantic_review') or {}
+        if doc.get('review_state')=='publishable' and not (
+            review.get('status')=='approved' and review.get('reviewer') and review.get('reviewed_at')):
+            raise ValueError('Unapproved publishable dossier: '+node)
+        by_claim={c['id']:c for c in ledger['claims']}
+        ids=doc.get('claim_ids',[])
+        if not all(i in by_claim for i in ids):raise ValueError('Unmatched claim id: '+node)
+        src_ids={e['source_id'] for cid in ids for e in by_claim[cid].get('evidence',[])}
+        sources=[{k:s.get(k) for k in ('id','title','url','published_at')}
+                 for s in ledger['sources'] if s['id'] in src_ids]
+        if len(sources)!=len(src_ids):raise ValueError('Missing claim source: '+node)
+        sections=doc.get('sections',{})
+        out.append({'node_id':node,'name':doc['name'],'as_of':doc['as_of'],
+          'review_state':doc.get('review_state','draft'),'semantic_review_status':review.get('status','pending'),
+          'sections':{k:sections.get(k) for k in ('identity','technical','upstream','downstream','companies','market','risk','open_questions')},
+          'claims':[{'id':cid,'text':by_claim[cid]['text'],'status':by_claim[cid]['status'],
+                     'analysis':by_claim[cid].get('analysis',''),
+                     'source_ids':list(dict.fromkeys(e['source_id'] for e in by_claim[cid].get('evidence',[])))}
+                    for cid in ids],
+          'sources':sources})
+    return out
 
 def discover_products(root=ROOT):
     categories=json.loads((root/'data'/'taxonomy'/'categories.json').read_text(encoding='utf-8'))['categories']
@@ -273,7 +311,7 @@ def main():
     catalog={'version':1,'stats':{'nodes':sum(len(x['tree_node']) for _,x in products),'companies':len({c['company_id'] for _,x in products for c in x['company']}),'sources':sum(len(x['source']) for _,x in products)},'products':[]}
     for meta,x in products:
         slug=meta['slug']
-        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
+        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,read_public_research(slug,{n['node_id'] for n in x['tree_node']})),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
         catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node'])})
     (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
     (d/'reverse_index.json').write_text(json.dumps(reverse,ensure_ascii=False,indent=2),encoding='utf-8')
