@@ -49,7 +49,7 @@ class HenkelPortfolioTests(unittest.TestCase):
   g=self.load()
   self.assertEqual(g["company_relations"],[])
   self.assertTrue(all(x["role"].startswith("product_") for x in g["company_material"]))
-  def test_henkel_evidence_dossiers_in_shared_sqlite(self):
+ def test_henkel_evidence_dossiers_in_shared_sqlite(self):
   registry=build_site.discover_products()
   with tempfile.TemporaryDirectory() as td:
    path=Path(td)/"all.sqlite"
