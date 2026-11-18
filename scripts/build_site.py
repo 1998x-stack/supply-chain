@@ -386,7 +386,8 @@ def main():
         persist_eyewear(ROOT/'build'/'supply_chain.sqlite',identity)
         add_additional_products(products,ROOT/'build'/'supply_chain.sqlite')
         from ingest_research import ingest
-        ingest(ROOT/'build'/'supply_chain.sqlite')
+        for meta,_ in products:
+            ingest(ROOT/'build'/'supply_chain.sqlite',slug=meta['slug'])
     else:
         raise ValueError('First-version database importer currently requires the eyewear seed')
     print('BUILD_OK',json.dumps(catalog['stats'],ensure_ascii=False),'products=',len(products),'dist=',dist)

@@ -49,4 +49,20 @@ class HenkelPortfolioTests(unittest.TestCase):
   g=self.load()
   self.assertEqual(g["company_relations"],[])
   self.assertTrue(all(x["role"].startswith("product_") for x in g["company_material"]))
- if __name__=="__main__":unittest.main()
+  def test_henkel_evidence_dossiers_in_shared_sqlite(self):
+  registry=build_site.discover_products()
+  with tempfile.TemporaryDirectory() as td:
+   path=Path(td)/"all.sqlite"
+   build_site.add_sqlite(build_site.unpack_seed(),path)
+   build_site.add_additional_products(registry,path)
+   from ingest_research import ingest
+   stats=ingest(path,"henkel-adhesives")
+   self.assertEqual(stats["dossiers"],6)
+   self.assertEqual(stats["claims"],11)
+   with sqlite3.connect(path) as db:
+    self.assertEqual(db.execute("SELECT COUNT(*) FROM node_dossier WHERE product_id='PRODUCT:HENKEL_ADHESIVES'").fetchone()[0],6)
+    self.assertEqual(db.execute("SELECT COUNT(*) FROM research_claim WHERE entity_id LIKE 'NODE:henkel-adhesives:%'").fetchone()[0],11)
+    self.assertEqual(db.execute("SELECT COUNT(*) FROM research_claim WHERE semantic_review_status='approved' AND entity_id LIKE 'NODE:henkel-adhesives:%'").fetchone()[0],0)
+    self.assertFalse(db.execute("PRAGMA foreign_key_check").fetchall())
+
+if __name__=="__main__":unittest.main()
