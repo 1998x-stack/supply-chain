@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0074",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "PPG optical monomers and coatings",
+      "url": "https://www.ppg.com/en-US/optical/about-us",
+      "publisher": "PPG",
+      "origin_group": "ppg",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "PPG HI-GARD® lens coating solution",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "Satisloh hard coating equipment",
+      "url": "https://www.satisloh.com/ophthalmic/products/hard-coating",
+      "publisher": "Satisloh",
+      "origin_group": "satisloh",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "dip- or spin-coating",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "PPG销售Hi-Gard镜片加硬涂层解决方案。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "PPG HI-GARD® lens coating solution",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "Satisloh提供浸涂与旋涂工艺选项。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "dip- or spin-coating",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}

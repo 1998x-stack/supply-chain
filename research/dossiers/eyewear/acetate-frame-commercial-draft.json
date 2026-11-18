@@ -1,0 +1,86 @@
+{
+  "node_id": "N0162",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "醋酸纤维素板材镜架",
+  "node_type": "finished_component",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Cellulose acetate frame manufacturing",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "眼镜框体/镜腿经板材切削、装配、抛光等工序制成",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "醋酸纤维素板材",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "切削/热塑成形/精密五金",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "光学眼镜",
+        "relation": "technological"
+      },
+      {
+        "product": "eyewear",
+        "component": "太阳镜",
+        "relation": "technological"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Eastman",
+        "relationship": "acetate_material_company",
+        "confirmed_specific_customer": false
+      },
+      {
+        "name": "Marchon",
+        "relationship": "eyewear_manufacturer_historical_partner",
+        "confirmed_specific_customer": false
+      },
+      {
+        "name": "MYKITA",
+        "relationship": "eyewear_manufacturer_historical_partner",
+        "confirmed_specific_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "2020/2022公告为历史合作，不能当2026采购规模；回收含量是质量平衡制式认证"
+      }
+    ],
+    "open_questions": [
+      "Eastman-Marchon与Eastman-MYKITA各自2026实际用量/合同有效期？",
+      "Acetate Renew经过ISCC认证的特定产品质量平衡如何核对？",
+      "标准CA板材与Acetate Renew具体牌号的价格/供给差异？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}

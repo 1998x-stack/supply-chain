@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0316",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Satisloh AR coating equipment",
+      "url": "https://www.satisloh.com/ophthalmic/products/ar-coating",
+      "publisher": "Satisloh",
+      "origin_group": "satisloh",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "900-TLX Mid-volume vacuum box coating machine",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "Satisloh multilayer stacks",
+      "url": "https://www.satisloh.com/ophthalmic/products/ar-coating/sl-multi-layer-coating-stacks",
+      "publisher": "Satisloh",
+      "origin_group": "satisloh",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Cutting-edge vacuum coating processes",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Satisloh销售900-TLX中等产量真空箱式镀膜设备。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "900-TLX Mid-volume vacuum box coating machine",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "Satisloh公开多层膜真空工艺产品。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "Cutting-edge vacuum coating processes",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}

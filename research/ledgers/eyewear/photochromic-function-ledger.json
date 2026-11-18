@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0124",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Mitsui SunSensors™ in-mass materials",
+      "url": "https://us.mitsuichemicals.com/service/product/sunsensors/index.htm",
+      "publisher": "Mitsui Chemicals",
+      "origin_group": "mitsui",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "photochromic pigments blended into the lens material itself",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "Transitions GEN S technology",
+      "url": "https://trade.transitions.com/GenS",
+      "publisher": "Transitions",
+      "origin_group": "transitions",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "dyes and matrix are specifically designed to seamlessly interact together",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "三井化学SunSensors介绍体内混合式光致变色技术。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "photochromic pigments blended into the lens material itself",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "Transitions GEN S采用染料与基体协同设计的技术描述。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "dyes and matrix are specifically designed to seamlessly interact together",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}

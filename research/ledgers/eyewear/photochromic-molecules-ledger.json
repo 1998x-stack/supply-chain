@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0125",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Transitions GEN S professional technology",
+      "url": "https://trade.transitions.com/GenS",
+      "publisher": "Transitions",
+      "origin_group": "transitions",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "1,500 new photochromic dyes created",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "Mitsui SunSensors in-mass products",
+      "url": "https://us.mitsuichemicals.com/service/product/sunsensors/index.htm",
+      "publisher": "Mitsui Chemicals",
+      "origin_group": "mitsui",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "in-mass photochromic technology",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Transitions公开其GEN S研发中涉及1500种新光致变色染料。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "1,500 new photochromic dyes created",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "三井公开SunSensors为体内式光致变色技术。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "in-mass photochromic technology",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}

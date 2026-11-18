@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0222",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "canonical_entity_id": null,
+  "sources": [
+    {
+      "id": "S001",
+      "title": "USGS China minerals 2024",
+      "url": "https://www.usgs.gov/centers/national-minerals-information-center/china",
+      "publisher": "USGS",
+      "origin_group": "usgs",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "estimated 172,000 t",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    },
+    {
+      "id": "S002",
+      "title": "USGS Mineral Commodity Summaries 2026",
+      "url": "https://www.usgs.gov/publications/mineral-commodity-summaries-2026",
+      "publisher": "USGS",
+      "origin_group": "usgs",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "world production, reserves, and resources",
+      "notes": "Short exact excerpt; full document must be checked before semantic approval."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "USGS估计中国2024年钛加工材产量约17.2万吨，非眼镜专用吨数。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "estimated 172,000 t",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "USGS年度矿产摘要包含全球生产与储量资料。",
+      "status": "supported",
+      "analysis": "Original corporate or official record supports this scoped claim; independent semantic adjudication and historical/current separation pending.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "world production, reserves, and resources",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original excerpts only; all factual claims pending human page-level semantic review.",
+    "Business announcements establish historical collaboration only, not present contract or volume.",
+    "No lens-grade raw material TOP3 can be inferred from general materials producer data."
+  ]
+}

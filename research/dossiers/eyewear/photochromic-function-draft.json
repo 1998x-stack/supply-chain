@@ -1,0 +1,76 @@
+{
+  "node_id": "N0124",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "光致变色功能",
+  "node_type": "functional_layer",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Photochromic optical lens function",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "光照与紫外环境变化时的镜片透过率响应；可采用体内混合或其它专有工艺",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "有机光致变色染料/分子",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "树脂基体与光稳定体系",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "眼镜变色镜片",
+        "relation": "technological"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Mitsui Chemicals",
+        "relationship": "in_mass_material_brand",
+        "confirmed_specific_customer": false
+      },
+      {
+        "name": "Transitions Optical",
+        "relationship": "photochromic_lens_technology_brand",
+        "confirmed_specific_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "不同基材、颜色、温度与工艺性能不同；不能以广告指标替代相同条件试验"
+      }
+    ],
+    "open_questions": [
+      "体内变色与表面变色相关染料类型、树脂与制造商怎样区分？",
+      "变色专用分子全球TOP3按哪种分母统计？",
+      "实际客户采购与某一专利配方是否有公开证据？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}

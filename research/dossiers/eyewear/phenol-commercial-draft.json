@@ -1,0 +1,81 @@
+{
+  "node_id": "N0034",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "苯酚",
+  "node_type": "chemical_intermediate",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Phenol petrochemical intermediate",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "通过BPA等中间环节进入PC产业链，不能把通用苯酚用途全部计为眼镜产业需求",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "异丙苯",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "苯、丙烯",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "双酚A",
+        "relation": "technological"
+      },
+      {
+        "product": "eyewear",
+        "component": "聚碳酸酯镜片材料",
+        "relation": "technological"
+      }
+    ],
+    "companies": [
+      {
+        "name": "INEOS",
+        "relationship": "phenol_supplier_2022",
+        "confirmed_specific_customer": false
+      },
+      {
+        "name": "Covestro",
+        "relationship": "phenol_buyer_2022",
+        "confirmed_specific_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "2022已公告供货不代表2026仍在供货；材料用于PC并不等于用于指定眼镜品牌"
+      }
+    ],
+    "open_questions": [
+      "INEOS/Covestro业务2026有无延续公开公告？",
+      "PC装置BPA/苯酚平衡吨数与光学级PC产量如何隔离？",
+      "苯酚市场供应商TOP3与市场份额以全球/中国何种口径统计？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}

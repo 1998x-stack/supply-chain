@@ -1,0 +1,77 @@
+{
+  "node_id": "N0222",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "钛丝/钛板/钛棒",
+  "node_type": "wrought_metal",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Titanium wire sheet and bar for eyewear",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "钛镜架的金属成形原料，来自海绵钛冶炼、熔锭和材料加工，也可使用合规再生料",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "钛锭、海绵钛",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "合金配料与熔炼加工",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "纯钛/钛合金镜框和镜腿",
+        "relation": "technological"
+      }
+    ],
+    "companies": [],
+    "market": [
+      {
+        "name": "China titanium processed materials",
+        "geography": "China",
+        "year": 2024,
+        "metric": "national_production",
+        "denominator": "All titanium processed materials in China; not eyewear-grade",
+        "unit": "metric_tonnes",
+        "value": 172000,
+        "share": null,
+        "source_id": "S001"
+      }
+    ],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "中国金属钛材总产量不等于用于眼镜镜架的钛丝/板材量"
+      }
+    ],
+    "open_questions": [
+      "眼镜级钛丝主要供应商名单和产能如何核验？",
+      "2024中国172000吨钛加工材料如何区别镜架用途？",
+      "不同钛牌号和应用标准的客户认证如何获取？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}

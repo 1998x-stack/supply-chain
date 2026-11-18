@@ -1,0 +1,76 @@
+{
+  "node_id": "N0125",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "有机光致变色分子（如萘并吡喃）",
+  "node_type": "specialty_chemical",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Organic photochromic molecules",
+      "scope": "Specific node-level technical meaning; not a fully qualified customer BOM."
+    },
+    "technical": {
+      "purpose": "在镜片基体或涂层中实现可逆光响应，必须区分具体化学体系与终端品牌",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "芳香族及杂环化学中间体",
+        "relation": "technological_input_not_confirmed_contract"
+      },
+      {
+        "name": "染料稳定剂/高分子基体",
+        "relation": "technological_input_not_confirmed_contract"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "光致变色功能层",
+        "relation": "technological"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Transitions Optical",
+        "relationship": "technology_developer",
+        "confirmed_specific_customer": false
+      },
+      {
+        "name": "Mitsui Chemicals",
+        "relationship": "in_mass_technology_developer",
+        "confirmed_specific_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_or_supply",
+        "state": "review_required",
+        "reason": "专有分子结构通常未完全公开；不得由商品名推断CAS与原料供货商"
+      }
+    ],
+    "open_questions": [
+      "哪些公开专利可定位具体萘并吡喃族化学结构与权利状态？",
+      "光变色分子的公开生产商、工厂与市场份额有哪些？",
+      "哪些产品使用体内配混而非表面膜？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence and exact pages need independent adversarial review."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Draft evidence-first research; company announcements are historically scoped."
+}
