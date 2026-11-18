@@ -1476,6 +1476,15 @@
       "branch": "市场与循环",
       "description": "含电子元器件、塑料、金属和可充电电池分类处理",
       "relation_type": "associated_with"
+    },
+    {
+      "id": "cherry_mx_blue",
+      "name": "CHERRY MX2A BLUE 代表性SKU",
+      "parent": "mx_system",
+      "kind": "sku",
+      "branch": "键轴与触发",
+      "description": "CHERRY点击机械轴，结构具有附加点击件；与MX2A红轴不能混用触发力/行程。",
+      "relation_type": "associated_with"
     }
   ],
   "materials": [
@@ -2330,6 +2339,22 @@
         "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
         "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
       ]
+    },
+    {
+      "node_id": "cherry_mx_blue",
+      "description": "CHERRY点击机械轴，结构具有附加点击件；与MX2A红轴不能混用触发力/行程。",
+      "kind": "sku",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "source_ids": [
+        "S14"
+      ],
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "某整机实际采用CHERRY青轴证据待核实"
+      ],
+      "updated_at": "2026-11-18"
     }
   ],
   "cross_links": [

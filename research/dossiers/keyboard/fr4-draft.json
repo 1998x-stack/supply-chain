@@ -1,0 +1,85 @@
+{
+  "node_id": "fr4",
+  "product_slug": "keyboard",
+  "configuration_id": "multi_configuration_keyboard",
+  "name": "FR-4玻纤环氧层压板",
+  "node_type": "material",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name": "FR-4玻纤环氧层压板",
+      "scope": "material",
+      "product_configuration": "specific SKU if named, otherwise technology family",
+      "source_as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "玻纤织物与热固性树脂形成常用PCB基材，不指明Isola为键盘供应商",
+      "properties": [
+        {
+          "label": "玻璃化转变温度 Tg",
+          "value": 190,
+          "unit": "°C",
+          "condition": "仅Isola FR408HR型号，DSC测试；并非所有FR4或键盘PCB",
+          "source_id": "S08"
+        }
+      ]
+    },
+    "upstream": [
+      {
+        "name": "玻璃纤维织物",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      },
+      {
+        "name": "环氧树脂",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      },
+      {
+        "name": "铜箔层压",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "computer_keyboard",
+        "component": "键盘PCB候选覆铜板",
+        "relationship": "technology_classification_not_buyer_contract"
+      }
+    ],
+    "companies": [
+      {
+        "relationship": "primary_product_technology_or_standard_source",
+        "confirmed_keyboard_oem_procurement": false,
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_and_procurement",
+        "state": "unverified",
+        "reason": "FR408HR是一种特定等级，不代表所有FR-4，也不能证明键盘板厂采购Isola。"
+      }
+    ],
+    "open_questions": [
+      "FR408HR是一种特定等级，不代表所有FR-4，也不能证明键盘板厂采购Isola。",
+      "补充至少1个不同来源机构的反证/独立核查并记录发布日期",
+      "查明特定年份/地区/量化分母后才能研究市场TOP3"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence is primary-source only, no independent adversarial semantic review"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "研究草稿，厂商资料不等于企业供应链合同。"
+}

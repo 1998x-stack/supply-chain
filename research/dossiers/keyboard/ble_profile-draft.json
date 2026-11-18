@@ -1,0 +1,73 @@
+{
+  "node_id": "ble_profile",
+  "product_slug": "keyboard",
+  "configuration_id": "multi_configuration_keyboard",
+  "name": "Bluetooth HOGP协议栈",
+  "node_type": "standard",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name": "Bluetooth HOGP协议栈",
+      "scope": "standard",
+      "product_configuration": "specific SKU if named, otherwise technology family",
+      "source_as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "HID over GATT profile，使用BLE承载键盘HID报告",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "BLE协议栈",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      },
+      {
+        "name": "无线SoC",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "computer_keyboard",
+        "component": "蓝牙键盘通信",
+        "relationship": "technology_classification_not_buyer_contract"
+      }
+    ],
+    "companies": [
+      {
+        "relationship": "primary_product_technology_or_standard_source",
+        "confirmed_keyboard_oem_procurement": false,
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_and_procurement",
+        "state": "unverified",
+        "reason": "HOGP使用不意味着某具体芯片品牌或OEM合同。"
+      }
+    ],
+    "open_questions": [
+      "HOGP使用不意味着某具体芯片品牌或OEM合同。",
+      "补充至少1个不同来源机构的反证/独立核查并记录发布日期",
+      "查明特定年份/地区/量化分母后才能研究市场TOP3"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence is primary-source only, no independent adversarial semantic review"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "研究草稿，厂商资料不等于企业供应链合同。"
+}

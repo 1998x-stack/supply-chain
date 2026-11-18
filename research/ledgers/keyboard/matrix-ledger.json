@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "node_id": "matrix",
+  "product_slug": "keyboard",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "QMK How a Keyboard Matrix Works",
+      "url": "https://docs.qmk.fm/how_a_matrix_works",
+      "publisher": "QMK",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Keyboard switch matrices are arranged in rows and columns",
+      "notes": "仅人工摘录的短句，不代表独立全文分析；实际网页支持关系与版本需要复核。"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "QMK文档解释了键盘行列矩阵扫描的基本工作方式。",
+      "status": "supported",
+      "analysis": "当前是来源原句与简短释义的初步匹配；已知厂商/标准来源，不代表采购合同或独立市场份额调查完成。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "Keyboard switch matrices are arranged in rows and columns",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "单一来源簇且短引文，原文语义与型号范围仍待人工二次验证。",
+    "制造商功能证明 ≠ 某品牌或具体ODM采购合同。"
+  ]
+}
