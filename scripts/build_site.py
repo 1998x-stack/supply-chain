@@ -333,6 +333,12 @@ def main():
         catalog['stats']['curated_eyewear_identities']=identity['summary']['curated_exact_links']
         catalog['stats']['unresolved_eyewear_nodes']=identity['summary']['provisional_nodes']
         (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
+    if eyewear_seed is not None:
+        from build_priority import prioritize, load_dossiers
+        priority=prioritize(eyewear_seed,load_dossiers())
+        (d/'eyewear_priority.json').write_text(json.dumps(priority,ensure_ascii=False,indent=2),encoding='utf-8')
+        catalog['stats']['eyewear_dossiers']=priority['nodes_with_dossiers']
+        (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
     (dist/'.nojekyll').write_text('',encoding='utf-8')
     eyewear=next((x for m,x in products if m['slug']=='eyewear'),None)
     if eyewear is not None:

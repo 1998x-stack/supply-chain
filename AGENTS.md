@@ -32,3 +32,10 @@
 
 ## 外部Deep Search
 可选仓库 https://github.com/1998x-stack/deep-search。用其计划、证据记录和对抗核验方法；本项目本地CLI只生成计划并做静态校验，不会自动联网或调用LLM。
+
+## 眼镜全量实体解析与研究优先级（2026-11-18）
+- 使用 `scripts/normalize_eyewear.py` 审计382个视图节点；`curated_exact` 为少量明确材料身份，其他节点仅暂定独立，不得按相同标签自动合并。
+- 老的 `representative_node_id` 不是严格材料同一性证明。`edge.associated_with` 只表示上下文关联，不用于推断真实加工路径或购销合同。
+- 使用 `scripts/build_priority.py` 输出P0/P1/P2研究队列，产品里所有未知的市场排名、厂家产能、客户认证必须标记待核实。
+- 研究批次新增档案需通过 `scripts/audit_eyewear.py`，并将结构化数据入库；机器只能验证引用结构，不能宣称语义审阅完成。
+- 本规则可被所有host端（Codex、Pi、Claude）加载，优先遵循规范源 `.agents/skills/`。
