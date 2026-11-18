@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "node_id": "MAT:PC_OPT",
+  "node_id": "N0032",
   "product_slug": "eyewear",
   "as_of": "2026-11-18",
   "sources": [
@@ -108,5 +108,6 @@
     "PDF page screenshot failed (403); verify source before promoting capacity share to approved.",
     "No actual buyer-supplier transaction has been established.",
     "S003 and S004 draw from the same upstream S&P source family, not independent confirmations."
-  ]
+  ],
+  "canonical_entity_id": "MAT:PC_OPT"
 }
