@@ -60,5 +60,5 @@ class ProductExtensionTest(unittest.TestCase):
 class TaxonomyTest(unittest.TestCase):
  def test_product_catalog_has_valid_categories(self):
   reg=build_site.discover_products()
-  self.assertEqual([meta['slug'] for meta,_ in reg],['eyewear','henkel-adhesives'])
-  self.assertEqual(len(build_site.reverse_catalog(reg)['material_to_products']),42)
+  self.assertEqual([meta['slug'] for meta,_ in reg],['eyewear','henkel-adhesives','keyboard'])
+  self.assertEqual(len(build_site.reverse_catalog(reg)['material_to_products']),55)

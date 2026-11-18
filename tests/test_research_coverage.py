@@ -10,7 +10,7 @@ class CoverageTests(unittest.TestCase):
   cls.products={m["slug"]:x for m,x in build_site.discover_products()}
  def test_coverage_for_both_products_preserves_truthful_dossier_counts(self):
   all=[]
-  for slug,count,dossiers in (("eyewear",382,16),("henkel-adhesives",73,6)):
+  for slug,count,dossiers in (("eyewear",382,16),("henkel-adhesives",73,6),("keyboard",165,12)):
    seed=self.products[slug]
    doc=build_site.read_public_research(slug,{n["node_id"] for n in seed["tree_node"]})
    result=research_coverage.build_coverage(slug,seed,doc)
@@ -23,8 +23,8 @@ class CoverageTests(unittest.TestCase):
    self.assertEqual(sum(m["by_priority"].values()),count)
    self.assertEqual(len({n["node_id"] for n in result["nodes"]}),count)
    all.append(result)
-  self.assertEqual(sum(x["metrics"]["nodes"] for x in all),455)
-  self.assertEqual(sum(x["metrics"]["dossiers"] for x in all),22)
+  self.assertEqual(sum(x["metrics"]["nodes"] for x in all),620)
+  self.assertEqual(sum(x["metrics"]["dossiers"] for x in all),34)
  def test_navigation_is_not_blocking_research_denominator(self):
   s=self.products["henkel-adhesives"]
   x=research_coverage.build_coverage("henkel-adhesives",s,[])

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "node_id": "gateron_ks20",
+  "product_slug": "keyboard",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Gateron KS-20 Magnetic White Hall Sensor Switch",
+      "url": "https://gateron.com/products/gateron-ks-20-magnetic-white-switch-set",
+      "publisher": "Gateron",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "permanent magnets and Hall sensors work together",
+      "notes": "仅人工摘录的短句，不代表独立全文分析；实际网页支持关系与版本需要复核。"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Gateron公开KS-20磁轴以永磁体和霍尔传感机制检测按键位置。",
+      "status": "supported",
+      "analysis": "当前是来源原句与简短释义的初步匹配；已知厂商/标准来源，不代表采购合同或独立市场份额调查完成。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "permanent magnets and Hall sensors work together",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "单一来源簇且短引文，原文语义与型号范围仍待人工二次验证。",
+    "制造商功能证明 ≠ 某品牌或具体ODM采购合同。"
+  ]
+}

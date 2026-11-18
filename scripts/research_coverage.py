@@ -28,6 +28,13 @@ EYEWEAR_CRITICAL={
 }
 STATE_ORD={"structural_only":0,"annotated":1,"source_note":2,
            "dossier_pending":3,"reviewed":4}
+KEYBOARD_CRITICAL={
+ "mx_system","hall_system","membrane_system","cherry_mx_red","gateron_ks20",
+ "pbt_caps","abs_caps","fr4","pcb_stack","hall_sensor","magnet","matrix",
+ "controller","ble_soc","nrf52840","liion_cell","usb_hid","ble_profile",
+ "mx_gold_contacts","copper_foil","neodymium_magnet","keycap_system",
+ "pbt_resin","abs_resin","doubleshot","rgb_led","smt_line",
+}
 
 def classify(node,has_parent,has_children):
     kind=(node.get("kind") or "").strip().lower()
@@ -45,6 +52,7 @@ def priority(slug,node,facet):
     nid=node["node_id"]
     if facet=="navigation":return "NAV"
     if slug=="eyewear" and nid in EYEWEAR_CRITICAL:return "P0"
+    if slug=="keyboard" and nid in KEYBOARD_CRITICAL:return "P0"
     if facet=="sku":return "P0"
     if facet in ("material","process"):return "P1"
     if slug=="eyewear" and node.get("kind") in (

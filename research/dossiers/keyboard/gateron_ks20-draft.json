@@ -1,0 +1,90 @@
+{
+  "node_id": "gateron_ks20",
+  "product_slug": "keyboard",
+  "configuration_id": "multi_configuration_keyboard",
+  "name": "Gateron KS-20 Magnetic White代表SKU",
+  "node_type": "sku",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name": "Gateron KS-20 Magnetic White代表SKU",
+      "scope": "sku",
+      "product_configuration": "specific SKU if named, otherwise technology family",
+      "source_as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "磁轴含永磁体；霍尔检测系统一般配合PCB上传感器",
+      "properties": [
+        {
+          "attribute": "总键程",
+          "value": "4.1±0.2",
+          "unit": "mm",
+          "grade": "Gateron KS-20 Magnetic White代表SKU",
+          "test_condition": "Gateron KS-20 Magnetic White; 厂家标称",
+          "source_id": "S001"
+        },
+        {
+          "attribute": "初始磁通密度（厂商规格）",
+          "value": 102,
+          "unit": "Gs",
+          "grade": "Gateron KS-20 Magnetic White代表SKU",
+          "test_condition": "Gateron KS-20 Magnetic White; 磁钢与传感器系统规格，不可当其他型号",
+          "source_id": "S001"
+        }
+      ]
+    },
+    "upstream": [
+      {
+        "name": "永磁体",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      },
+      {
+        "name": "传感器及采样电路",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "computer_keyboard",
+        "component": "磁轴键盘",
+        "relationship": "technology_classification_not_buyer_contract"
+      }
+    ],
+    "companies": [
+      {
+        "relationship": "primary_product_technology_or_standard_source",
+        "confirmed_keyboard_oem_procurement": false,
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_and_procurement",
+        "state": "unverified",
+        "reason": "未确认Gateron该SKU的特定磁钢化学配方及整机客户。"
+      }
+    ],
+    "open_questions": [
+      "未确认Gateron该SKU的特定磁钢化学配方及整机客户。",
+      "补充至少1个不同来源机构的反证/独立核查并记录发布日期",
+      "查明特定年份/地区/量化分母后才能研究市场TOP3"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence is primary-source only, no independent adversarial semantic review"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "研究草稿，厂商资料不等于企业供应链合同。"
+}

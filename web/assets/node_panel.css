@@ -60,3 +60,9 @@
 .sc-copy-task{background:#204c69;color:#ecf8ff;border:1px solid #407a9d;padding:9px 12px;border-radius:8px;cursor:pointer;font-weight:600}
 .sc-copy-task:hover{background:#2d6387}
 .graph-stats a{font-size:11px;color:#94d7f5}
+
+/* Highlight only representative anchor nodes; do not hide mutually alternative systems. */
+#svg .node.config-primary rect{stroke:#f7c56c;stroke-width:2.6}
+.kb-config-label{display:flex;align-items:center;gap:5px;white-space:nowrap;font-size:11px;color:#b8cee0}
+.kb-config-label select{max-width:155px;min-height:30px;background:#152a41;color:#e3f2fc;border:1px solid #385776;border-radius:7px;padding:5px}
+#configurationHelp{color:#f0d39a;line-height:1.5}

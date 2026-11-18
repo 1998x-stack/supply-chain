@@ -1,0 +1,73 @@
+{
+  "node_id": "mx_gold_contacts",
+  "product_slug": "keyboard",
+  "configuration_id": "multi_configuration_keyboard",
+  "name": "金交叉点触点/金镀层",
+  "node_type": "component",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name": "金交叉点触点/金镀层",
+      "scope": "component",
+      "product_configuration": "specific SKU if named, otherwise technology family",
+      "source_as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "CHERRY Gold Crosspoint为其特定产品技术，非所有机械轴通用",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "金属接触簧片",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      },
+      {
+        "name": "电镀金",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "computer_keyboard",
+        "component": "MX类机械轴",
+        "relationship": "technology_classification_not_buyer_contract"
+      }
+    ],
+    "companies": [
+      {
+        "relationship": "primary_product_technology_or_standard_source",
+        "confirmed_keyboard_oem_procurement": false,
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_and_procurement",
+        "state": "unverified",
+        "reason": "镀金厚度、材料批号及上游金厂尚无充分证据。"
+      }
+    ],
+    "open_questions": [
+      "镀金厚度、材料批号及上游金厂尚无充分证据。",
+      "补充至少1个不同来源机构的反证/独立核查并记录发布日期",
+      "查明特定年份/地区/量化分母后才能研究市场TOP3"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence is primary-source only, no independent adversarial semantic review"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "研究草稿，厂商资料不等于企业供应链合同。"
+}

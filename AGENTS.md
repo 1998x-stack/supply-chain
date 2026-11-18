@@ -51,3 +51,9 @@
 - 使用 scripts/research_coverage.py 生成5级证据状态及P0/P1/P2批次，NAV目录不计入材料档案分母。
 - 不得把自动生成的研究问题、树状描述或营销笔记当作已验证事实。
 - UI展示真实结构、数据口径及可复制Deep Search任务；研究完成要有claim与source对应及语义审查。
+
+## 第三产品：外接电脑键盘
+- 对键盘节点使用 .agents/skills/keyboard-supply-chain，配合product-ontology、node-dossier、multi-source-deep-search和research-quality-gate。
+- 机械接点、霍尔磁轴、薄膜/剪刀脚、USB/BLE/2.4G、有线/锂电/一次电池均是不同构型，不能合并成同一BOM。
+- CHERRY/Gateron/Isola/Nordic/TI公开技术能力不等于某OEM采购。市场TOP3必须经同口径核验，缺失保留UNKNOWN。
+- 使用 python scripts/validate_intelligence.py data/products/keyboard/graph.json；已有12份键盘草稿不自动标记语义approved。

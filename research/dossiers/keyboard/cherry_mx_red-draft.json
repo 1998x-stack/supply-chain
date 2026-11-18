@@ -1,0 +1,77 @@
+{
+  "node_id": "cherry_mx_red",
+  "product_slug": "keyboard",
+  "configuration_id": "multi_configuration_keyboard",
+  "name": "CHERRY MX2A RED 代表性SKU",
+  "node_type": "sku",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name": "CHERRY MX2A RED 代表性SKU",
+      "scope": "sku",
+      "product_configuration": "specific SKU if named, otherwise technology family",
+      "source_as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "CHERRY公开MX2A红轴的弹簧、金触点和塑料件结构；不要外推所有品牌",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "金触点",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      },
+      {
+        "name": "回弹弹簧",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      },
+      {
+        "name": "工程塑料轴芯",
+        "relationship": "technical_candidate_not_confirmed_supplier"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "computer_keyboard",
+        "component": "机械接点键盘",
+        "relationship": "technology_classification_not_buyer_contract"
+      }
+    ],
+    "companies": [
+      {
+        "relationship": "primary_product_technology_or_standard_source",
+        "confirmed_keyboard_oem_procurement": false,
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_and_procurement",
+        "state": "unverified",
+        "reason": "该CHERRY产品资料并不能证明某整机品牌直接采购此轴。"
+      }
+    ],
+    "open_questions": [
+      "该CHERRY产品资料并不能证明某整机品牌直接采购此轴。",
+      "补充至少1个不同来源机构的反证/独立核查并记录发布日期",
+      "查明特定年份/地区/量化分母后才能研究市场TOP3"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Evidence is primary-source only, no independent adversarial semantic review"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "研究草稿，厂商资料不等于企业供应链合同。"
+}
