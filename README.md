@@ -74,3 +74,19 @@ deep-search集成遵守其原始证据schema，但没有自动提供网络或LLM
 ### 第一个真实节点研究样例
 
 眼镜/光学级PC档案：research/dossiers/eyewear/pc-optical-draft.json；证据账本：research/ledgers/eyewear/pc-optical-ledger.json；研究解读：research/dossiers/eyewear/pc-optical-report.md。此档案是 **REVIEWABLE DRAFT**，研究引用需要语义复核，PC全品类产能不代表光学级PC产能。其余展示节点仍需逐项研究。
+
+## Nodes with research dossiers
+
+The web build collects reviewed and draft dossiers under `research/dossiers/<product>/*.json`
+and joins them to the product-tree nodes by their stable `node_id`. Each dossier
+must have a matching `research/ledgers/<product>/*.json` evidence ledger with the
+same node_id. Node click reveals research details, claims, sources, conflicting
+market definitions and open questions; non-approved research is visibly marked
+as a draft. Source full text is not copied into the public website snapshot.
+
+Example: eyewear node `N0032` 光学级PC树脂. Its 2024 whole-PC capacity figures
+are NOT ophthalmic-grade PC market shares, and do NOT establish a customer-supplier
+contract. Only this first node has a dossier prototype; remaining nodes stay in
+the unreviewed queue.
+
+A public profile showing draft research is not a factual or semantic verification.
