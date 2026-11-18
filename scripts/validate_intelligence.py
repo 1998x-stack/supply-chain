@@ -69,6 +69,17 @@ def inspect(graph):
  for row in graph.get("company_material",[]):
   if row.get("company") not in company or row.get("material") not in material or row.get("source") not in source_by:
    err("Invalid company_material reference "+str(row))
+ for link in graph.get("cross_links",[]):
+  if link.get("from") not in node_by or link.get("to") not in node_by:
+   err("Cross link references missing node "+str(link.get("id")))
+  if link.get("from")==link.get("to"):err("Cross link has self-loop")
+  if link.get("relation_type") not in ALLOWED_RELATIONS:err("Cross link has invalid relation type")
+  if link.get("evidence_status") not in ("technological","hypothesis","verified","unknown","disputed"):
+   err("Cross link has invalid evidence status")
+  if link.get("source_id") and link["source_id"] not in source_by:
+   err("Cross link references unavailable evidence")
+  if link.get("evidence_status")=="verified" and not link.get("source_id"):
+   err("Verified cross link lacks direct source")
  for r in graph.get("company_relations",[]):
   if not all(r.get(k) for k in ("source","type","date","scope")):err("Commercial edge lacks source/type/date/scope")
   if r.get("source") not in source_by:err("Commercial edge source unknown")

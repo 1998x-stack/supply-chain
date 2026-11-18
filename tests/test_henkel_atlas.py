@@ -45,6 +45,15 @@ class HenkelPortfolioTests(unittest.TestCase):
  def test_validator_catches_unattributed_fact(self):
   g=self.load();next(x for x in g["node_intelligence"] if x["node_id"]=="henkel")["metrics"][0]["source_id"]="S404"
   self.assertFalse(validate_intelligence.inspect(g)["structure_valid"])
+ def test_cross_branch_links_are_typed_and_audited(self):
+  g=self.load()
+  self.assertEqual(len(g["cross_links"]),23)
+  self.assertTrue(all("relation_type" in c and "evidence_status" in c for c in g["cross_links"]))
+  row=next(x for x in g["cross_links"] if x["from"]=="ethylene" and x["to"]=="evaresin")
+  self.assertEqual(row["relation_type"],"associated_with")
+  self.assertEqual(row["evidence_status"],"hypothesis")
+  g["cross_links"][0]["source_id"]="MISSING"
+  self.assertFalse(validate_intelligence.inspect(g)["structure_valid"])
  def test_no_claim_of_current_procurement_from_brand(self):
   g=self.load()
   self.assertEqual(g["company_relations"],[])

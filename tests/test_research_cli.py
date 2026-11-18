@@ -90,6 +90,13 @@ class ResearchCliTests(unittest.TestCase):
         self.assertTrue(all(n["verified_claims"]==0 for n in b["nodes"]))
         self.assertTrue(all(n["priority"]=="unrated" for n in b["nodes"]))
 
+    def test_second_product_backlog_with_six_pending_dossiers(self):
+        x=research_cli.seed_backlog(argparse.Namespace(product="henkel-adhesives"))
+        self.assertEqual(x["count"],73)
+        self.assertEqual(x["dossier_count"],6)
+        self.assertEqual(x["unreviewed_count"],67)
+        self.assertTrue(all(n["verified_claims"]==0 for n in x["nodes"]))
+
     def test_sqlite_research_migration_applied(self):
         with tempfile.TemporaryDirectory() as tmp:
             dbp=Path(tmp)/"test.sqlite"
