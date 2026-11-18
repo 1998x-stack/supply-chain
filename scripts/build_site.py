@@ -328,6 +328,8 @@ def main():
     if eyewear is not None:
         add_sqlite(eyewear,ROOT/'build'/'supply_chain.sqlite')
         add_additional_products(products,ROOT/'build'/'supply_chain.sqlite')
+        from ingest_research import ingest
+        ingest(ROOT/'build'/'supply_chain.sqlite')
     else:
         raise ValueError('First-version database importer currently requires the eyewear seed')
     print('BUILD_OK',json.dumps(catalog['stats'],ensure_ascii=False),'products=',len(products),'dist=',dist)
