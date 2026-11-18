@@ -54,6 +54,24 @@ class CoverageTests(unittest.TestCase):
   self.assertEqual(tasks["semantic_review"],"not_started")
   self.assertFalse(any("Henkel" in str(t) for t in tasks["tasks"]))
   self.assertTrue(all(t["priority"]=="P0" for t in tasks["tasks"]))
+ def test_curated_material_source_is_contextual_not_assumed_procurement(self):
+  seed={"tree_node":[
+   {"node_id":"root","name":"Root","parent_id":None,"kind":"category","branch":"Test","description":""},
+   {"node_id":"old","name":"Legacy alias","parent_id":"root","kind":"material","branch":"Test","description":""},
+   {"node_id":"real","name":"Exact material","parent_id":"root","kind":"material","branch":"Test","description":""}],
+   "material":[{"material_id":"X","name":"Material X","representative_node_id":"old"}],
+   "source":[{"source_id":"S001","title":"Vendor disclosure","url":"https://example.org"}],
+   "company_material":[{"company_id":"COMP1","material_id":"X","source_id":"S001","role":"manufacturer"}],
+   "node_intelligence":[]}
+  identity={"view_nodes":[{"view_node_id":"real","canonical_material_entity_id":"MAT:X"}]}
+  report=research_coverage.build_coverage("synthetic",seed,[],identity)
+  byid={x["node_id"]:x for x in report["nodes"]}
+  self.assertEqual(byid["real"]["stage"],"source_note")
+  self.assertEqual(byid["real"]["material_source_ids"],["S001"])
+  self.assertEqual(byid["old"]["stage"],"structural_only")
+  self.assertEqual(byid["old"]["material_source_ids"],[])
+  self.assertFalse(byid["real"]["approved"])
+
  def test_distinguishes_approved_from_dossier_present(self):
   seed={"tree_node":[{"node_id":"x","name":"合成根","parent_id":None,"kind":"category","branch":"test","description":""},
                      {"node_id":"y","name":"合成测试料","parent_id":"x","kind":"material","branch":"test","description":"高纯度"}],

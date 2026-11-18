@@ -112,10 +112,10 @@ def build_coverage(slug,seed,dossiers,identity=None):
             material_by_node[m["representative_node_id"]].append(m["material_id"])
     # Only explicitly curated exact identities may carry source-linked material data.
     # Legacy representative_node_id is contextual and must NOT transfer identity.
-    source_ids={s["source_id"] for s in seed.get("source",[])}
+    available_source_ids={s["source_id"] for s in seed.get("source",[])}
     material_sources=defaultdict(set)
     def related_source(material_id,source_id):
-        if material_id and source_id in source_ids:
+        if material_id and source_id in available_source_ids:
             material_sources[material_id].add(source_id)
     for row in seed.get("company_material",[]):
         related_source(row.get("material_id"),row.get("source_id"))
