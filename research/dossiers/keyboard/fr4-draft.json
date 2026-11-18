@@ -20,10 +20,11 @@
       "purpose": "玻纤织物与热固性树脂形成常用PCB基材，不指明Isola为键盘供应商",
       "properties": [
         {
-          "label": "玻璃化转变温度 Tg",
+          "attribute": "玻璃化转变温度 Tg",
           "value": 190,
           "unit": "°C",
-          "condition": "仅Isola FR408HR型号，DSC测试；并非所有FR4或键盘PCB",
+          "grade": "FR-4玻纤环氧层压板",
+          "test_condition": "仅Isola FR408HR型号，DSC测试；并非所有FR4或键盘PCB",
           "source_id": "S001"
         }
       ]

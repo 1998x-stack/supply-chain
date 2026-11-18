@@ -20,17 +20,19 @@
       "purpose": "Nordic官方无线SoC含BLE、USB、存储与MCU；仅为公开可选芯片，不证明被指定品牌采购",
       "properties": [
         {
-          "label": "Flash存储容量",
+          "attribute": "Flash存储容量",
           "value": 1,
           "unit": "MB",
-          "condition": "Nordic nRF52840 SoC公开规格；非整机硬盘",
+          "grade": "nRF52840无线SoC示例",
+          "test_condition": "Nordic nRF52840 SoC公开规格；非整机硬盘",
           "source_id": "S001"
         },
         {
-          "label": "RAM",
+          "attribute": "RAM",
           "value": 256,
           "unit": "KB",
-          "condition": "Nordic nRF52840 SoC",
+          "grade": "nRF52840无线SoC示例",
+          "test_condition": "Nordic nRF52840 SoC",
           "source_id": "S001"
         }
       ]
