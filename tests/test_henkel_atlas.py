@@ -43,7 +43,7 @@ class HenkelPortfolioTests(unittest.TestCase):
     self.assertFalse(db.execute("PRAGMA foreign_key_check").fetchall())
     self.assertEqual(db.execute("SELECT relation_type FROM edge WHERE edge_id='EDGE:henkel-adhesives:brand'").fetchone()[0],"associated_with")
  def test_validator_catches_unattributed_fact(self):
-  g=self.load();g["node_intelligence"][0]["metrics"][0]["source_id"]="S404"
+  g=self.load();next(x for x in g["node_intelligence"] if x["node_id"]=="henkel")["metrics"][0]["source_id"]="S404"
   self.assertFalse(validate_intelligence.inspect(g)["structure_valid"])
  def test_no_claim_of_current_procurement_from_brand(self):
   g=self.load()

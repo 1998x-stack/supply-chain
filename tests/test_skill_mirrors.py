@@ -12,7 +12,7 @@ class MirrorPortabilityTests(unittest.TestCase):
  def test_repo_links_healthy(self):
   errors,count=mod.sync(ROOT,"check")
   self.assertFalse(errors,errors)
-  self.assertEqual(count,30)
+  self.assertEqual(count,33)
  def test_copy_mode_portable_and_drift_blocked(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp)
