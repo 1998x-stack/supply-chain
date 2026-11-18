@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "node_id": "pur9340",
+  "product_slug": "henkel-adhesives",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "TECHNOMELT PUR 9340 TDS October 2025",
+      "url": "https://datasheets.tdx.henkel.com/TECHNOMELT-PUR-9340-en_GL.pdf",
+      "publisher": "Henkel",
+      "origin_group": "henkel_primary",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "moisture curing hot melt adhesive based on polyurethane. Viscosity at 130°C, Pa.s 7 to 13. Application temperature °C 100 to 140",
+      "notes": "Brief curated literal excerpt; not complete PDF text. Human semantic review pending."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "PUR 9340采用湿气固化聚氨酯热熔技术。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "moisture curing hot melt adhesive based on polyurethane",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "PUR9340在130°C的厂家粘度典型范围为7–13 Pa·s。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "7 to 13",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "One manufacturer-origin source for this draft; full PDF page and semantics require independent review.",
+    "No buyer/supplier commercial contracting evidence is asserted."
+  ]
+}

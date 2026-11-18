@@ -1,0 +1,85 @@
+{
+  "node_id": "eva5669",
+  "product_slug": "henkel-adhesives",
+  "configuration_id": "portfolio_or_named_sku",
+  "name": "TECHNOMELT 3018322-000（5669）",
+  "node_type": "sku",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name": "TECHNOMELT 3018322-000（5669）",
+      "grade_or_scope": "sku",
+      "as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "过滤器褶皱与工业粘接",
+      "chemistry": "EVA hot melt",
+      "setting": "physical",
+      "properties": [
+        {
+          "attribute": "application_temperature",
+          "value": "130–150",
+          "unit": "°C",
+          "grade": "3018322-000 (5669)",
+          "test_condition": "July 2022 TDS; process setpoint",
+          "source_id": "S001"
+        }
+      ]
+    },
+    "upstream": [
+      {
+        "name": "EVA树脂通用原料链，特定配方未公开",
+        "relationship": "technical_family_only"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "空气过滤器",
+        "relationship": "industry_application_not_confirmed_client"
+      },
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "纸及非织造材料",
+        "relationship": "industry_application_not_confirmed_client"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Henkel AG & Co. KGaA",
+        "relationship": "brand_owner_and_product_marketer",
+        "source_ids": [
+          "S001"
+        ],
+        "confirmed_upstream_supplier": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "portfolio_and_supplier_conflation",
+        "state": "unknown",
+        "reason": "No actual raw-material supplier purchase contract is established by a manufacturer TDS."
+      }
+    ],
+    "open_questions": [
+      "2026 SKU仍有效或已更新？",
+      "EVA专用原料生产商及实际合同？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "No independent page-level semantic review or adversarial corroboration"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "Official single-origin primary evidence. No verified current supplier/customer relationship."
+}

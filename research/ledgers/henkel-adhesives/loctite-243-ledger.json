@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "node_id": "243",
+  "product_slug": "henkel-adhesives",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "LOCTITE 243 Technical Data Sheet April 2025",
+      "url": "https://datasheets.tdx.henkel.com/LOCTITE-243-en_GL.pdf",
+      "publisher": "Henkel",
+      "origin_group": "henkel_primary",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Chemical Type Dimethacrylate ester. Cure Anaerobic. Viscosity, Brookfield - RVT, 25° C, mPa.s (cP): Spindle 3, Speed 20 rpm 1,300 to 3,000",
+      "notes": "Brief curated literal excerpt; not complete PDF text. Human semantic review pending."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "LOCTITE243化学类别为双甲基丙烯酸酯，采用厌氧固化。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "Dimethacrylate ester",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "25°C条件下Brookfield粘度为1300–3000 mPa·s（特定转子及转速）。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "1,300 to 3,000",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "One manufacturer-origin source for this draft; full PDF page and semantics require independent review.",
+    "No buyer/supplier commercial contracting evidence is asserted."
+  ]
+}
