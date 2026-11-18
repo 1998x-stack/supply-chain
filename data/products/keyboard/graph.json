@@ -2605,19 +2605,70 @@
   "product_configurations": [
     {
       "id": "mechanical_usb",
-      "description": "机械接点轴+USB有线；无电池/无线RF为典型结构之一"
+      "description": "机械接点轴+USB有线；无电池/无线RF为典型结构之一",
+      "label": "USB机械接点",
+      "primary_nodes": [
+        "mech_keyboard",
+        "mx_system",
+        "mx_spring",
+        "mx_gold_contacts",
+        "keycap_system",
+        "pcb_stack",
+        "matrix",
+        "controller",
+        "wired_usb",
+        "usb_hid"
+      ]
     },
     {
       "id": "hall_usb",
-      "description": "Hall磁轴+USB有线+传感器，是否含可调触发需固件确认"
+      "description": "Hall磁轴+USB有线+传感器，是否含可调触发需固件确认",
+      "label": "USB霍尔磁轴",
+      "primary_nodes": [
+        "hall_keyboard",
+        "hall_system",
+        "magnet",
+        "hall_sensor",
+        "hall_adc",
+        "hall_mcu",
+        "pcb_stack",
+        "controller",
+        "wired_usb",
+        "usb_hid"
+      ]
     },
     {
       "id": "membrane_usb",
-      "description": "橡胶碗薄膜+USB；不用按机械轴加金触点"
+      "description": "橡胶碗薄膜+USB；不用按机械轴加金触点",
+      "label": "USB薄膜/橡胶碗",
+      "primary_nodes": [
+        "membrane_keyboard",
+        "membrane_system",
+        "pet_membrane",
+        "printed_silver",
+        "spacer",
+        "rubber_dome",
+        "pcb_stack",
+        "controller",
+        "wired_usb"
+      ]
     },
     {
       "id": "mechanical_ble",
-      "description": "机械轴+BLE+电池/充电或一次电池备选；不可同时要求两种电池"
+      "description": "机械轴+BLE+电池/充电或一次电池备选；不可同时要求两种电池",
+      "label": "BLE机械键盘",
+      "primary_nodes": [
+        "mech_keyboard",
+        "mx_system",
+        "mx_spring",
+        "keycap_system",
+        "pcb_stack",
+        "ble_wireless",
+        "ble_soc",
+        "ble_profile",
+        "power",
+        "zmk"
+      ]
     }
   ],
   "relationship_note": "Tree is for navigation and technical comparison. Cross_links are scoped/typed; no brand-to-OEM purchasing contracts or supplier rankings proven.",

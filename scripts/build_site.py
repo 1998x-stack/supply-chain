@@ -36,6 +36,7 @@ def compact(x,research=None,resolution=None,coverage=None):
      'research':research or [],
      'coverage':(coverage or {}).get('nodes',[]),
      'insights':x.get('node_intelligence',[]),
+     'configurations':x.get('product_configurations',[]),
      'xl':[[r['from'],r['to'],r['relation_type'],r['evidence_status'],r.get('source_id'),r.get('note','')] for r in x.get('cross_links',[])],
      'identity':[[r['view_node_id'],r['canonical_material_entity_id'],r['identity_state'],r['label_key']] for r in (resolution or {}).get('view_nodes',[])],
      'n':[[t['node_id'],t['name'],t['parent_id'],t['kind'],t['branch'],t['description'] or '',t.get('relation_type','material_input')] for t in x['tree_node']],
@@ -122,7 +123,7 @@ def discover_products(root=ROOT):
 
 def convert_atlas_v1(g):
     # Public schema uses human-readable objects; internal compatibility shape is the v2 dataset.
-    x={k:[] for k in ('tree_node','material','company','company_material','company_relation','market','market_share','substitution_opportunity','source','procurement_concentration','capacity_observation','company_kpi','node_intelligence','cross_links')}
+    x={k:[] for k in ('tree_node','material','company','company_material','company_relation','market','market_share','substitution_opportunity','source','procurement_concentration','capacity_observation','company_kpi','node_intelligence','cross_links','product_configurations')}
     for n in g.get('nodes',[]):
         x['tree_node'].append({'node_id':n['id'],'name':n['name'],'parent_id':n.get('parent'), 'kind':n.get('kind','材料'), 'branch':n.get('branch','未分类'), 'description':n.get('description',''), 'depth':0,'relation_type':n.get('relation_type','material_input')})
     by_id={n['node_id']:n for n in x['tree_node']}
@@ -135,6 +136,16 @@ def convert_atlas_v1(g):
     if sum(n['parent_id'] is None for n in x['tree_node'])!=1:raise ValueError('Exactly one root required')
     x['node_intelligence']=g.get('node_intelligence',[])
     x['cross_links']=g.get('cross_links',[])
+    x['product_configurations']=g.get('product_configurations',[])
+    known={n['node_id'] for n in x['tree_node']}
+    config_ids=set()
+    for cfg in x['product_configurations']:
+        if not cfg.get('id') or cfg['id'] in config_ids:
+            raise ValueError('Missing or duplicate product configuration ID')
+        config_ids.add(cfg['id'])
+        if any(n not in known for n in cfg.get('primary_nodes',[])):
+            raise ValueError('Configuration references unknown node: '+cfg['id'])
+
     known_sources={src['id'] for src in g.get('sources',[])}
     known_nodes={n['node_id'] for n in x['tree_node']}
     seen_insights=set()
