@@ -24,14 +24,14 @@
           "value": 1,
           "unit": "MB",
           "condition": "Nordic nRF52840 SoC公开规格；非整机硬盘",
-          "source_id": "S07"
+          "source_id": "S001"
         },
         {
           "label": "RAM",
           "value": 256,
           "unit": "KB",
           "condition": "Nordic nRF52840 SoC",
-          "source_id": "S07"
+          "source_id": "S001"
         }
       ]
     },

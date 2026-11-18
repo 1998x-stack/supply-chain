@@ -24,7 +24,7 @@
           "value": 190,
           "unit": "°C",
           "condition": "仅Isola FR408HR型号，DSC测试；并非所有FR4或键盘PCB",
-          "source_id": "S08"
+          "source_id": "S001"
         }
       ]
     },

@@ -24,14 +24,14 @@
           "value": "4.1±0.2",
           "unit": "mm",
           "condition": "Gateron KS-20 Magnetic White; 厂家标称",
-          "source_id": "S02"
+          "source_id": "S001"
         },
         {
           "label": "初始磁通密度（厂商规格）",
           "value": 102,
           "unit": "Gs",
           "condition": "Gateron KS-20 Magnetic White; 磁钢与传感器系统规格，不可当其他型号",
-          "source_id": "S02"
+          "source_id": "S001"
         }
       ]
     },
