@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "slug": "keyboard",
+  "title": "电脑键盘产业链",
+  "category_id": "electronics",
+  "category": "消费电子",
+  "icon": "⌨️",
+  "description": "外接键盘多构型图谱：机械轴、磁轴、薄膜轴、键帽、PCB、无线/电池、塑料树脂、金属、半导体、资源及设备；支持节点证据与逆向追溯。",
+  "adapter": "atlas_v1",
+  "source": "graph.json",
+  "published": true
+}

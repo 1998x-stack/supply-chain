@@ -1,0 +1,2786 @@
+{
+  "schema_version": "atlas_v1.1",
+  "nodes": [
+    {
+      "id": "keyboard",
+      "name": "外接电脑键盘：多构型技术与供应链",
+      "parent": null,
+      "kind": "product",
+      "branch": "全局",
+      "description": "研究对象是外接电脑输入键盘；包括不同开关、无线供电等替代构型；不是某一品牌真实BOM。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "variants",
+      "name": "A. 产品构型与选项",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "产品构型",
+      "description": "机械、磁轴、薄膜与不同传输方式为替代选项，不能将所有原料相加为一副键盘。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "mech_keyboard",
+      "name": "传统机械接点键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "MX类机械接点与矩阵扫描方案；不代表所有机械键盘使用Cherry",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "hall_keyboard",
+      "name": "磁轴/霍尔效果键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "永磁体和位置传感器组合；不以机械接点实现键程检测",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "membrane_keyboard",
+      "name": "橡胶碗薄膜键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "橡胶碗回弹与薄膜电路触点配合，非MX机械轴",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "scissor_keyboard",
+      "name": "剪刀脚薄膜键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "常见低键程机构，属于机械支撑结构与电气触点的组合",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "wired_usb",
+      "name": "USB有线键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "USB物理供电与HID协议；省去内置无线射频是常见结构选项",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ble_wireless",
+      "name": "蓝牙低功耗无线键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "BLE HOGP输入报告；需无线SoC与电池/供电方案",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "wireless_24g",
+      "name": "2.4GHz私有协议+接收器",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "射频芯片、协议栈、配对与USB接收器；非标准蓝牙等价品",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "split_keyboard",
+      "name": "分体键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "左右半区需要数据同步与电气连接；可能有独立电池和控制器",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "gaming_keyboard",
+      "name": "电竞低延迟键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "更重视扫描延迟与触发逻辑，但宣传轮询率不等于端到端延迟",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "office_keyboard",
+      "name": "办公静音键盘",
+      "parent": "variants",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "description": "成本、噪音、功耗与输入手感权衡；具体结构随SKU变化",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "switches",
+      "name": "B. 触发与键轴系统",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "键轴与触发",
+      "description": "接点式机械轴、磁轴和薄膜触发是不同原理，需分开上游材料与测试条件。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "mx_system",
+      "name": "机械接点键轴（MX类）",
+      "parent": "switches",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "通过轴芯运动和金属接点导通实现触发；非所有机械轴采用同一结构",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "hall_system",
+      "name": "霍尔磁轴开关系统",
+      "parent": "switches",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "永磁体位置变化由PCB上Hall传感器测量；不得假定每款磁轴使用同一家IC",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "membrane_system",
+      "name": "薄膜触点系统",
+      "parent": "switches",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "上下电路膜及隔离层形成按压闭合；需与低键程剪刀支架分开",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "optical_system",
+      "name": "光电轴（可选）",
+      "parent": "switches",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "通过光路遮挡或反射变化感测按键，与金属触点及霍尔方案均不相同",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "cherry_mx_red",
+      "name": "CHERRY MX2A RED 代表性SKU",
+      "parent": "mx_system",
+      "kind": "sku",
+      "branch": "键轴与触发",
+      "description": "CHERRY公开MX2A红轴的弹簧、金触点和塑料件结构；不要外推所有品牌",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "mx_top",
+      "name": "轴体上盖",
+      "parent": "mx_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "注塑结构件，保护与引导滑轨；工程塑料种类以SKU资料为准",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "mx_stem",
+      "name": "机械轴芯/导向滑块",
+      "parent": "mx_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "决定线性/段落/点击机构与摩擦特征，具体树脂牌号不公开",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "mx_bottom",
+      "name": "轴体底座",
+      "parent": "mx_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "容纳触点、弹簧与PCB安装结构；可有玻纤增强塑料",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "mx_spring",
+      "name": "机械轴回弹弹簧",
+      "parent": "mx_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "典型金属压缩弹簧，需分钢号、丝径和热处理工艺",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "mx_gold_contacts",
+      "name": "金交叉点触点/金镀层",
+      "parent": "mx_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "CHERRY Gold Crosspoint为其特定产品技术，非所有机械轴通用",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "mx_lube",
+      "name": "轴体润滑剂",
+      "parent": "mx_system",
+      "kind": "material",
+      "branch": "键轴与触发",
+      "description": "部分轴体出厂润滑，种类、黏度与添加剂需查TDS",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "mx_click_jacket",
+      "name": "段落/点击组件（可选）",
+      "parent": "mx_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "Clicky轴可有额外塑料机构，与静音轴结构不同",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "mx_pin",
+      "name": "金属引脚与端子",
+      "parent": "mx_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "导电端子通过焊接或插拔座连接PCB",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "gateron_ks20",
+      "name": "Gateron KS-20 Magnetic White代表SKU",
+      "parent": "hall_system",
+      "kind": "sku",
+      "branch": "键轴与触发",
+      "description": "磁轴含永磁体；霍尔检测系统一般配合PCB上传感器",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "magnetic_stem",
+      "name": "磁轴轴芯",
+      "parent": "hall_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "携带或相对于永磁体运动，轴芯结构需匹配磁极和传感器",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "magnet",
+      "name": "微型永磁体",
+      "parent": "hall_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "磁场随键程变化，永久磁材可能采用不同等级，未知具体配方勿猜NdFeB",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "hall_sensor",
+      "name": "Hall位置传感器IC",
+      "parent": "hall_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "可测磁场大小并用于位移判断；应核实模拟/数字传感器架构",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "hall_adc",
+      "name": "多路ADC/传感器复用",
+      "parent": "hall_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "用于位置读数；是否使用MCU内部ADC取决于设计",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rapid_trigger",
+      "name": "动态抬键重触发固件",
+      "parent": "hall_system",
+      "kind": "process",
+      "branch": "键轴与触发",
+      "description": "依赖位置数据与触发状态机，不是一个独立原材料",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "magnetic_calibration",
+      "name": "磁轴公差校准",
+      "parent": "hall_system",
+      "kind": "process",
+      "branch": "键轴与触发",
+      "description": "应考虑磁场、温度、键程和量产标定的一致性",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "hall_mcu",
+      "name": "磁轴控制与采样主控",
+      "parent": "hall_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "位置传感器汇总并输出HID事件的控制器",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pet_membrane",
+      "name": "PET薄膜电路基材",
+      "parent": "membrane_system",
+      "kind": "material",
+      "branch": "键轴与触发",
+      "description": "印刷导电电路及隔离层的通用工业候选材料，具体厂商未确认",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "printed_silver",
+      "name": "银浆导电油墨",
+      "parent": "membrane_system",
+      "kind": "material",
+      "branch": "键轴与触发",
+      "description": "常见薄膜线路导电材料之一；镀银或碳墨替代需按具体工艺",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "printed_carbon",
+      "name": "碳导电油墨",
+      "parent": "membrane_system",
+      "kind": "material",
+      "branch": "键轴与触发",
+      "description": "用于触点、引线或保护层的可选配方，非所有薄膜同时使用",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "spacer",
+      "name": "间隔层/压敏胶",
+      "parent": "membrane_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "上下触点隔离及局部通孔结构",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rubber_dome",
+      "name": "硅橡胶碗",
+      "parent": "membrane_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "提供回弹与按压力曲线，硅氧烷体系需要另溯源",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "scissor_link",
+      "name": "剪刀脚塑胶连杆",
+      "parent": "membrane_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "薄型键盘运动导向结构，非机械MX轴金属接点",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "optical_emitter",
+      "name": "红外发射器",
+      "parent": "optical_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "光电轴所需的可选发射元件，具体波长和功耗待查",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "optical_receiver",
+      "name": "接收器/光敏IC",
+      "parent": "optical_system",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "description": "光路检测器件，不应与磁传感器合并",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "keycaps",
+      "name": "C. 键帽与机械框架",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "键帽与结构",
+      "description": "键帽、固定板、壳体、隔音棉与金属紧固结构，按材质和工艺分别研究。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "keycap_system",
+      "name": "键帽与字符层",
+      "parent": "keycaps",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "PBT/ABS以及印字工艺可互换，成套键帽不是一种聚合物",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "case_system",
+      "name": "机壳与定位结构",
+      "parent": "keycaps",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "外壳、定位板、底壳与减震机构依产品设计而变化",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "stabilizer",
+      "name": "卫星轴/大键平衡杆",
+      "parent": "keycaps",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "长键键帽避免倾斜的稳定器，需独立BOM",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "gasket",
+      "name": "Gasket弹性垫圈",
+      "parent": "keycaps",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "软垫装配路线是可选结构，不是所有键盘都有",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "foam_system",
+      "name": "声学缓冲材料",
+      "parent": "keycaps",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "用于吸声或调音，EVA/硅胶/Poron等具体配方需核查",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pbt_caps",
+      "name": "PBT键帽（聚酯）",
+      "parent": "keycap_system",
+      "kind": "material",
+      "branch": "键帽与结构",
+      "description": "PBT主要原料或混配体系，不能假设100%纯PBT",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "abs_caps",
+      "name": "ABS键帽",
+      "parent": "keycap_system",
+      "kind": "material",
+      "branch": "键帽与结构",
+      "description": "聚丙烯腈-丁二烯-苯乙烯树脂，通常通过注塑成形",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pc_caps",
+      "name": "透明PC键帽（可选）",
+      "parent": "keycap_system",
+      "kind": "material",
+      "branch": "键帽与结构",
+      "description": "透明聚碳酸酯，具体光学级与通用级材料区分",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "doubleshot",
+      "name": "双色/三色注塑工艺",
+      "parent": "keycap_system",
+      "kind": "process",
+      "branch": "键帽与结构",
+      "description": "字符与主体分别注射，需多色模具及工艺设计",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "dyesub",
+      "name": "热升华印字工艺",
+      "parent": "keycap_system",
+      "kind": "process",
+      "branch": "键帽与结构",
+      "description": "常见于PBT键帽，不应外推到所有配方与墨水",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "laser_engrave",
+      "name": "激光镭雕与涂层",
+      "parent": "keycap_system",
+      "kind": "process",
+      "branch": "键帽与结构",
+      "description": "键帽字符加工路线之一；可能使用涂层或透光设计",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "uv_print",
+      "name": "UV印刷/喷绘",
+      "parent": "keycap_system",
+      "kind": "process",
+      "branch": "键帽与结构",
+      "description": "表层字符工艺，耐磨性与固化条件需测试",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "keycap_mold",
+      "name": "键帽精密模具",
+      "parent": "keycap_system",
+      "kind": "equipment",
+      "branch": "键帽与结构",
+      "description": "字母、拔模、收缩率与多腔工艺相关",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "alu_case",
+      "name": "CNC铝合金外壳",
+      "parent": "case_system",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "铝板/型材经过数控切削、阳极氧化及组装的可选高端方案",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "plastic_case",
+      "name": "ABS/PC塑料机壳",
+      "parent": "case_system",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "注塑塑料壳；具体阻燃等级、增韧体系与材料牌号未知",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "steel_plate",
+      "name": "冲压钢定位板",
+      "parent": "case_system",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "可能使用钢板或其他金属材料；厚度和涂层需按SKU",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "alu_plate",
+      "name": "铝定位板",
+      "parent": "case_system",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "板料冲切/CNC加工，与外壳可以不同铝合金",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "fr4_plate",
+      "name": "FR-4复合板定位板",
+      "parent": "case_system",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "玻纤环氧复合结构的可选定位板，不是PCB电路的必然组成",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "anodize",
+      "name": "铝氧化膜/表面处理",
+      "parent": "case_system",
+      "kind": "process",
+      "branch": "键帽与结构",
+      "description": "阳极氧化/喷砂/涂层等可选",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "screws",
+      "name": "螺丝/铜柱/紧固结构",
+      "parent": "case_system",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "description": "钢、黄铜或不锈钢，表面处理需按认证确认",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pcb",
+      "name": "D. PCB与控制电子系统",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "PCB与控制",
+      "description": "核心为电路板、矩阵检测与USB HID固件；无线和磁轴会增加不同IC/采样架构。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pcb_stack",
+      "name": "PCB主板与层压结构",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "玻纤环氧覆铜板、多层线路、阻焊与表面处理；不是每款键盘相同堆叠",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "matrix",
+      "name": "矩阵行列扫描/防鬼键",
+      "parent": "pcb",
+      "kind": "process",
+      "branch": "PCB与控制",
+      "description": "普通接点开关常用行列扫描与二极管防鬼键配置",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "controller",
+      "name": "键盘控制MCU",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "扫描、消抖、HID报告与可选灯控；具体供货随型号不同",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "usb_port",
+      "name": "USB Type-C连接器",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "可选有线接口，端口与布线需满足USB电气和机构规范",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "hotswap",
+      "name": "热插拔开关插座",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "用于可换轴PCB，可否适配机械/磁轴取决于电气与机械设计",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rgb_led",
+      "name": "RGB背光LED及驱动",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "SMD LED/驱动IC，电源预算与热可靠性待核查",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rgb_diffuser",
+      "name": "导光/扩散结构",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "PC或其他透明材料导光，也可不具备背光",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "esd",
+      "name": "ESD/浪涌保护器件",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "接口和PCB防护方案的可选元件",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "crystal",
+      "name": "晶振/时钟器件",
+      "parent": "pcb",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "部分MCU使用外部晶振或内置时钟",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "fr4",
+      "name": "FR-4玻纤环氧层压板",
+      "parent": "pcb_stack",
+      "kind": "material",
+      "branch": "PCB与控制",
+      "description": "玻纤织物与热固性树脂形成常用PCB基材，不指明Isola为键盘供应商",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "copper_foil",
+      "name": "覆铜板电解铜箔",
+      "parent": "pcb_stack",
+      "kind": "material",
+      "branch": "PCB与控制",
+      "description": "通过电沉积等工艺制成铜箔，制造商/品质规格待核查",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "prepreg",
+      "name": "玻纤预浸料",
+      "parent": "pcb_stack",
+      "kind": "material",
+      "branch": "PCB与控制",
+      "description": "玻璃纤维织物浸渍树脂的多层叠压中间品",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "soldermask",
+      "name": "阻焊油墨",
+      "parent": "pcb_stack",
+      "kind": "material",
+      "branch": "PCB与控制",
+      "description": "焊盘与铜线路保护涂层，UV或热固化体系可异",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "vias",
+      "name": "金属化通孔/电镀铜",
+      "parent": "pcb_stack",
+      "kind": "process",
+      "branch": "PCB与控制",
+      "description": "孔壁金属化和层间互联；工艺流程需按板厂确认",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "surface_finish",
+      "name": "焊盘表面处理",
+      "parent": "pcb_stack",
+      "kind": "process",
+      "branch": "PCB与控制",
+      "description": "OSP、ENIG、HASL等互斥工艺选项，不能当成同一板必备叠加",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "diodes",
+      "name": "矩阵二极管",
+      "parent": "matrix",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "可降低多键同时按压产生的ghosting，是否需要按架构确认",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rowcol",
+      "name": "GPIO行列布线",
+      "parent": "matrix",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "矩阵扫描电气结构，行列数不是可精确换算的真实物料成本",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "debounce",
+      "name": "按键消抖算法",
+      "parent": "matrix",
+      "kind": "process",
+      "branch": "PCB与控制",
+      "description": "触点开关常需消抖，磁轴有不同信号滤波路径",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "qmk",
+      "name": "QMK开源键盘固件",
+      "parent": "matrix",
+      "kind": "software",
+      "branch": "PCB与控制",
+      "description": "开源键盘软件技术，可配置矩阵扫描和USB报告；不等于所有键盘的商用固件",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "usb_hid",
+      "name": "USB HID Usage Tables/报告",
+      "parent": "controller",
+      "kind": "standard",
+      "branch": "PCB与控制",
+      "description": "USB-IF键盘使用码和报文规范；这是标准不是物理供应商",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "mcu_core",
+      "name": "ARM Cortex-M / AVR处理核心",
+      "parent": "controller",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "芯片核心架构依主控而异，不能按QMK示例推定所有键盘芯片",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "flash",
+      "name": "程序存储与固件升级",
+      "parent": "controller",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "description": "内部闪存或外部存储器以及Bootloader升级机制",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "wireless",
+      "name": "E. 无线连接与供电系统",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "无线与能源",
+      "description": "无线键盘的差异化子系统；有线USB键盘无需强制加入锂电与射频。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ble_soc",
+      "name": "Bluetooth LE无线SoC",
+      "parent": "wireless",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "可选无线控制芯片，Nordic nRF52840只是候选产品例子",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ble_profile",
+      "name": "Bluetooth HOGP协议栈",
+      "parent": "wireless",
+      "kind": "standard",
+      "branch": "无线与能源",
+      "description": "HID over GATT profile，使用BLE承载键盘HID报告",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rf24",
+      "name": "2.4GHz私有无线射频芯片",
+      "parent": "wireless",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "非BLE的专有无线协议，需要接收器与兼容性评估",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "dongle",
+      "name": "USB无线接收器",
+      "parent": "wireless",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "无线2.4G专用接收端硬件，可能包含MCU、晶振、USB接口",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "antenna",
+      "name": "PCB/陶瓷2.4GHz天线",
+      "parent": "wireless",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "需匹配阻抗和认证条件，实际位置与材料依机壳",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "power",
+      "name": "电池与电源管理",
+      "parent": "wireless",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "可充电电池、一次性电池或无电池有线三种构型",
+      "relation_type": "component_of"
+    },
+    {
+      "id": "zmk",
+      "name": "ZMK无线键盘固件",
+      "parent": "wireless",
+      "kind": "software",
+      "branch": "无线与能源",
+      "description": "面向低功耗有线/无线输入设备的开源方案，非每款键盘都使用",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "nrf52840",
+      "name": "nRF52840无线SoC示例",
+      "parent": "ble_soc",
+      "kind": "sku",
+      "branch": "无线与能源",
+      "description": "Nordic官方无线SoC含BLE、USB、存储与MCU；仅为公开可选芯片，不证明被指定品牌采购",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rf_frontend",
+      "name": "射频匹配电路",
+      "parent": "ble_soc",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "射频走线、匹配电容/电感与EMC相关",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "liion_cell",
+      "name": "锂离子可充电电芯",
+      "parent": "power",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "三元/磷酸铁锂等电芯化学路线因供应商与设计差异，勿统一判定",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "battery_pack",
+      "name": "电池保护与封装",
+      "parent": "power",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "保护板、PCM、绝缘、电连接与温度安全",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "charge_ic",
+      "name": "充电管理IC",
+      "parent": "power",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "USB供电、电池充电/保护和状态采样",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "buck_ldo",
+      "name": "DC-DC/LDO稳压",
+      "parent": "power",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "无线低功耗供电和LED负载电源调节",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "power_button",
+      "name": "电源开关/低功耗休眠",
+      "parent": "power",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "供电物理开关与固件电源策略",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "primary_cell",
+      "name": "AA/AAA等一次电池选项",
+      "parent": "power",
+      "kind": "component",
+      "branch": "无线与能源",
+      "description": "使用一次性电池的构型不应纳入锂离子电池BOM",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "materials",
+      "name": "F. 材料、精细化工与资源上游",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "材料到资源",
+      "description": "通用化学与矿产技术路线，包含跨产品共享的原料候选，不代表品牌采购链。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pbt_resin",
+      "name": "PBT聚对苯二甲酸丁二醇酯树脂",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "聚酯工程塑料，可用于键帽混配或注塑，必须区分具体牌号",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "abs_resin",
+      "name": "ABS工程塑料树脂",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "苯乙烯-丙烯腈-丁二烯共聚/接枝工程塑料及混配级",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pc_resin",
+      "name": "PC聚碳酸酯树脂",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "透明键帽或外壳备选材料，实际型号和比例待查",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pom_resin",
+      "name": "POM聚甲醛树脂",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "耐磨轴芯常见候选材料之一，不能推断Cherry具体树脂",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "nylon_resin",
+      "name": "PA尼龙/增强尼龙树脂",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "轴体壳体常见工程塑料候选；PA6/PA66/特种共聚物需区分",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pet_resin",
+      "name": "PET聚对苯二甲酸乙二醇酯",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "薄膜基材与纤维/包装材料的工业原料候选",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "silicone",
+      "name": "有机硅橡胶",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "橡胶碗、垫片、减振结构的可选化学路线",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "spring_steel",
+      "name": "弹簧钢丝/不锈钢丝",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "回弹弹簧的金属材料，合金成分与热处理影响寿命",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "gold",
+      "name": "电子接点镀金",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "CHERRY Gold Crosspoint为特定技术；金资源/电镀量与所有键盘不可直接换算",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "copper",
+      "name": "铜材/电镀铜",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "PCB铜箔、布线与连接器铜合金的上游金属",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "aluminum",
+      "name": "铝锭/铝合金板材",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "铝制外壳/定位板的冶金原料路线",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "neodymium_magnet",
+      "name": "钕铁硼永磁材料（候选）",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "用于部分磁轴永磁体的工业候选，不代表Gateron具体磁钢成分",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "samarium_cobalt",
+      "name": "钐钴永磁材料（候选）",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "霍尔仿真中可用的另一种磁体路线，不等于特定产品用料",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "lithium_salts",
+      "name": "锂盐/正极前驱体（可充电构型）",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "电池产业链的上游候选，必须确定电芯化学体系",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "semiconductor_si",
+      "name": "电子级硅与硅晶圆",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "MCU、Hall IC、存储与电源芯片的半导体材料基础",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pta",
+      "name": "对苯二甲酸PTA",
+      "parent": "pbt_resin",
+      "kind": "chemical",
+      "branch": "材料到资源",
+      "description": "PBT、PET等聚酯相关工业中间体；具体路径需按生产工艺",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "bdo",
+      "name": "1,4-丁二醇BDO",
+      "parent": "pbt_resin",
+      "kind": "chemical",
+      "branch": "材料到资源",
+      "description": "PBT缩聚常见二醇中间体；制备来源有不同路线",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "styrene",
+      "name": "苯乙烯单体",
+      "parent": "abs_resin",
+      "kind": "chemical",
+      "branch": "材料到资源",
+      "description": "ABS/SAN的苯乙烯单体来源，油气裂解下游",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "acrylonitrile",
+      "name": "丙烯腈单体",
+      "parent": "abs_resin",
+      "kind": "chemical",
+      "branch": "材料到资源",
+      "description": "ABS常见单体之一，注意有毒物质行业安全合规",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "butadiene",
+      "name": "1,3-丁二烯",
+      "parent": "abs_resin",
+      "kind": "chemical",
+      "branch": "材料到资源",
+      "description": "ABS橡胶相上游，可来自石油裂解C4馏分",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "bpa",
+      "name": "双酚A",
+      "parent": "pc_resin",
+      "kind": "chemical",
+      "branch": "材料到资源",
+      "description": "双酚A型PC树脂关键中间体，BPA型和无BPA替代路线不同",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "meg",
+      "name": "乙二醇MEG",
+      "parent": "pet_resin",
+      "kind": "chemical",
+      "branch": "材料到资源",
+      "description": "PET生产常见二醇单体，来自乙烯氧化等工业路线",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "siloxane",
+      "name": "聚硅氧烷原料",
+      "parent": "silicone",
+      "kind": "chemical_family",
+      "branch": "材料到资源",
+      "description": "硅橡胶基础聚合物中间体及交联体系，牌号不公开",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "quartz",
+      "name": "硅石/石英砂",
+      "parent": "silicone",
+      "kind": "resource",
+      "branch": "材料到资源",
+      "description": "工业硅冶炼和玻纤等产业的硅源资源级候选",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "copper_concentrate",
+      "name": "铜精矿/再生铜",
+      "parent": "copper",
+      "kind": "resource",
+      "branch": "材料到资源",
+      "description": "铜箔/连接器铜金属链源头；不能把国家矿产产量当某键盘厂采购",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "alumina",
+      "name": "氧化铝",
+      "parent": "aluminum",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "铝电解冶炼中间体",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "bauxite",
+      "name": "铝土矿",
+      "parent": "aluminum",
+      "kind": "resource",
+      "branch": "材料到资源",
+      "description": "铝业矿产资源输入，需与再生铝路径分离",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "gold_ore",
+      "name": "金矿或再生贵金属",
+      "parent": "gold",
+      "kind": "resource",
+      "branch": "材料到资源",
+      "description": "电子镀金可能来源于原矿或回收；实际流向未知",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rare_earth_ore",
+      "name": "稀土矿/混合稀土分离",
+      "parent": "neodymium_magnet",
+      "kind": "resource",
+      "branch": "材料到资源",
+      "description": "永磁材料原料产业，不同元素/磁体成分不能混算",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "iron_boron",
+      "name": "铁与硼中间料",
+      "parent": "neodymium_magnet",
+      "kind": "chemical_family",
+      "branch": "材料到资源",
+      "description": "钕铁硼磁体的基础配料族，实际磁轴材料未经认证",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "polysilicon",
+      "name": "电子级多晶硅/晶体硅",
+      "parent": "semiconductor_si",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "高纯半导体硅链，晶圆与光伏硅级别不同",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "wafer",
+      "name": "晶圆制造与光刻",
+      "parent": "semiconductor_si",
+      "kind": "process",
+      "branch": "材料到资源",
+      "description": "Hall/MCU/电源IC的通用制造工艺，不指向任一具体Fab",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "oil_gas",
+      "name": "原油/天然气资源",
+      "parent": "materials",
+      "kind": "resource",
+      "branch": "材料到资源",
+      "description": "苯乙烯、丙烯酸、工程树脂等基础化工路线的典型资源输入",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "electricity",
+      "name": "制造电力与蒸汽",
+      "parent": "materials",
+      "kind": "resource",
+      "branch": "材料到资源",
+      "description": "塑料改性/注塑/冶金/PCB制造的公用工程，供应区域需调查",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "recycled_resin",
+      "name": "回收工程塑料",
+      "parent": "materials",
+      "kind": "material",
+      "branch": "材料到资源",
+      "description": "键帽/机壳的再生聚合物来源与产品实际再生成分需实证",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "manufacturing",
+      "name": "G. 加工设备与质量检测",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "制造与质检",
+      "description": "工艺设备是制造能力链，不应作为成品键盘物理BOM。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "injection",
+      "name": "塑料注塑成型设备",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "键帽、轴体塑料壳、外壳常见加工装备；机器型号与吨位待查",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "multishot_mold",
+      "name": "多色模具与射出机",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "双色或三色注塑键帽加工技术",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "press",
+      "name": "金属冲压模具",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "定位板/触点/端子冲压精密工艺",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "spring_machine",
+      "name": "卷簧与热处理设备",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "弹簧绕制、应力消除和表面处理",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "smt_line",
+      "name": "SMT贴片与回流焊",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "LED/MCU/二极管等元件贴装与连接",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "pcb_etch",
+      "name": "PCB曝光/蚀刻/镀铜",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "电路板制造流程，药液、水处理与废水排放为产业配套",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "cnc_line",
+      "name": "CNC机床与夹具",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "金属外壳/定位板切削加工",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "anodize_line",
+      "name": "阳极氧化生产线",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "铝壳表面处理设备及化学品，含环保排放要求",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "assembly_line",
+      "name": "组装压合和自动锁螺丝",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "键帽、轴体、定位板、PCB、壳体组装",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "switch_tester",
+      "name": "按键寿命与力程曲线测试仪",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "按压次数、力程、触发点、接点抖动的测试方法",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "hall_test",
+      "name": "磁场传感校准设备",
+      "parent": "manufacturing",
+      "kind": "equipment",
+      "branch": "制造与质检",
+      "description": "Hall键盘磁场一致性、温度漂移、极性与校准测试",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "emi_test",
+      "name": "EMC、ESD与无线认证",
+      "parent": "manufacturing",
+      "kind": "process",
+      "branch": "制造与质检",
+      "description": "测试和合规过程，非材料生产公司",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "firmware_test",
+      "name": "USB HID与矩阵固件回归",
+      "parent": "manufacturing",
+      "kind": "process",
+      "branch": "制造与质检",
+      "description": "多键无冲突、固件升级、错误按键识别与耗电测试",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "battery_test",
+      "name": "电池循环寿命与安全测试",
+      "parent": "manufacturing",
+      "kind": "process",
+      "branch": "制造与质检",
+      "description": "适用于有可充电电芯的构型；不能用于无电池USB键盘强行叠加",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "market",
+      "name": "H. 商业环节、终端与回收",
+      "parent": "keyboard",
+      "kind": "category",
+      "branch": "市场与循环",
+      "description": "产品销售、OEM、终端用户与回收属于价值链下游，不能作为上游物料采购证据。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "keyboard_oem",
+      "name": "整机OEM/ODM组装企业",
+      "parent": "market",
+      "kind": "company_role",
+      "branch": "市场与循环",
+      "description": "需要核实代工关系，不能由品牌官网产品销售推定具体代工厂",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "switch_vendor",
+      "name": "轴体生产企业/品牌商",
+      "parent": "market",
+      "kind": "company_role",
+      "branch": "市场与循环",
+      "description": "开关供应行业的角色；并非所有键盘均采购CHERRY或Gateron",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "keycap_vendor",
+      "name": "键帽注塑生产商",
+      "parent": "market",
+      "kind": "company_role",
+      "branch": "市场与循环",
+      "description": "需区别品牌营销、模具制造、注塑产线实际控制方",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pcb_vendor",
+      "name": "PCB制板与SMT加工企业",
+      "parent": "market",
+      "kind": "company_role",
+      "branch": "市场与循环",
+      "description": "供应商身份和代工合同均待独立核实",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "chip_vendor",
+      "name": "MCU/无线/Hall IC芯片制造商",
+      "parent": "market",
+      "kind": "company_role",
+      "branch": "市场与循环",
+      "description": "产品可用于键盘不等于指定整机客户采购",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "distribution",
+      "name": "电商平台/零售渠道",
+      "parent": "market",
+      "kind": "channel",
+      "branch": "市场与循环",
+      "description": "销售渠道不是上游物料生产厂",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "enterprise",
+      "name": "企业与公共机构采购",
+      "parent": "market",
+      "kind": "application",
+      "branch": "市场与循环",
+      "description": "B2B终端需求；采购数量/大客户排名待证",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "consumer",
+      "name": "电竞/办公/个人用户",
+      "parent": "market",
+      "kind": "application",
+      "branch": "市场与循环",
+      "description": "终端消费场景，包含不同价格和配置",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "repair",
+      "name": "可维修与换轴市场",
+      "parent": "market",
+      "kind": "channel",
+      "branch": "市场与循环",
+      "description": "热插拔、轴体替换、键帽改装与售后",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ewaste",
+      "name": "废旧电子设备拆解与回收",
+      "parent": "market",
+      "kind": "process",
+      "branch": "市场与循环",
+      "description": "含电子元器件、塑料、金属和可充电电池分类处理",
+      "relation_type": "associated_with"
+    }
+  ],
+  "materials": [
+    {
+      "id": "KBD_MX_SWITCH",
+      "name": "接点式机械键轴产品族",
+      "node": "mx_system"
+    },
+    {
+      "id": "KBD_HALL_SWITCH",
+      "name": "霍尔磁轴产品族",
+      "node": "hall_system"
+    },
+    {
+      "id": "KBD_HALL_IC",
+      "name": "霍尔位置传感器类别",
+      "node": "hall_sensor"
+    },
+    {
+      "id": "KBD_NRF52840",
+      "name": "Nordic nRF52840 特定SoC",
+      "node": "nrf52840"
+    },
+    {
+      "id": "KBD_FR4",
+      "name": "FR-4玻纤环氧覆铜板材料族",
+      "node": "fr4"
+    },
+    {
+      "id": "KBD_PBT",
+      "name": "PBT工程塑料",
+      "node": "pbt_resin"
+    },
+    {
+      "id": "KBD_ABS",
+      "name": "ABS工程塑料",
+      "node": "abs_resin"
+    },
+    {
+      "id": "KBD_PET",
+      "name": "PET工程塑料",
+      "node": "pet_resin"
+    },
+    {
+      "id": "KBD_COPPER",
+      "name": "电工铜及铜箔材料",
+      "node": "copper"
+    },
+    {
+      "id": "KBD_NDFEB",
+      "name": "钕铁硼永磁材料候选",
+      "node": "neodymium_magnet"
+    },
+    {
+      "id": "KBD_LI_ION",
+      "name": "锂离子电池产品族",
+      "node": "liion_cell"
+    },
+    {
+      "id": "KBD_GOLD_CONTACT",
+      "name": "金接点/镀层相关材料族",
+      "node": "gold"
+    },
+    {
+      "id": "KBD_AL_ALLOY",
+      "name": "铝合金型材/板材族",
+      "node": "aluminum"
+    }
+  ],
+  "companies": [
+    {
+      "id": "CHERRY",
+      "zh": "CHERRY",
+      "en": "Cherry SE",
+      "geo": "Germany",
+      "website": "https://www.cherry.de"
+    },
+    {
+      "id": "GATERON",
+      "zh": "佳达隆（Gateron）",
+      "en": "Gateron",
+      "geo": "China",
+      "website": "https://www.gateron.com"
+    },
+    {
+      "id": "TI",
+      "zh": "德州仪器",
+      "en": "Texas Instruments Incorporated",
+      "geo": "USA",
+      "website": "https://www.ti.com"
+    },
+    {
+      "id": "NORDIC",
+      "zh": "Nordic Semiconductor",
+      "en": "Nordic Semiconductor ASA",
+      "geo": "Norway",
+      "website": "https://www.nordicsemi.com"
+    },
+    {
+      "id": "ISOLA",
+      "zh": "Isola Group",
+      "en": "Isola Group",
+      "geo": "USA",
+      "website": "https://www.isola-group.com"
+    },
+    {
+      "id": "KBDFANS",
+      "zh": "KBDfans",
+      "en": "KBDfans",
+      "geo": "China",
+      "website": "https://kbdfans.com"
+    }
+  ],
+  "company_material": [
+    {
+      "company": "CHERRY",
+      "material": "KBD_MX_SWITCH",
+      "role": "marketed_manufactured_mechanical_switch_family",
+      "source": "S01"
+    },
+    {
+      "company": "GATERON",
+      "material": "KBD_HALL_SWITCH",
+      "role": "published_magnetic_switch_product_family",
+      "source": "S02"
+    },
+    {
+      "company": "TI",
+      "material": "KBD_HALL_IC",
+      "role": "publishes_hall_keyboard_reference_app_note_not_confirmed_keyboard_customer",
+      "source": "S03"
+    },
+    {
+      "company": "NORDIC",
+      "material": "KBD_NRF52840",
+      "role": "semiconductor_manufacturer_product_suitable_for_wireless_keyboards_not_customer_contract",
+      "source": "S07"
+    },
+    {
+      "company": "ISOLA",
+      "material": "KBD_FR4",
+      "role": "publishes_FR4_laminate_material_not_verified_keyboard_supplier",
+      "source": "S08"
+    },
+    {
+      "company": "KBDFANS",
+      "material": "KBD_PBT",
+      "role": "retail_and_own_brand_keycap_product_category_not_resin_supplier",
+      "source": "S09"
+    },
+    {
+      "company": "KBDFANS",
+      "material": "KBD_ABS",
+      "role": "retail_keycap_product_category_not_polymer_manufacturer",
+      "source": "S09"
+    }
+  ],
+  "company_relations": [],
+  "markets": [],
+  "shares": [],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "CHERRY MX2A RED — 官方机械轴结构",
+      "url": "https://www.cherry.de/en-us/product/mx2a-red",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "title": "Gateron KS-20 Magnetic White Hall Sensor Switch",
+      "url": "https://gateron.com/products/gateron-ks-20-magnetic-white-switch-set",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "title": "TI Position Sensing in Keyboard Applications, SLYA093 (2025)",
+      "url": "https://www.ti.com/lit/an/slya093/slya093.pdf",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "title": "QMK How a Keyboard Matrix Works",
+      "url": "https://docs.qmk.fm/how_a_matrix_works",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "title": "USB-IF HID Specifications and Usage Tables 1.7 (2026)",
+      "url": "https://usb.org/hid",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "title": "Bluetooth SIG HID Over GATT Profile v1.2 (2026)",
+      "url": "https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/hogp_v1-2_1777405843/HOGP_v1.2/out/en/index-en.html",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "title": "Nordic Semiconductor nRF52840 官方产品",
+      "url": "https://www.nordicsemi.com/Products/nRF52840/GetStarted?lang=zh-CN",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "title": "Isola FR408HR Glass Epoxy Laminate",
+      "url": "https://www.isola-group.com/pcb-laminates-prepreg/fr408hr-laminate-and-prepreg/",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "title": "KBDfans PBTfans Doubleshot 双色注塑工艺",
+      "url": "https://kbdfans.com/pages/about-pbtfans-doubleshot",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "title": "ZMK Wireless / Wired Keyboard Firmware Docs",
+      "url": "https://zmk.dev/docs",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "title": "Gateron Magnetic Switches Series",
+      "url": "https://www.gateron.com/blog/detail/gateron-magnetic-switches-series-for-the-ultimate-gaming-experience",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "title": "CHERRY MX2A 产品与工艺公告",
+      "url": "https://www.cherry.de/en-us/company/news/cherry-blog/article/cherry-mx2a",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "title": "TI TMAG5134 Position Sensor Product Announcement (2025)",
+      "url": "https://www.ti.com/en-us/about-ti/newsroom/news-releases/2025/ti-unveils-the-industrys-most-sensitive-in-plane-hall-effect-switch-enabling-lower-design-costs",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "title": "CHERRY MX2A BLUE 键轴结构",
+      "url": "https://www.cherry.de/en-us/product/mx2a-blue",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "title": "QMK How Keyboards Work: USB HID",
+      "url": "https://docs.qmk.fm/how_keyboards_work",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "title": "QMK Firmware Keyboard Matrix Config",
+      "url": "https://docs.qmk.fm/porting_your_keyboard_to_qmk",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "title": "USB-IF HID Device Class v1.11",
+      "url": "https://www.usb.org/documents?search=HID+usage+tables",
+      "type": "official_primary",
+      "checked_on": "2026-11-18"
+    }
+  ],
+  "opportunities": [],
+  "capacity": [],
+  "procurement": [],
+  "node_intelligence": [
+    {
+      "node_id": "cherry_mx_red",
+      "description": "CHERRY公开MX2A红轴的弹簧、金触点和塑料件结构；不要外推所有品牌",
+      "kind": "sku",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S01",
+        "S12"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "mx_system",
+      "description": "通过轴芯运动和金属接点导通实现触发；非所有机械轴采用同一结构",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S01",
+        "S14"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "mx_gold_contacts",
+      "description": "CHERRY Gold Crosspoint为其特定产品技术，非所有机械轴通用",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S01",
+        "S12"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "mx_spring",
+      "description": "典型金属压缩弹簧，需分钢号、丝径和热处理工艺",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S01"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "mx_stem",
+      "description": "决定线性/段落/点击机构与摩擦特征，具体树脂牌号不公开",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S01"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "gateron_ks20",
+      "description": "磁轴含永磁体；霍尔检测系统一般配合PCB上传感器",
+      "kind": "sku",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S02",
+        "S11"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "总键程",
+          "value": "4.1±0.2",
+          "unit": "mm",
+          "condition": "Gateron KS-20 Magnetic White; 厂家标称",
+          "source_id": "S02"
+        },
+        {
+          "label": "初始磁通密度（厂商规格）",
+          "value": 102,
+          "unit": "Gs",
+          "condition": "Gateron KS-20 Magnetic White; 磁钢与传感器系统规格，不可当其他型号",
+          "source_id": "S02"
+        }
+      ],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "hall_system",
+      "description": "永磁体位置变化由PCB上Hall传感器测量；不得假定每款磁轴使用同一家IC",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S02",
+        "S03"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "hall_sensor",
+      "description": "可测磁场大小并用于位移判断；应核实模拟/数字传感器架构",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S03"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "hall_adc",
+      "description": "用于位置读数；是否使用MCU内部ADC取决于设计",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S03"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "magnet",
+      "description": "磁场随键程变化，永久磁材可能采用不同等级，未知具体配方勿猜NdFeB",
+      "kind": "component",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S02",
+        "S03"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "rapid_trigger",
+      "description": "依赖位置数据与触发状态机，不是一个独立原材料",
+      "kind": "process",
+      "branch": "键轴与触发",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S02"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "matrix",
+      "description": "普通接点开关常用行列扫描与二极管防鬼键配置",
+      "kind": "process",
+      "branch": "PCB与控制",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S04"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "rowcol",
+      "description": "矩阵扫描电气结构，行列数不是可精确换算的真实物料成本",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S04"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "qmk",
+      "description": "开源键盘软件技术，可配置矩阵扫描和USB报告；不等于所有键盘的商用固件",
+      "kind": "software",
+      "branch": "PCB与控制",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S04",
+        "S15",
+        "S16"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "usb_hid",
+      "description": "USB-IF键盘使用码和报文规范；这是标准不是物理供应商",
+      "kind": "standard",
+      "branch": "PCB与控制",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S05",
+        "S15"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "controller",
+      "description": "扫描、消抖、HID报告与可选灯控；具体供货随型号不同",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S04",
+        "S16"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "ble_profile",
+      "description": "HID over GATT profile，使用BLE承载键盘HID报告",
+      "kind": "standard",
+      "branch": "无线与能源",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S06"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "ble_wireless",
+      "description": "BLE HOGP输入报告；需无线SoC与电池/供电方案",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S06"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "ble_soc",
+      "description": "可选无线控制芯片，Nordic nRF52840只是候选产品例子",
+      "kind": "component",
+      "branch": "无线与能源",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S07"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "nrf52840",
+      "description": "Nordic官方无线SoC含BLE、USB、存储与MCU；仅为公开可选芯片，不证明被指定品牌采购",
+      "kind": "sku",
+      "branch": "无线与能源",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S07"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "Flash存储容量",
+          "value": 1,
+          "unit": "MB",
+          "condition": "Nordic nRF52840 SoC公开规格；非整机硬盘",
+          "source_id": "S07"
+        },
+        {
+          "label": "RAM",
+          "value": 256,
+          "unit": "KB",
+          "condition": "Nordic nRF52840 SoC",
+          "source_id": "S07"
+        }
+      ],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "zmk",
+      "description": "面向低功耗有线/无线输入设备的开源方案，非每款键盘都使用",
+      "kind": "software",
+      "branch": "无线与能源",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S10"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "fr4",
+      "description": "玻纤织物与热固性树脂形成常用PCB基材，不指明Isola为键盘供应商",
+      "kind": "material",
+      "branch": "PCB与控制",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S08"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "玻璃化转变温度 Tg",
+          "value": 190,
+          "unit": "°C",
+          "condition": "仅Isola FR408HR型号，DSC测试；并非所有FR4或键盘PCB",
+          "source_id": "S08"
+        }
+      ],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "pcb_stack",
+      "description": "玻纤环氧覆铜板、多层线路、阻焊与表面处理；不是每款键盘相同堆叠",
+      "kind": "component",
+      "branch": "PCB与控制",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S08"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "keycap_system",
+      "description": "PBT/ABS以及印字工艺可互换，成套键帽不是一种聚合物",
+      "kind": "component",
+      "branch": "键帽与结构",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S09"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "pbt_caps",
+      "description": "PBT主要原料或混配体系，不能假设100%纯PBT",
+      "kind": "material",
+      "branch": "键帽与结构",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S09"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "abs_caps",
+      "description": "聚丙烯腈-丁二烯-苯乙烯树脂，通常通过注塑成形",
+      "kind": "material",
+      "branch": "键帽与结构",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S09"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "doubleshot",
+      "description": "字符与主体分别注射，需多色模具及工艺设计",
+      "kind": "process",
+      "branch": "键帽与结构",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S09"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "wired_usb",
+      "description": "USB物理供电与HID协议；省去内置无线射频是常见结构选项",
+      "kind": "configuration",
+      "branch": "产品构型",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S05"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    },
+    {
+      "node_id": "wireless",
+      "description": "无线键盘的差异化子系统；有线USB键盘无需强制加入锂电与射频。",
+      "kind": "category",
+      "branch": "无线与能源",
+      "review_status": "draft",
+      "evidence_status": "official_primary_not_semantically_approved",
+      "source_ids": [
+        "S06"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [],
+      "claims": [],
+      "gaps": [
+        "指定品牌/型号真实供应商与物料BOM需要独立公告或合同证据",
+        "同口径市场TOP3、年度产能与采购份额仍需多信源调查"
+      ]
+    }
+  ],
+  "cross_links": [
+    {
+      "id": "KBX001",
+      "from": "mx_system",
+      "to": "mech_keyboard",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S01",
+      "note": "机械接点轴是可选键盘构型，Cherry只是代表，不等于整机采购"
+    },
+    {
+      "id": "KBX002",
+      "from": "cherry_mx_red",
+      "to": "mx_system",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S01",
+      "note": "具体产品SKU属于机械接点轴类别"
+    },
+    {
+      "id": "KBX003",
+      "from": "mx_gold_contacts",
+      "to": "cherry_mx_red",
+      "relation_type": "component_of",
+      "evidence_status": "technological",
+      "source_id": "S01",
+      "note": "Cherry公开金触点结构；其他轴体不能类推"
+    },
+    {
+      "id": "KBX004",
+      "from": "mx_spring",
+      "to": "cherry_mx_red",
+      "relation_type": "component_of",
+      "evidence_status": "technological",
+      "source_id": "S01",
+      "note": "典型回弹弹簧结构"
+    },
+    {
+      "id": "KBX005",
+      "from": "mx_stem",
+      "to": "cherry_mx_red",
+      "relation_type": "component_of",
+      "evidence_status": "technological",
+      "source_id": "S01",
+      "note": "典型机械轴滑块结构"
+    },
+    {
+      "id": "KBX006",
+      "from": "hall_system",
+      "to": "hall_keyboard",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S03",
+      "note": "霍尔方案是磁轴键盘可选核心技术"
+    },
+    {
+      "id": "KBX007",
+      "from": "gateron_ks20",
+      "to": "hall_system",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S02",
+      "note": "Gateron磁轴示例"
+    },
+    {
+      "id": "KBX008",
+      "from": "magnet",
+      "to": "hall_system",
+      "relation_type": "component_of",
+      "evidence_status": "technological",
+      "source_id": "S02",
+      "note": "传感磁场来自随轴芯移动的永磁体"
+    },
+    {
+      "id": "KBX009",
+      "from": "hall_sensor",
+      "to": "hall_system",
+      "relation_type": "component_of",
+      "evidence_status": "technological",
+      "source_id": "S03",
+      "note": "PCB侧磁感元件，实际牌号/供应商未知"
+    },
+    {
+      "id": "KBX010",
+      "from": "hall_adc",
+      "to": "hall_sensor",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S03",
+      "note": "模拟输出采样的可能方案，具体MCU实现不固定"
+    },
+    {
+      "id": "KBX011",
+      "from": "neodymium_magnet",
+      "to": "magnet",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "候选磁体化学路线；未确证Gateron KS20磁钢材质"
+    },
+    {
+      "id": "KBX012",
+      "from": "samarium_cobalt",
+      "to": "magnet",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "另一候选永磁路线，并不代表与钕铁硼同时使用"
+    },
+    {
+      "id": "KBX013",
+      "from": "membrane_system",
+      "to": "membrane_keyboard",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "薄膜键盘产业常见结构，尚缺产品级特定来源"
+    },
+    {
+      "id": "KBX014",
+      "from": "scissor_link",
+      "to": "scissor_keyboard",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "剪刀脚机械支架并不能推定导电膜材"
+    },
+    {
+      "id": "KBX015",
+      "from": "pbt_resin",
+      "to": "pbt_caps",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "KBDfans披露PBT键帽材料包含混配配方，不一定100%PBT"
+    },
+    {
+      "id": "KBX016",
+      "from": "abs_resin",
+      "to": "abs_caps",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "ABS键帽的注塑材料类别"
+    },
+    {
+      "id": "KBX017",
+      "from": "doubleshot",
+      "to": "keycap_system",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "双色或三色注塑工艺属于键帽制作而非原料"
+    },
+    {
+      "id": "KBX018",
+      "from": "fr4",
+      "to": "pcb_stack",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S08",
+      "note": "FR4为PCB常见材料族，具体板厂可选其他级别"
+    },
+    {
+      "id": "KBX019",
+      "from": "copper_foil",
+      "to": "pcb_stack",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "常规覆铜板技术原料；具体PCB工艺待研究"
+    },
+    {
+      "id": "KBX020",
+      "from": "matrix",
+      "to": "controller",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S04",
+      "note": "矩阵扫描是普通触点键盘控制器常见固件工作"
+    },
+    {
+      "id": "KBX021",
+      "from": "diodes",
+      "to": "matrix",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "许多设计用二极管防鬼键，是否采用取决于矩阵架构"
+    },
+    {
+      "id": "KBX022",
+      "from": "qmk",
+      "to": "controller",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S15",
+      "note": "开源固件实现，不代表指定商业键盘采用QMK"
+    },
+    {
+      "id": "KBX023",
+      "from": "usb_hid",
+      "to": "wired_usb",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S05",
+      "note": "USB键盘协议标准"
+    },
+    {
+      "id": "KBX024",
+      "from": "ble_profile",
+      "to": "ble_wireless",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S06",
+      "note": "BLE无线键盘使用HOGP协议类别"
+    },
+    {
+      "id": "KBX025",
+      "from": "nrf52840",
+      "to": "ble_soc",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S07",
+      "note": "Nordic候选SoC并非已确认供应给特定键盘厂"
+    },
+    {
+      "id": "KBX026",
+      "from": "ble_soc",
+      "to": "ble_wireless",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "无线方案可选不同SoC"
+    },
+    {
+      "id": "KBX027",
+      "from": "zmk",
+      "to": "ble_wireless",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S10",
+      "note": "无线固件生态关系而不是器件供应"
+    },
+    {
+      "id": "KBX028",
+      "from": "liion_cell",
+      "to": "ble_wireless",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "可充电无线构型之一；也可使用AA/AAA一次性电池"
+    },
+    {
+      "id": "KBX029",
+      "from": "pbt_caps",
+      "to": "keycap_system",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "PBT材质键帽方案，和ABS可替代"
+    },
+    {
+      "id": "KBX030",
+      "from": "abs_caps",
+      "to": "keycap_system",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "ABS材质键帽方案，和PBT可替代"
+    },
+    {
+      "id": "KBX031",
+      "from": "pta",
+      "to": "pbt_resin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "PBT常用工业聚合原料路线，不代表特定键帽品牌上游采购"
+    },
+    {
+      "id": "KBX032",
+      "from": "bdo",
+      "to": "pbt_resin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "PBT常用工业聚合原料路线，需调查生产企业"
+    },
+    {
+      "id": "KBX033",
+      "from": "styrene",
+      "to": "abs_resin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "ABS基本化工路线，仅技术关联"
+    },
+    {
+      "id": "KBX034",
+      "from": "acrylonitrile",
+      "to": "abs_resin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "ABS基本化工路线，仅技术关联"
+    },
+    {
+      "id": "KBX035",
+      "from": "butadiene",
+      "to": "abs_resin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "ABS基本化工路线，仅技术关联"
+    },
+    {
+      "id": "KBX036",
+      "from": "bpa",
+      "to": "pc_resin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "BPA型PC路线可能适用，不能推断键帽PC供应合同"
+    },
+    {
+      "id": "KBX037",
+      "from": "siloxane",
+      "to": "silicone",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "硅橡胶常见聚合原料方向，具体配方未知"
+    },
+    {
+      "id": "KBX038",
+      "from": "quartz",
+      "to": "siloxane",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "二氧化硅至有机硅的一般资源路径"
+    },
+    {
+      "id": "KBX039",
+      "from": "copper_concentrate",
+      "to": "copper",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "矿产或回收铜的资源路径，未识别产品厂商"
+    },
+    {
+      "id": "KBX040",
+      "from": "bauxite",
+      "to": "aluminum",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "铝土矿至氧化铝至电解铝的一般工业路径"
+    },
+    {
+      "id": "KBX041",
+      "from": "rare_earth_ore",
+      "to": "neodymium_magnet",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "稀土永磁材料的资源类路径，不证明Gateron的实际磁体选型"
+    },
+    {
+      "id": "KBX042",
+      "from": "polysilicon",
+      "to": "semiconductor_si",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "半导体硅资源链，晶圆制造与具体Fab尚未核实"
+    },
+    {
+      "id": "KBX043",
+      "from": "oil_gas",
+      "to": "styrene",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "石油化工到苯乙烯的典型路线，非采购关系"
+    },
+    {
+      "id": "KBX044",
+      "from": "oil_gas",
+      "to": "pta",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "PX/氧化为PTA的石化链候选，未确定实际供货来源"
+    },
+    {
+      "id": "KBX045",
+      "from": "wafer",
+      "to": "hall_sensor",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "晶圆制造的上游工艺关联，不证明特定Foundry"
+    },
+    {
+      "id": "KBX046",
+      "from": "smt_line",
+      "to": "pcb_stack",
+      "relation_type": "uses_equipment",
+      "evidence_status": "technological",
+      "source_id": null,
+      "note": "通常需要SMT贴片装备；具体设备企业尚未核实"
+    },
+    {
+      "id": "KBX047",
+      "from": "injection",
+      "to": "keycap_system",
+      "relation_type": "uses_equipment",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "键帽注塑需要设备，未核实键帽厂采购何品牌注塑机"
+    }
+  ],
+  "product_configurations": [
+    {
+      "id": "mechanical_usb",
+      "description": "机械接点轴+USB有线；无电池/无线RF为典型结构之一"
+    },
+    {
+      "id": "hall_usb",
+      "description": "Hall磁轴+USB有线+传感器，是否含可调触发需固件确认"
+    },
+    {
+      "id": "membrane_usb",
+      "description": "橡胶碗薄膜+USB；不用按机械轴加金触点"
+    },
+    {
+      "id": "mechanical_ble",
+      "description": "机械轴+BLE+电池/充电或一次电池备选；不可同时要求两种电池"
+    }
+  ],
+  "relationship_note": "Tree is for navigation and technical comparison. Cross_links are scoped/typed; no brand-to-OEM purchasing contracts or supplier rankings proven.",
+  "data_governance": {
+    "research_scope": "外接电脑键盘的多构型技术图谱，非单一SKU的真实BOM",
+    "no_market_share_assumptions": "No comparable vendor TOP3 by switch/keycap/PCB grade yet.",
+    "no_specific_procurement": "Official Cherry/Gateron/Isola/TI/Nordic evidence shows product capabilities not keyboard OEM purchasing contracts.",
+    "origin_independence": "Manufacturer disclosures and standards are independent for technology boundaries but not independent sector share studies.",
+    "evidence_state": "Public primary records, not independently human-semantic-approved"
+  }
+}
