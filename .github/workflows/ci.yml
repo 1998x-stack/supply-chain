@@ -24,6 +24,9 @@ jobs:
           python scripts/research_cli.py audit-ledger --input research/examples/ledger.json
           python scripts/research_cli.py audit-dossier --input research/examples/node-dossier.json
 
+      - name: Audit every eyewear dossier and its ledger (structure only)
+        run: python scripts/audit_eyewear.py --output build/research/eyewear_audit.json
+
       - name: Audit optical PC research example (structure only)
         run: |
           python scripts/research_cli.py audit-ledger --input research/ledgers/eyewear/pc-optical-ledger.json

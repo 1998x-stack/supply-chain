@@ -1,0 +1,112 @@
+{
+  "node_id": "N0163",
+  "canonical_entity_id": "MAT:ACETATE_SHEET",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "醋酸纤维素板材",
+  "node_type": "frame_material",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Cellulose acetate eyewear sheet",
+      "aliases": [
+        "醋酸纤维素板材",
+        "acetate sheet",
+        "CA sheet"
+      ],
+      "scope": "镜架板材，不等于TAC偏光膜或全部纤维素衍生品"
+    },
+    "technical": {
+      "purpose": "醋酸板材镜圈/镜腿；涉及染色、层压、切削、抛光与成形",
+      "process": "木浆/棉短绒提纯纤维素→醋酐酯化→CA粉末→加增塑剂/色料→板材",
+      "process_notes": "不同厂商使用不同增塑剂、溶剂及成板工艺，不可据此推导某一家下游眼镜品牌采购关系"
+    },
+    "upstream": [
+      {
+        "name": "高纯木浆、棉短绒",
+        "relationship": "cellulose feedstock",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "name": "醋酸酐",
+        "relationship": "cellulose acetylation reagent",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "name": "增塑剂与色料",
+        "relationship": "sheet formulation",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "醋酸板材镜框及镜腿",
+        "relation": "technological",
+        "source_ids": [
+          "S001",
+          "S002"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "name": "Mazzucchelli 1849",
+        "relationship": "sheet_manufacturer",
+        "source_ids": [
+          "S001"
+        ],
+        "confirmed_lens_brand_customer": false
+      },
+      {
+        "name": "Eastman",
+        "relationship": "eyewear_material_manufacturer",
+        "source_ids": [
+          "S002"
+        ],
+        "confirmed_lens_brand_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "grade_variation",
+        "state": "important",
+        "reason": "配方、色号与增塑剂可造成成本和性能差异"
+      },
+      {
+        "type": "certification",
+        "state": "unknown",
+        "reason": "回收含量与生物基比例必须按独立牌号/认证口径核实"
+      }
+    ],
+    "open_questions": [
+      "醋酸纤维素板材厂家全球与中国TOP3出货量/出货额有无独立统计？",
+      "醋酐、溶解浆、增塑剂各自的主要实际采购供应商是谁？",
+      "循环材料的质量平衡法、可追溯来源及第三方审核是什么？",
+      "具体客户是否披露板材品牌、色号、批次及年度采购金额？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Original-page semantic review and independent-source challenge still needed."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Evidence-first dossier. Technical production pathway and manufacturer product offering are not actual supply contracts."
+}

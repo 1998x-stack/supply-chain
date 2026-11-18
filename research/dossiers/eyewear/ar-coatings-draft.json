@@ -1,0 +1,113 @@
+{
+  "node_id": "N0088",
+  "canonical_entity_id": null,
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "减反射多层膜 AR",
+  "node_type": "lens_functional_layer",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Anti-reflection multilayer coating on ophthalmic lens",
+      "aliases": [
+        "AR coating",
+        "减反射膜",
+        "anti-reflective layer"
+      ],
+      "scope": "涂层工艺+功能层，区别光学级蒸镀物料与普通TiO2颜料"
+    },
+    "technical": {
+      "purpose": "降低镜片表面反射并可与加硬、疏水、疏油层叠加",
+      "properties": [
+        {
+          "attribute": "process_class",
+          "value": "vacuum multi-layer stacks",
+          "source_id": "S001"
+        },
+        {
+          "attribute": "upper_layer",
+          "value": "hydrophobic/oleophobic top coat (optional)",
+          "source_id": "S002"
+        }
+      ],
+      "process": "真空蒸镀/多层膜设计与顶层疏水功能处理，实际膜系与厚度由工艺限定"
+    },
+    "upstream": [
+      {
+        "name": "光学镀膜级高纯材料",
+        "relationship": "candidate deposition input",
+        "evidence_status": "composition_varies_by_stack"
+      },
+      {
+        "name": "加硬层及涂料",
+        "relationship": "surface preparation",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "name": "真空镀膜设备与耗材",
+        "relationship": "equipment",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "经AR镀膜处理的矫正镜片",
+        "relation": "surface_function",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "name": "Satisloh",
+        "relationship": "coating_equipment_and_process_supplier",
+        "source_ids": [
+          "S001",
+          "S002"
+        ],
+        "confirmed_lens_brand_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "scope_mismatch",
+        "state": "critical",
+        "reason": "TiO2颜料市场份额不能代表光学膜料市场"
+      },
+      {
+        "type": "recipe",
+        "state": "unknown",
+        "reason": "具体工艺多层膜料的供应商与膜厚配方未披露"
+      }
+    ],
+    "open_questions": [
+      "高低折射率光学膜料对应的具体化学纯度和质量标准是什么？",
+      "光学膜料、涂层设备和镜片品牌的真实合同有无公开披露？",
+      "加硬/AR/疏水三层的测试标准与保修失效率如何比较？",
+      "各镀膜设备商与耗材商在眼镜专用市场的份额有无同口径来源？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Original-page semantic review and independent-source challenge still needed."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Evidence-first dossier. Technical production pathway and manufacturer product offering are not actual supply contracts."
+}

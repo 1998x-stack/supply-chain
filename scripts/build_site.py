@@ -50,11 +50,19 @@ def read_public_research(slug, node_ids):
     for path in sorted((root/'ledgers'/slug).glob('*.json')):
         data=json.loads(path.read_text(encoding='utf-8'))
         if data['node_id'] in ledgers:raise ValueError('Duplicate node research ledger')
-        ledgers[data['node_id']]=data
+        from research_cli import audit_ledger
+        qa=audit_ledger(data)
+        if not qa["structure_valid"]:
+            raise ValueError("Invalid evidence ledger "+str(path)+": "+repr(qa["errors"]))
+        ledgers[data["node_id"]]=data
     out=[]
     for path in sorted((root/'dossiers'/slug).glob('*.json')):
         doc=json.loads(path.read_text(encoding='utf-8'))
-        node=doc['node_id']
+        from research_cli import audit_dossier
+        qa=audit_dossier(doc)
+        if not qa["structure_valid"]:
+            raise ValueError("Invalid research dossier "+str(path)+": "+repr(qa["errors"]))
+        node=doc["node_id"]
         if node not in node_ids:raise ValueError('Dossier node not in product: '+node)
         ledger=ledgers.get(node)
         if ledger is None:raise ValueError('Missing node evidence ledger: '+node)
@@ -311,8 +319,9 @@ def main():
     catalog={'version':1,'stats':{'nodes':sum(len(x['tree_node']) for _,x in products),'companies':len({c['company_id'] for _,x in products for c in x['company']}),'sources':sum(len(x['source']) for _,x in products)},'products':[]}
     for meta,x in products:
         slug=meta['slug']
-        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,read_public_research(slug,{n['node_id'] for n in x['tree_node']})),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
-        catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node'])})
+        research=read_public_research(slug,{n['node_id'] for n in x['tree_node']})
+        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,research),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
+        catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node']),'research_dossiers':len(research)})
     (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
     (d/'reverse_index.json').write_text(json.dumps(reverse,ensure_ascii=False,indent=2),encoding='utf-8')
     (dist/'.nojekyll').write_text('',encoding='utf-8')
@@ -320,6 +329,8 @@ def main():
     if eyewear is not None:
         add_sqlite(eyewear,ROOT/'build'/'supply_chain.sqlite')
         add_additional_products(products,ROOT/'build'/'supply_chain.sqlite')
+        from ingest_research import ingest
+        ingest(ROOT/'build'/'supply_chain.sqlite')
     else:
         raise ValueError('First-version database importer currently requires the eyewear seed')
     print('BUILD_OK',json.dumps(catalog['stats'],ensure_ascii=False),'products=',len(products),'dist=',dist)

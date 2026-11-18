@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0163",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://www.mazzucchelli1849.it/pages/materials-and-processing",
+      "title": "Mazzucchelli 1849 – Materials and processing",
+      "publisher": "Mazzucchelli",
+      "origin_group": "mazzucchelli_material",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "From these sources the purest part of the cellulose is extracted which is subsequently treated with Acetic Anhydride",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    },
+    {
+      "id": "S002",
+      "url": "https://www.eastman.com/en/products/industries/consumer-goods/eyewear/applications/eyeglass-frames",
+      "title": "Eastman – Eyeglass frames material choices",
+      "publisher": "Eastman",
+      "origin_group": "eastman_eyewear",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Explore Acetate Renew",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Mazzucchelli官方描述纤维素提取后经过醋酸酐处理以制成醋酸纤维素粉末。",
+      "status": "supported",
+      "analysis": "支持一般化学处理环节，不意味着能识别其醋酐供应商。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "treated with Acetic Anhydride",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "Eastman提供Acetate Renew作为眼镜架的材料选择。",
+      "status": "supported",
+      "analysis": "证明制造商材料产品存在，不等于任意镜架都采用该再生材料。",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "Explore Acetate Renew",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "canonical_entity_id": "MAT:ACETATE_SHEET",
+  "research_limitations": [
+    "The archived content is a short original excerpt, not the full article text.",
+    "Company product marketing does not verify actual buyer-supplier transactions.",
+    "Semantic human review remains pending; machine checks validate structure only."
+  ]
+}

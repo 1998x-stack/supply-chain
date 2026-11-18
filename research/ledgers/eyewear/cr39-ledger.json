@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0004",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://www.ppg.com/en-US/optical/about-us",
+      "title": "PPG Optical Monomers and Coatings – About Us",
+      "publisher": "PPG",
+      "origin_group": "ppg_optical",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Our extensive line of optical monomers includes PPG CR-39® plastic lens material",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    },
+    {
+      "id": "S002",
+      "url": "https://www.ppg.com/en-US/optical/products",
+      "title": "PPG Optical Monomers and Coatings – Products",
+      "publisher": "PPG",
+      "origin_group": "ppg_optical",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "CR-39 Monomer Our proprietary scratch- and heat-resistant lens monomer",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "PPG将CR-39列为其生产销售的光学级镜片单体产品。",
+      "status": "supported",
+      "analysis": "一手厂商官网证实产品供给，不足以证明下游客户名单。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "PPG CR-39® plastic lens material",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "PPG在产品页将CR-39称为自有光学单体产品。",
+      "status": "supported",
+      "analysis": "证明官方产品类别，不足以推出市场份额排名。",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "CR-39 Monomer",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "canonical_entity_id": "MAT:CR39",
+  "research_limitations": [
+    "The archived content is a short original excerpt, not the full article text.",
+    "Company product marketing does not verify actual buyer-supplier transactions.",
+    "Semantic human review remains pending; machine checks validate structure only."
+  ]
+}

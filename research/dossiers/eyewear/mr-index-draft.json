@@ -1,0 +1,110 @@
+{
+  "node_id": "N0019",
+  "canonical_entity_id": "MAT:MR",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "高折射率浇铸树脂镜片（MR类）",
+  "node_type": "lens_material",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Mitsui MR thiourethane optical lens materials",
+      "aliases": [
+        "MR-8",
+        "MR-7",
+        "MR-174"
+      ],
+      "scope": "MR产品系列；不能将MR-8专用市场与所有高折射率镜片材料混用"
+    },
+    "technical": {
+      "purpose": "薄型近视与其他矫正镜片的高折射率浇铸树脂体系",
+      "properties": [
+        {
+          "attribute": "nominal_refractive_index",
+          "value": 1.6,
+          "grade": "MR-8",
+          "source_id": "S001"
+        },
+        {
+          "attribute": "Abbe number (nu_e)",
+          "value": 41,
+          "grade": "MR-8",
+          "test_condition": "manufacturer representative, not guaranteed",
+          "source_id": "S002"
+        },
+        {
+          "attribute": "heat distortion temperature",
+          "value": 118,
+          "unit": "degree C",
+          "grade": "MR-8",
+          "test_condition": "manufacturer representative",
+          "source_id": "S002"
+        }
+      ],
+      "process": "硫代氨基甲酸酯体系浇铸聚合；具体单体配比属于需逐牌号核实的信息"
+    },
+    "upstream": [
+      {
+        "name": "多硫醇/异氰酸酯等配方族",
+        "relationship": "chemical family",
+        "evidence_status": "research_required_per_grade"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "高折射率浇铸镜片",
+        "relation": "technological",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "name": "Mitsui Chemicals",
+        "relationship": "material_manufacturer",
+        "source_ids": [
+          "S001",
+          "S002"
+        ],
+        "confirmed_lens_brand_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "grade_and_test_method",
+        "state": "important",
+        "reason": "厂家典型值不应写成所有MR镜片的保证值"
+      },
+      {
+        "type": "supplier_market",
+        "state": "unknown",
+        "reason": "没有MR-8细分全球份额TOP3统一口径"
+      }
+    ],
+    "open_questions": [
+      "MR-8/MR-7/MR-174各自的单体/多硫醇体系区别有哪些？",
+      "全球同类1.60/1.67/1.74硫代氨基甲酸酯材料生产商及可比市场占比？",
+      "是否存在镜片品牌对某一牌号的官方认证与供货公告？",
+      "具体牌号现行TDS、SDS与工艺限制是否可公开获取？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Original-page semantic review and independent-source challenge still needed."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Evidence-first dossier. Technical production pathway and manufacturer product offering are not actual supply contracts."
+}

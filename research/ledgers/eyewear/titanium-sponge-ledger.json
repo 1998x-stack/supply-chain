@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0224",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://www.usgs.gov/centers/national-minerals-information-center/china",
+      "title": "USGS – China minerals overview",
+      "publisher": "USGS",
+      "origin_group": "usgs_china_2024",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Production of titanium sponge increased by 17% to 256,000 t",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "USGS报告中国2024年海绵钛产量约256,000吨、同比增长17%。",
+      "status": "supported",
+      "analysis": "国家产量数据，不代表公司市场份额或眼镜镜架专用材料消费。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "Production of titanium sponge increased by 17% to 256,000 t",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "canonical_entity_id": "MAT:TITANIUM_SPONGE",
+  "research_limitations": [
+    "The archived content is a short original excerpt, not the full article text.",
+    "Company product marketing does not verify actual buyer-supplier transactions.",
+    "Semantic human review remains pending; machine checks validate structure only."
+  ]
+}

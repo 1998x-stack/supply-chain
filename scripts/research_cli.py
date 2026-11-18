@@ -113,13 +113,32 @@ def plan(a):
                 "Human researcher must inspect actual content, source independence and contradictions."]}
 
 def seed_backlog(a):
+    """Generate an honest to-do list, retaining actual dossier status if present."""
     path=ROOT/"data"/"products"/a.product/"intelligence_data.json.gz"
     with gzip.open(path,"rt",encoding="utf-8") as f:seed=json.load(f)
-    entries=[{"node_id":n["node_id"],"name":n.get("name"),"branch":n.get("branch"),"parent_id":n.get("parent_id"),
-              "research_state":"unreviewed","priority":"unrated","dossier":None,"verified_claims":None}
-             for n in seed["tree_node"]]
-    return {"schema_version":"1.0","product_slug":a.product,"generated_at":utc(),"nodes":entries,"count":len(entries),
-            "notice":"This is a to-do list, not evidence that the 382 nodes have been researched."}
+    docs={}
+    for f in sorted((ROOT/"research"/"dossiers"/a.product).glob("*.json")):
+        d=read(f);nid=d["node_id"]
+        if nid in docs:raise ValueError("Duplicate dossier node "+nid)
+        docs[nid]=(d,f)
+    entries=[]
+    for n in seed["tree_node"]:
+        nid=n["node_id"];record=docs.get(nid)
+        d,fp=record if record else ({},None)
+        semantic=d.get("semantic_review") or {}
+        approved=semantic.get("status")=="approved"
+        entries.append({"node_id":nid,"name":n.get("name"),"branch":n.get("branch"),
+           "parent_id":n.get("parent_id"),"research_state":d.get("review_state","unreviewed"),
+           "priority":"unrated","dossier":str(fp.relative_to(ROOT)) if fp else None,
+           "claim_count":len(d.get("claim_ids",[])) if fp else 0,
+           "semantic_review_status":semantic.get("status","not_started") if fp else "not_started",
+           "verified_claims":len(d.get("claim_ids",[])) if approved else 0})
+    missing=set(docs)-{n["node_id"] for n in seed["tree_node"]}
+    if missing:raise ValueError("Dossier nodes not in product: "+repr(sorted(missing)))
+    return {"schema_version":"1.1","product_slug":a.product,"generated_at":utc(),"nodes":entries,
+        "count":len(entries),"dossier_count":len(docs),
+        "unreviewed_count":sum(n["research_state"]=="unreviewed" for n in entries),
+        "notice":"Dossier state is not evidence that semantic claims are independently verified."}
 
 def coverage(a):
     root=Path(a.dossiers);rows=[]

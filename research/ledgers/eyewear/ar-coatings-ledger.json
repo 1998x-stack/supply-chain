@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0088",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://www.satisloh.com/ophthalmic/products/ar-coating",
+      "title": "Satisloh – AR coating equipment",
+      "publisher": "Satisloh",
+      "origin_group": "satisloh_coating",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "anti-reflective (AR) and mirror coating equipment",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    },
+    {
+      "id": "S002",
+      "url": "https://www.satisloh.com/ophthalmic/products/ar-coating/top-coat-overview",
+      "title": "Satisloh – Top coat overview",
+      "publisher": "Satisloh",
+      "origin_group": "satisloh_coating",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Top coats make lenses easy to clean, smooth, hydrophobic and oleophobic",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Satisloh经营眼镜镜片减反射及镜面镀膜设备与工艺。",
+      "status": "supported",
+      "analysis": "确认设备及工艺角色，不等于生产全部光学膜料。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "anti-reflective (AR) and mirror coating equipment",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "Satisloh产品资料描述了可选的疏水/疏油顶层。",
+      "status": "supported",
+      "analysis": "说明可用工艺，不应默认每副眼镜均包含该层。",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "hydrophobic and oleophobic",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "canonical_entity_id": null,
+  "research_limitations": [
+    "The archived content is a short original excerpt, not the full article text.",
+    "Company product marketing does not verify actual buyer-supplier transactions.",
+    "Semantic human review remains pending; machine checks validate structure only."
+  ]
+}

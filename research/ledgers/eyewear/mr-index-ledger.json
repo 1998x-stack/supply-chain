@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0019",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://jp.mitsuichemicals.com/en/special/mr/lineup/",
+      "title": "Mitsui Chemicals MR series product lineup",
+      "publisher": "Mitsui Chemicals",
+      "origin_group": "mitsui_mr",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Refractive Index 1.60MR-8™/MR-160DG™",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    },
+    {
+      "id": "S002",
+      "url": "https://www.mitsuichemicals.cn/special/mr/lineup/",
+      "title": "Mitsui Chemicals MR lineup detailed typical properties",
+      "publisher": "Mitsui Chemicals",
+      "origin_group": "mitsui_mr",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "MR-8™\n\n阿贝数νe=41 ／ 热变形温度118℃",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "三井化学MR-8归于标称折射率1.60的MR系列。",
+      "status": "supported",
+      "analysis": "厂家自有牌号定义；不是所有1.60镜片的材料供应证明。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "Refractive Index 1.60MR-8™/MR-160DG™",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "三井化学公开了MR-8的代表性阿贝数41和热变形温度118℃。",
+      "status": "supported",
+      "analysis": "数值为该公司测试方法下代表值，不是产品规格保证或其他牌号参数。",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "阿贝数νe=41 ／ 热变形温度118℃",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "canonical_entity_id": "MAT:MR",
+  "research_limitations": [
+    "The archived content is a short original excerpt, not the full article text.",
+    "Company product marketing does not verify actual buyer-supplier transactions.",
+    "Semantic human review remains pending; machine checks validate structure only."
+  ]
+}

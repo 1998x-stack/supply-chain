@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0278",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://reports.wacker.com/2025/annual-report/management-report/governance/products-services.html",
+      "title": "Wacker Annual Report 2025 – Products & Services",
+      "publisher": "Wacker",
+      "origin_group": "wacker_annual_2025",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Two raw materials – silicon metal and methanol – are the basis for making over 2,800 silicone products",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Wacker 2025年报确认工业硅和甲醇是其硅酮产品的重要基础原料。",
+      "status": "supported",
+      "analysis": "仅证实Wacker硅化工材料路径，不能推导Wacker向任何指定鼻托厂供货。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "silicon metal and methanol",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "canonical_entity_id": null,
+  "research_limitations": [
+    "The archived content is a short original excerpt, not the full article text.",
+    "Company product marketing does not verify actual buyer-supplier transactions.",
+    "Semantic human review remains pending; machine checks validate structure only."
+  ]
+}
