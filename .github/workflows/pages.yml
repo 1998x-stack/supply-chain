@@ -27,7 +27,7 @@ jobs:
           python scripts/validate_intelligence.py data/products/henkel-adhesives/graph.json
           node --check web/assets/node_panel.js
           node --check web/assets/app.js
-          node --test tests/test_node_panel.mjs tests/test_catalog_cache.mjs
+          node --test tests/test_node_panel.mjs tests/test_catalog_cache.mjs tests/test_research_status_ui.mjs
       - name: Build static site and SQLite database
         run: python scripts/research_cli.py validate-skills && python -m unittest discover -s tests -v && python scripts/build_site.py
       - name: Verify exact Pages artifact before upload
