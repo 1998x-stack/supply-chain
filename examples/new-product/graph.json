@@ -1,0 +1,9 @@
+{
+  "nodes": [
+    {"id":"root","name":"演示产品","parent":null,"kind":"产品","branch":"示例","description":"模板根节点"},
+    {"id":"part-a","name":"演示部件A","parent":"root","kind":"部件","branch":"示例","description":"以技术路径接到根节点"},
+    {"id":"mat-a","name":"演示材料A","parent":"part-a","kind":"原材料","branch":"示例","description":"正式研究中请补来源"}
+  ],
+  "materials": [{"id":"EXAMPLE_MATERIAL","name":"演示材料A","node":"mat-a"}],
+  "companies":[],"company_material":[],"company_relations":[],"markets":[],"shares":[],"sources":[],"opportunities":[],"capacity":[],"procurement":[]
+}

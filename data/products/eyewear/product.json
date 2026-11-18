@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "slug": "eyewear",
+  "title": "眼镜",
+  "category_id": "optical",
+  "category": "光学与消费医疗",
+  "icon": "👓",
+  "description": "镜片、镜架、五金、功能镀膜、制造装备，以及直至石油、天然气和矿产的上游路径。",
+  "adapter": "legacy_eyewear_v2",
+  "source": "intelligence_data.json.gz",
+  "published": true
+}

@@ -44,3 +44,13 @@ Settings → Pages → Build and deployment → Source → **GitHub Actions**。
 - 国产替代状态独立记录材料级别、认证和客户验证，不因总产能存在就判断已替代。
 
 > 非投资建议。数据和市场份额来源于公开资料及前期归集，部分企业合作关系为历史披露，发布日期不是持续供货的保证。
+
+## 持续扩展产品
+
+~~~bash
+python3 scripts/new_product.py smartphone --title 智能手机 --category electronics --icon 📱
+~~~
+
+把该产品的技术图谱、材料/企业和来源写入新目录的 graph.json，审核后将 product.json 中 published 改为 true。
+构建器会自动扫描已发布产品，生成分类主页、单产品交互图和 material_id → 产品反向索引。
+标准类别见 data/taxonomy/categories.json，完整规范见 docs/ADD_PRODUCT.md。

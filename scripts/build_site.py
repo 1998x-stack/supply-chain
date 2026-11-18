@@ -42,6 +42,74 @@ def compact(x):
      'pc':[[v['buyer_company_id'],v['supplier_rank'],v['share_of_buyer_procurement_pct'],v['supplier_identity_disclosed']] for v in x['procurement_concentration']]
     }
 
+def discover_products(root=ROOT):
+    categories=json.loads((root/'data'/'taxonomy'/'categories.json').read_text(encoding='utf-8'))['categories']
+    known={x['id']:x['name'] for x in categories}
+    products=[]
+    for file in sorted((root/'data'/'products').glob('*/product.json')):
+        meta=json.loads(file.read_text(encoding='utf-8'))
+        if not meta.get('published',False): continue
+        if meta.get('schema_version') != 1 or not meta['slug'].replace('-','').isalnum():
+            raise ValueError('Invalid product metadata: '+str(file))
+        if meta['slug']!=file.parent.name:
+            raise ValueError('Product slug must match directory: '+str(file))
+        if known.get(meta['category_id'])!=meta['category']:
+            raise ValueError('Unknown taxonomy category or mismatched name: '+str(file))
+        adapter=meta.get('adapter','atlas_v1')
+        if adapter=='legacy_eyewear_v2':
+            with gzip.open(file.parent/meta['source'],'rt',encoding='utf-8') as fh:x=json.load(fh)
+        elif adapter=='atlas_v1':
+            graph=json.loads((file.parent/meta['source']).read_text(encoding='utf-8'))
+            x=convert_atlas_v1(graph)
+        else:raise ValueError('Unknown adapter '+adapter)
+        check_seed(x)
+        products.append((meta,x))
+    if not products:raise ValueError('At least one published product required')
+    return products
+
+def convert_atlas_v1(g):
+    # Public schema uses human-readable objects; internal compatibility shape is the v2 dataset.
+    x={k:[] for k in ('tree_node','material','company','company_material','company_relation','market','market_share','substitution_opportunity','source','procurement_concentration','capacity_observation','company_kpi')}
+    for n in g.get('nodes',[]):
+        x['tree_node'].append({'node_id':n['id'],'name':n['name'],'parent_id':n.get('parent'), 'kind':n.get('kind','材料'), 'branch':n.get('branch','未分类'), 'description':n.get('description',''), 'depth':0})
+    by_id={n['node_id']:n for n in x['tree_node']}
+    if len(by_id)!=len(x['tree_node']):raise ValueError('Duplicate node id')
+    for n in x['tree_node']:
+        seen={n['node_id']};parent=n['parent_id']
+        while parent:
+            if parent not in by_id or parent in seen:raise ValueError('Cycle or missing parent: '+n['node_id'])
+            seen.add(parent);n['depth']+=1;parent=by_id[parent]['parent_id']
+    if sum(n['parent_id'] is None for n in x['tree_node'])!=1:raise ValueError('Exactly one root required')
+    for m in g.get('materials',[]):x['material'].append({'material_id':m['id'],'name':m['name'],'representative_node_id':m.get('node')})
+    for c in g.get('companies',[]):x['company'].append({'company_id':c['id'],'name_zh':c.get('zh',''),'name_en':c.get('en',c.get('zh',c['id'])),'official_website':c.get('website'), 'geo':c.get('geo')})
+    for c in g.get('company_material',[]):x['company_material'].append({'company_id':c['company'],'material_id':c['material'],'role':c.get('role','industry_participant'), 'source_id':c['source']})
+    for r in g.get('company_relations',[]):x['company_relation'].append({'relation_id':r['id'],'upstream_company_id':r['upstream'],'downstream_company_id':r['downstream'],'material_id':r['material'],'relation_type':r.get('type','commercial_collaboration'),'source_id':r['source'],'scope_note':r.get('scope',''),'event_date':r.get('date')})
+    for m in g.get('markets',[]):x['market'].append({'market_id':m['id'],'name':m['name'],'geography':m['geo'],'year':m['year'],'metric':m['metric'],'denominator_scope':m['denominator'],'material_id':m['material'],'unit':'%', 'source_id':m['source']})
+    for s in g.get('shares',[]):x['market_share'].append({'market_id':s['market'],'company_id':s.get('company'),'label':s['label'],'share_pct':s.get('pct'),'rank':s.get('rank'),'source_id':s['source']})
+    for src in g.get('sources',[]):x['source'].append({'source_id':src['id'],'title':src['title'],'url':src['url'],'type':src.get('type','官网/研究'),'checked_on':src.get('checked_on','')})
+    for i,o in enumerate(g.get('opportunities',[])):x['substitution_opportunity'].append({'opportunity_id':i+1,'material_id':o['material'],'china_candidate_company_id':o.get('candidate'),'benchmark_company_id':o.get('benchmark'),'topic':o['topic'],'validation_gap':o.get('gap',''),'source_id':o['source']})
+    return x
+
+def reverse_catalog(products):
+    material_to_products={};company_to_materials={};seen_materials={};seen_companies={}
+    for meta,x in products:
+        slug=meta['slug']
+        for m in x['material']:
+            mid=m['material_id']
+            if mid in seen_materials and seen_materials[mid]!=m['name']:
+                raise ValueError('Conflicting canonical material name for '+mid)
+            seen_materials[mid]=m['name']
+            material_to_products.setdefault(mid,[])
+            if slug not in material_to_products[mid]:material_to_products[mid].append(slug)
+        for c in x['company']:
+            cid=c['company_id'];name=c['name_en']
+            if cid in seen_companies and seen_companies[cid]!=name:raise ValueError('Conflicting company id '+cid)
+            seen_companies[cid]=name
+        for cm in x['company_material']:
+            arr=company_to_materials.setdefault(cm['company_id'],[])
+            if cm['material_id'] not in arr:arr.append(cm['material_id'])
+    return {'version':1,'material_to_products':material_to_products,'company_to_materials':company_to_materials}
+
 def add_sqlite(x,out):
     out.parent.mkdir(parents=True,exist_ok=True)
     if out.exists():out.unlink()
@@ -118,16 +186,102 @@ def add_sqlite(x,out):
     db.close()
     assert integrity=='ok' and not issues,(integrity,issues)
 
+def add_additional_products(products,out):
+    """Attach v1 products to the shared material/company graph without duplicating canonical IDs."""
+    db=sqlite3.connect(out);db.execute('PRAGMA foreign_keys=ON')
+    for meta,x in products:
+        slug=meta['slug']
+        if slug=='eyewear':continue
+        product_id='PRODUCT:'+slug.upper().replace('-','_')
+        cat='CAT:'+meta['category_id']
+        db.execute('INSERT OR IGNORE INTO category(category_id,name_zh,icon) VALUES (?,?,?)',(cat,meta['category'],meta['icon']))
+        db.execute('INSERT INTO entity(entity_id,entity_type,name_zh) VALUES (?,?,?)',(product_id,'product',meta['title']))
+        db.execute('INSERT INTO product(product_id,slug,category_id,summary,icon,published) VALUES (?,?,?,?,?,?)',(product_id,slug,cat,meta['description'],meta['icon'],1))
+        sources={}
+        for src in x['source']:
+            dbid='SRC:'+slug+':'+src['source_id'];sources[src['source_id']]=dbid
+            db.execute('INSERT INTO source(source_id,title,url,source_type,accessed_on) VALUES (?,?,?,?,?)',
+                       (dbid,src['title'],src['url'],src.get('type','公开资料'),src.get('checked_on','')))
+        def material_id(local):return 'MAT:'+local
+        def company_id(local):return 'COMP:'+local
+        def node_id(local):return 'NODE:'+slug+':'+local
+        for n in x['tree_node']:
+            db.execute('INSERT INTO entity(entity_id,entity_type,name_zh,description) VALUES (?,?,?,?)',
+                       (node_id(n['node_id']),'component' if n['parent_id'] else 'product',n['name'],n.get('description')))
+        for n in x['tree_node']:
+            db.execute('INSERT INTO product_view_node(product_id,view_node_id,entity_id,parent_view_node_id,display_depth,display_label) VALUES (?,?,?,?,?,?)',
+                       (product_id,n['node_id'],node_id(n['node_id']),n['parent_id'],n['depth'],n['name']))
+            if n['parent_id']:
+                db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id) VALUES (?,?,?,?,?,?)',
+                           ('EDGE:'+slug+':'+n['node_id'],node_id(n['node_id']),node_id(n['parent_id']),'material_input','technological',product_id))
+            else:
+                db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id) VALUES (?,?,?,?,?,?)',
+                           ('ROOT:'+slug,node_id(n['node_id']),product_id,'component_of','technological',product_id))
+        for m in x['material']:
+            mid=material_id(m['material_id'])
+            old=db.execute('SELECT name_zh FROM entity WHERE entity_id=?',(mid,)).fetchone()
+            if old:
+                if old[0]!=m['name']:raise ValueError('Material ID collision for '+mid)
+            else:db.execute('INSERT INTO entity(entity_id,entity_type,name_zh) VALUES (?,?,?)',(mid,'material',m['name']))
+            if m['representative_node_id']:
+                db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id) VALUES (?,?,?,?,?,?)',
+                           ('ALIAS:'+slug+':'+m['material_id'],mid,node_id(m['representative_node_id']),'processed_into','technological',product_id))
+        for c in x['company']:
+            cid=company_id(c['company_id'])
+            old=db.execute('SELECT name_en FROM entity WHERE entity_id=?',(cid,)).fetchone()
+            if old:
+                if old[0]!=c['name_en']:raise ValueError('Company ID collision for '+cid)
+            else:
+                db.execute('INSERT INTO entity(entity_id,entity_type,name_zh,name_en) VALUES (?,?,?,?)',
+                           (cid,'company',c['name_zh'] or c['name_en'],c['name_en']))
+                db.execute('INSERT INTO company(company_id,website,headquarters_country) VALUES (?,?,?)',
+                           (cid,c['official_website'],c['geo']))
+        for cm in x['company_material']:
+            edgeid='CM:'+slug+':'+cm['company_id']+':'+cm['material_id']
+            db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,notes) VALUES (?,?,?,?,?,?)',
+                       (edgeid,company_id(cm['company_id']),material_id(cm['material_id']),'associated_with','verified',cm['role']+'; NOT a purchasing contract'))
+            if cm['source_id'] in sources:
+                db.execute('INSERT INTO edge_source(edge_id,source_id) VALUES (?,?)',(edgeid,sources[cm['source_id']]))
+        for row in x['company_relation']:
+            kind={'announced_supply':'supplied_to','announced_sourcing':'announced_sourcing',
+                  'commercial_collaboration':'commercial_collaboration','joint_development':'joint_development',
+                  'joint_research_production':'joint_research_production','confirmed_collection_material':'confirmed_material_adoption'}[row['relation_type']]
+            edgeid='REL:'+slug+':'+str(row['relation_id'])
+            db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,valid_from,notes) VALUES (?,?,?,?,?,?,?)',
+                       (edgeid,company_id(row['upstream_company_id']),company_id(row['downstream_company_id']),kind,'verified',row['event_date'],row['scope_note']))
+            db.execute('INSERT INTO edge_source(edge_id,source_id) VALUES (?,?)',(edgeid,sources[row['source_id']]))
+        for m in x['market']:
+            mk='MARKET:'+slug+':'+m['market_id']
+            db.execute('INSERT INTO market(market_id,subject_entity_id,name_zh,geography,year,metric,denominator,unit,source_id) VALUES (?,?,?,?,?,?,?,?,?)',
+                       (mk,material_id(m['material_id']),m['name'],m['geography'],m['year'],m['metric'],m['denominator_scope'],m['unit'],sources[m['source_id']]))
+        for ms in x['market_share']:
+            db.execute('INSERT INTO market_share(market_id,competitor_id,label,share,rank,source_id) VALUES (?,?,?,?,?,?)',
+                       ('MARKET:'+slug+':'+ms['market_id'],company_id(ms['company_id']) if ms['company_id'] else None,
+                        ms['label'],ms['share_pct'],ms['rank'],sources[ms['source_id']]))
+    db.commit()
+    check=db.execute('PRAGMA foreign_key_check').fetchall()
+    db.close()
+    if check:raise ValueError('Foreign key errors: '+repr(check))
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',default='dist');a=parser.parse_args()
-    x=unpack_seed();stats=check_seed(x)
+    products=discover_products()
+    reverse=reverse_catalog(products)
     dist=(ROOT/a.output).resolve();shutil.rmtree(dist,ignore_errors=True);shutil.copytree(ROOT/'web',dist)
     d=dist/'data';d.mkdir(parents=True,exist_ok=True)
-    (d/'eyewear.json.gz').write_bytes(gzip.compress(json.dumps(compact(x),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
-    catalog={'version':1,'stats':{'nodes':stats['nodes'],'companies':stats['companies'],'sources':stats['sources']},'products':[{'slug':'eyewear','title':'眼镜','category':'光学与消费医疗','icon':'👓','description':'镜片、镜架、五金、功能镀膜、制造装备，以及直至石油、天然气和矿产的上游路径。','nodes':stats['nodes']}]}
+    catalog={'version':1,'stats':{'nodes':sum(len(x['tree_node']) for _,x in products),'companies':len({c['company_id'] for _,x in products for c in x['company']}),'sources':sum(len(x['source']) for _,x in products)},'products':[]}
+    for meta,x in products:
+        slug=meta['slug']
+        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
+        catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node'])})
     (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
-    (d/'reverse_index.json').write_text(json.dumps({'version':1,'material_to_products':{v['material_id']:['eyewear'] for v in x['material']},'company_to_materials':{c['company_id']:[v['material_id'] for v in x['company_material'] if v['company_id']==c['company_id']] for c in x['company']}},ensure_ascii=False,indent=2),encoding='utf-8')
+    (d/'reverse_index.json').write_text(json.dumps(reverse,ensure_ascii=False,indent=2),encoding='utf-8')
     (dist/'.nojekyll').write_text('',encoding='utf-8')
-    add_sqlite(x,ROOT/'build'/'supply_chain.sqlite')
-    print('BUILD_OK',json.dumps(stats,ensure_ascii=False), 'dist=',dist)
+    eyewear=next((x for m,x in products if m['slug']=='eyewear'),None)
+    if eyewear is not None:
+        add_sqlite(eyewear,ROOT/'build'/'supply_chain.sqlite')
+        add_additional_products(products,ROOT/'build'/'supply_chain.sqlite')
+    else:
+        raise ValueError('First-version database importer currently requires the eyewear seed')
+    print('BUILD_OK',json.dumps(catalog['stats'],ensure_ascii=False),'products=',len(products),'dist=',dist)
 if __name__=='__main__':main()
