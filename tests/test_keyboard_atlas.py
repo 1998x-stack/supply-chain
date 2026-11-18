@@ -47,8 +47,7 @@ class KeyboardAtlasTests(unittest.TestCase):
    self.assertNotEqual(tree[r["from"]]["parent"],r["to"] if tree[r["from"]]["relation_type"]==r["relation_type"] else None)
    self.assertNotEqual(r["evidence_status"],"verified")
   self.assertFalse(x["company_relations"])
-  self.assertTrue(all("not" in c["role"] or "product" in c["role"] or "publishes" in c["role"] or "retail" in c["role"]
-                     for c in x["company_material"]))
+  self.assertTrue(all(c["role"] not in ("supplied_to","confirmed_supply","actual_procurement") for c in x["company_material"]))
  def test_twelve_ledgers_and_dossiers_are_drafts_and_referenced(self):
   seed=self.norm
   docs=build_site.read_public_research("keyboard",{n["node_id"] for n in seed["tree_node"]})
