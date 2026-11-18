@@ -3,7 +3,7 @@
 No third-party Python dependencies required. Run from repository root.
 """
 from __future__ import annotations
-import argparse, gzip, json, sqlite3, shutil, sys
+import argparse, gzip, json, sqlite3, shutil, sys, os, hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 SRC=ROOT/'data'/'products'/'eyewear'/'intelligence_data.json.gz'
@@ -359,8 +359,22 @@ def main():
     identity=resolve_eyewear(eyeseed) if eyeseed is not None else None
     reverse=reverse_catalog(products)
     dist=(ROOT/a.output).resolve();shutil.rmtree(dist,ignore_errors=True);shutil.copytree(ROOT/'web',dist)
+    # URLs change on each deployment; GitHub Pages/browser caches may keep old HTML/CSS/JS.
+    # The client also cache-busts JSON requests to recover from an out-of-date catalog.
+    source_hash=hashlib.sha256()
+    for asset in ('index.html','assets/app.js','assets/node_panel.js',
+                  'assets/styles.css','assets/node_panel.css'):
+        source_hash.update((dist/asset).read_bytes())
+    build_id=(os.environ.get('GITHUB_SHA') or source_hash.hexdigest())[:12]
+    index_path=dist/'index.html'
+    index=index_path.read_text(encoding='utf-8')
+    for asset in ('assets/app.js','assets/node_panel.js','assets/styles.css','assets/node_panel.css'):
+        expected='./'+asset
+        if expected not in index:raise ValueError('Missing versioned asset reference '+expected)
+        index=index.replace(expected+'"',expected+'?v='+build_id+'"')
+    index_path.write_text(index,encoding='utf-8')
     d=dist/'data';d.mkdir(parents=True,exist_ok=True)
-    catalog={'version':1,'stats':{'nodes':sum(len(x['tree_node']) for _,x in products),'companies':len({c['company_id'] for _,x in products for c in x['company']}),'sources':sum(len(x['source']) for _,x in products)},'products':[]}
+    catalog={'version':1,'build_id':build_id,'stats':{'nodes':sum(len(x['tree_node']) for _,x in products),'companies':len({c['company_id'] for _,x in products for c in x['company']}),'sources':sum(len(x['source']) for _,x in products)},'products':[]}
     for meta,x in products:
         slug=meta['slug']
         research=read_public_research(slug,{n['node_id'] for n in x['tree_node']})
