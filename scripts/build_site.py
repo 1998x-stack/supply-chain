@@ -30,10 +30,11 @@ def check_seed(x):
         if not r['supplier_identity_disclosed']:assert r['supplier_public_name']=='未披露名称'
     return {'nodes':len(nodes),'companies':len(company),'materials':len(materials),'sources':len(x['source'])}
 
-def compact(x,research=None,resolution=None):
+def compact(x,research=None,resolution=None,coverage=None):
     # Array encoding reduces Pages payload size; unpacked using a versioned field dictionary in frontend.
     return {
      'research':research or [],
+     'coverage':(coverage or {}).get('nodes',[]),
      'insights':x.get('node_intelligence',[]),
      'xl':[[r['from'],r['to'],r['relation_type'],r['evidence_status'],r.get('source_id'),r.get('note','')] for r in x.get('cross_links',[])],
      'identity':[[r['view_node_id'],r['canonical_material_entity_id'],r['identity_state'],r['label_key']] for r in (resolution or {}).get('view_nodes',[])],
@@ -357,6 +358,7 @@ def main():
     from normalize_eyewear import resolve as resolve_eyewear,persist as persist_eyewear
     eyeseed=next((x for m,x in products if m['slug']=='eyewear'),None)
     identity=resolve_eyewear(eyeseed) if eyeseed is not None else None
+    from research_coverage import build_coverage,prioritized_queue,task_bundle
     reverse=reverse_catalog(products)
     dist=(ROOT/a.output).resolve();shutil.rmtree(dist,ignore_errors=True);shutil.copytree(ROOT/'web',dist)
     # URLs change on each deployment; GitHub Pages/browser caches may keep old HTML/CSS/JS.
@@ -375,11 +377,22 @@ def main():
     index_path.write_text(index,encoding='utf-8')
     d=dist/'data';d.mkdir(parents=True,exist_ok=True)
     catalog={'version':1,'build_id':build_id,'stats':{'nodes':sum(len(x['tree_node']) for _,x in products),'companies':len({c['company_id'] for _,x in products for c in x['company']}),'sources':sum(len(x['source']) for _,x in products)},'products':[]}
+    coverages={}
     for meta,x in products:
         slug=meta['slug']
         research=read_public_research(slug,{n['node_id'] for n in x['tree_node']})
-        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,research,identity if slug=='eyewear' else None),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
-        catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node']),'research_dossiers':len(research)})
+        coverage=build_coverage(slug,x,research,identity if slug=='eyewear' else None)
+        coverages[slug]=coverage
+        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,research,identity if slug=='eyewear' else None,coverage),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
+        catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node']),'research_dossiers':len(research),'coverage':coverage['metrics']})
+    catalog['stats']['research']={'dossiers':sum(c['metrics']['dossiers'] for c in coverages.values()),
+       'source_notes_without_dossier':sum(c['metrics']['source_notes_without_dossier'] for c in coverages.values()),
+       'approved_dossiers':sum(c['metrics']['approved_dossiers'] for c in coverages.values()),
+       'research_targets':sum(c['metrics']['research_targets'] for c in coverages.values())}
+    (d/'research_coverage.json').write_text(json.dumps({slug:coverage['metrics'] for slug,coverage in coverages.items()},ensure_ascii=False,indent=2),encoding='utf-8')
+    for slug,coverage in coverages.items():
+        (d/(slug+'_research_queue.json')).write_text(json.dumps(
+          task_bundle(slug,prioritized_queue(coverage,'all',35)),ensure_ascii=False,indent=2),encoding='utf-8')
     (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
     (d/'reverse_index.json').write_text(json.dumps(reverse,ensure_ascii=False,indent=2),encoding='utf-8')
     if identity is not None:
