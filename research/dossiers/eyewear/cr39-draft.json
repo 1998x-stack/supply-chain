@@ -1,0 +1,102 @@
+{
+  "node_id": "N0004",
+  "canonical_entity_id": "MAT:CR39",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "CR-39 / ADC传统树脂镜片",
+  "node_type": "lens_material",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "CR-39 ophthalmic resin / allyl diglycol carbonate",
+      "aliases": [
+        "CR-39",
+        "ADC",
+        "allyl diglycol carbonate"
+      ],
+      "scope": "商品名CR-39属于PPG；不能将所有1.50树脂镜片视为PPG采购"
+    },
+    "technical": {
+      "purpose": "浇铸型透明眼镜镜片树脂；涉及单体浇铸、固化与后续加硬镀膜",
+      "properties": [
+        {
+          "attribute": "lens_substrate",
+          "value": "CR-39",
+          "scope": "PPG marketed optical monomer",
+          "source_id": "S001"
+        }
+      ],
+      "manufacturing": "单体浇铸与固化属于一般工艺描述；特定厂商温控曲线/催化配方未获证"
+    },
+    "upstream": [
+      {
+        "name": "二甘醇双烯丙基碳酸酯(ADC)单体",
+        "relationship": "chemical precursor",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "name": "二甘醇、烯丙醇、碳酸化路线",
+        "relationship": "proposed precursor pathway",
+        "evidence_status": "research_required"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "普通1.50系列浇铸树脂镜片",
+        "relation": "technological",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "name": "PPG",
+        "relationship": "material_manufacturer",
+        "source_ids": [
+          "S001",
+          "S002"
+        ],
+        "confirmed_lens_brand_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "brand_scope",
+        "state": "confirmed_scope_limit",
+        "reason": "CR-39商标所属供应商与ADC类别市场不可直接等同"
+      },
+      {
+        "type": "buyer_relationship",
+        "state": "unknown",
+        "reason": "缺少对具体镜片厂商业供货证据"
+      }
+    ],
+    "open_questions": [
+      "全球/中国ADC单体供应商分别有哪些，各自按产量与销量的TOP3？",
+      "镜片厂采购合同能否确认PPG或其他ADC原料来源？",
+      "ADC生产中间体的不同工艺和主要工业装置是什么？",
+      "CR-39与1.56、1.60不同镜片配方是否被统计混用？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Original-page semantic review and independent-source challenge still needed."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Evidence-first dossier. Technical production pathway and manufacturer product offering are not actual supply contracts."
+}

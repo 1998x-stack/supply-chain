@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "node_id": "N0195",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://www.emsgrivory.com/en/products-markets/products/",
+      "title": "EMS GRIVORY – High-performance polymers product overview",
+      "publisher": "EMS-GRIVORY",
+      "origin_group": "ems_tr90",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "PA MACM12  | Grilamid TR 90",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    },
+    {
+      "id": "S002",
+      "url": "https://www.emsgrivory.com/fileadmin/user_upload/EMS-GRIVORY/documents/products/Grilamid_TR/Flyer_Grilamid_TR_EN_10-2023_web_01.pdf",
+      "title": "EMS GRIVORY – Grilamid TR 90 family brochure",
+      "publisher": "EMS-GRIVORY",
+      "origin_group": "ems_tr90",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Grilamid TR 90 modifications: LS – Easy processing and demoulding",
+      "notes": "Verbatim short excerpt only; not full article archive. Source may be vendor self-description."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "EMS-GRIVORY将Grilamid TR90列于PA MACM12而不是普通PA12。",
+      "status": "supported",
+      "analysis": "厂商产品组合表能够证实本体类别，不能推出下游供货名单。",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "PA MACM12  | Grilamid TR 90",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "EMS-GRIVORY公开了TR90家族的多种功能修改牌号。",
+      "status": "supported",
+      "analysis": "品牌内部不同级别不能合并为同一技术性能。",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "Grilamid TR 90 modifications",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "canonical_entity_id": "MAT:TR90",
+  "research_limitations": [
+    "The archived content is a short original excerpt, not the full article text.",
+    "Company product marketing does not verify actual buyer-supplier transactions.",
+    "Semantic human review remains pending; machine checks validate structure only."
+  ]
+}

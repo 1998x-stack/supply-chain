@@ -1,0 +1,107 @@
+{
+  "node_id": "N0195",
+  "canonical_entity_id": "MAT:TR90",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "PA MACM12（Grilamid TR90体系）",
+  "node_type": "frame_material",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "EMS-GRIVORY Grilamid TR 90, PA MACM12",
+      "aliases": [
+        "Grilamid TR 90",
+        "TR90",
+        "PA MACM12"
+      ],
+      "scope": "专用透明聚酰胺商品牌号；不得等同普通PA12或整个TR聚酰胺家族"
+    },
+    "technical": {
+      "purpose": "透明镜架注塑、光学与运动应用的特种聚酰胺",
+      "properties": [
+        {
+          "attribute": "polymer_family",
+          "value": "PA MACM12",
+          "source_id": "S001"
+        },
+        {
+          "attribute": "available_variants",
+          "value": [
+            "LS",
+            "LXS",
+            "NZ",
+            "NZZ",
+            "TL",
+            "UV"
+          ],
+          "source_id": "S002"
+        }
+      ],
+      "process": "特种聚酰胺单体聚合成树脂并注塑；具体MACM与长链二酸路线需核验"
+    },
+    "upstream": [
+      {
+        "name": "特种脂环族二胺与十二碳二酸相关单体",
+        "relationship": "chemical family (candidate)",
+        "evidence_status": "requires_grade_specific_corroboration"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "TR90透明聚酰胺镜架",
+        "relation": "technological",
+        "source_ids": [
+          "S001",
+          "S002"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "name": "EMS-GRIVORY",
+        "relationship": "material_manufacturer",
+        "source_ids": [
+          "S001",
+          "S002"
+        ],
+        "confirmed_lens_brand_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "category_boundary",
+        "state": "high",
+        "reason": "普通PA12供需份额不能替代TR90专用牌号市场"
+      },
+      {
+        "type": "counterfeit_brand_scope",
+        "state": "unknown",
+        "reason": "市场俗称TR90产品未必采用EMS原厂牌号；需TDS与合同核验"
+      }
+    ],
+    "open_questions": [
+      "眼镜架使用的TR90专用品级有哪些替代制造商及实际客户认证？",
+      "上游MACM及十二碳二酸链条的商用工艺及材料来源是什么？",
+      "眼镜专用透明PA销量与通用PA12相比份额有多少、口径是什么？",
+      "不同LS/TL/UV牌号的疲劳、耐溶剂、注塑性能要求是什么？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Original-page semantic review and independent-source challenge still needed."
+  },
+  "sources": [
+    "S001",
+    "S002"
+  ],
+  "notes": "Evidence-first dossier. Technical production pathway and manufacturer product offering are not actual supply contracts."
+}

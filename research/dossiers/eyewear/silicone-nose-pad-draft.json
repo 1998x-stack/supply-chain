@@ -1,0 +1,99 @@
+{
+  "node_id": "N0278",
+  "canonical_entity_id": null,
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "硅橡胶鼻托",
+  "node_type": "accessory_material",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Silicone-rubber eyewear nose pad",
+      "aliases": [
+        "硅胶鼻托",
+        "silicone nose pads"
+      ],
+      "scope": "硅橡胶材料路径，不等于单晶硅或半导体材料链"
+    },
+    "technical": {
+      "purpose": "鼻托接触皮肤时的柔软支撑、防滑与舒适性",
+      "process": "工业硅＋甲醇基础化工路线→硅烷/硅氧烷→硅橡胶→模压或注塑鼻托；具体材料牌号、固化路线待证"
+    },
+    "upstream": [
+      {
+        "name": "工业硅",
+        "relationship": "silicone feedstock",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "name": "甲醇",
+        "relationship": "silicone feedstock",
+        "source_ids": [
+          "S001"
+        ]
+      },
+      {
+        "name": "硅氧烷/硅橡胶体系",
+        "relationship": "intermediate",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "鼻托",
+        "relation": "technological_not_confirmed_supply",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "name": "Wacker",
+        "relationship": "silicone_material_manufacturer",
+        "source_ids": [
+          "S001"
+        ],
+        "confirmed_lens_brand_customer": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "allergy_and_quality",
+        "state": "unverified",
+        "reason": "具体医疗级/皮肤接触认证和配方未知"
+      },
+      {
+        "type": "buyer_relation",
+        "state": "unknown",
+        "reason": "并无Wacker直接供货给眼镜鼻托厂的合同证据"
+      }
+    ],
+    "open_questions": [
+      "鼻托用硅胶液态/固态牌号及其生物相容性标准是什么？",
+      "主要鼻托生产商与硅橡胶生产商之间有无真实供货合同？",
+      "单体和硅烷生产供应商TOP3市场份额能否独立统计？",
+      "如何区分硅胶、TPR、PVC鼻托供应链？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Original-page semantic review and independent-source challenge still needed."
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "Evidence-first dossier. Technical production pathway and manufacturer product offering are not actual supply contracts."
+}

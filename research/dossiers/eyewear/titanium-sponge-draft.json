@@ -1,0 +1,92 @@
+{
+  "node_id": "N0224",
+  "canonical_entity_id": "MAT:TITANIUM_SPONGE",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_eyewear",
+  "name": "海绵钛",
+  "node_type": "primary_metal",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Titanium sponge metal",
+      "aliases": [
+        "海绵钛",
+        "sponge titanium"
+      ],
+      "scope": "海绵钛(中间金属)与TiO2颜料、钛精矿、成品钛丝不同"
+    },
+    "technical": {
+      "purpose": "钛合金/纯钛金属加工的上游冶炼中间材料",
+      "process": "钛精矿/富钛料→氯化物→金属还原→海绵钛→熔锭→钛丝/板；实际工厂流程需来源核验"
+    },
+    "upstream": [
+      {
+        "name": "富钛原料及钛矿精矿",
+        "relationship": "precursor stream",
+        "evidence_status": "technical_route_to_verify"
+      },
+      {
+        "name": "还原剂镁和氯化工材料",
+        "relationship": "industrial input",
+        "evidence_status": "technical_route_to_verify"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "钛材镜架/鼻梁及镜腿",
+        "relation": "technological_not_contractual",
+        "source_ids": [
+          "S001"
+        ]
+      }
+    ],
+    "companies": [],
+    "market": [
+      {
+        "name": "China titanium sponge annual production",
+        "geography": "China",
+        "year": 2024,
+        "metric": "national_production",
+        "denominator": "2024 China titanium sponge estimated production (not world share)",
+        "unit": "metric tonnes",
+        "value": 256000,
+        "source_id": "S001",
+        "share": null,
+        "review_status": "official_country_statistics"
+      }
+    ],
+    "risk": [
+      {
+        "type": "metric_scope",
+        "state": "high",
+        "reason": "国家产量与企业份额不同，吨数不能读成中国镜架行业采购量"
+      },
+      {
+        "type": "grade_validation",
+        "state": "unknown",
+        "reason": "海绵钛冶炼纯度/钛丝级别不同，眼镜使用量无法从总吨数推算"
+      }
+    ],
+    "open_questions": [
+      "全球2025年海绵钛国家产量TOP3及修订值如何按USGS最新报告确认？",
+      "中国钛镜架用的钛丝/钛板牌号及具体企业采购来源是什么？",
+      "海绵钛主要生产企业与眼镜级成品钛丝供货商是否有公开合同？",
+      "各国钛材回收料掺混对眼镜级采购结构有何影响？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Original-page semantic review and independent-source challenge still needed."
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "Evidence-first dossier. Technical production pathway and manufacturer product offering are not actual supply contracts."
+}
