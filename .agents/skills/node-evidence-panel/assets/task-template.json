@@ -1,0 +1,40 @@
+{
+  "schema_version": "node_intelligence_v1",
+  "node_id": "replace-with-view-node",
+  "review_status": "draft",
+  "source_ids": [
+    "S001"
+  ],
+  "facts": [
+    {
+      "label": "粘度",
+      "value": "100–200",
+      "unit": "mPa·s",
+      "condition": "25°C, 20 rpm, 2025 TDS",
+      "source_id": "S001"
+    }
+  ],
+  "metrics": [
+    {
+      "label": "业务销售额",
+      "value": 123,
+      "unit": "million EUR",
+      "period": "FY2025",
+      "scope": "business unit, not global adhesive market share",
+      "source_id": "S001"
+    }
+  ],
+  "claims": [
+    {
+      "text": "请用原始资料中的限定句建立独立原子论断",
+      "source_ids": [
+        "S001"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gaps": [
+    "具体采购合同尚未核实"
+  ],
+  "note": "This is a synthetic template; never publish example values as research facts."
+}

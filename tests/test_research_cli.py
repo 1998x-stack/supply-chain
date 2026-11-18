@@ -15,7 +15,7 @@ class ResearchCliTests(unittest.TestCase):
     def test_skill_mirrors_and_metadata(self):
         r=research_cli.validate_skills()
         self.assertTrue(r["structure_valid"],r["errors"])
-        self.assertEqual(r["skill_count"],10)
+        self.assertEqual(r["skill_count"],11)
         self.assertFalse(r["semantic_truth_verified"])
 
     def test_plan_deep_search_schema_shape(self):
@@ -89,6 +89,13 @@ class ResearchCliTests(unittest.TestCase):
         self.assertEqual(b["unreviewed_count"],366)
         self.assertTrue(all(n["verified_claims"]==0 for n in b["nodes"]))
         self.assertTrue(all(n["priority"]=="unrated" for n in b["nodes"]))
+
+    def test_second_product_backlog_with_six_pending_dossiers(self):
+        x=research_cli.seed_backlog(argparse.Namespace(product="henkel-adhesives"))
+        self.assertEqual(x["count"],73)
+        self.assertEqual(x["dossier_count"],6)
+        self.assertEqual(x["unreviewed_count"],67)
+        self.assertTrue(all(n["verified_claims"]==0 for n in x["nodes"]))
 
     def test_sqlite_research_migration_applied(self):
         with tempfile.TemporaryDirectory() as tmp:

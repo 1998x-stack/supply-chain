@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "node_id": "henkel",
+  "product_slug": "henkel-adhesives",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Henkel FY2025 Adhesive Technologies results",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2026-03-11-henkel-delivers-organic-growth-in-2025-and-increases-profitability-through-innovation-and-more-efficiency-2132514",
+      "publisher": "Henkel",
+      "origin_group": "henkel_primary",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Sales in the Adhesive Technologies business unit totaled 10,667 million euros in the year under review",
+      "notes": "Brief curated literal excerpt; not complete PDF text. Human semantic review pending."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Adhesive Technologies 2025年度销售额为10,667百万欧元（不是行业市占率）。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "10,667 million euros",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "One manufacturer-origin source for this draft; full PDF page and semantics require independent review.",
+    "No buyer/supplier commercial contracting evidence is asserted."
+  ]
+}

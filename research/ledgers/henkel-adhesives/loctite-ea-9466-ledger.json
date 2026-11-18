@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "node_id": "ea9466",
+  "product_slug": "henkel-adhesives",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "LOCTITE EA 9466 Technical Data Sheet March 2025",
+      "url": "https://datasheets.tdx.henkel.com/LOCTITE-EA-9466-en_GL.pdf",
+      "publisher": "Henkel",
+      "origin_group": "henkel_primary",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Technology Epoxy. Components Two components – requires mixing. Mix ratio, (by volume) Resin : Hardener 2 : 1. Mixed: Working life, minutes 60",
+      "notes": "Brief curated literal excerpt; not complete PDF text. Human semantic review pending."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "EA 9466是需混合的双组分环氧胶。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "Two components – requires mixing",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "EA 9466在2025 TDS的树脂:固化剂体积配比为2:1。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "2 : 1",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "One manufacturer-origin source for this draft; full PDF page and semantics require independent review.",
+    "No buyer/supplier commercial contracting evidence is asserted."
+  ]
+}

@@ -1,0 +1,1773 @@
+{
+  "schema_version": "atlas_v1.1",
+  "nodes": [
+    {
+      "id": "henkel",
+      "name": "汉高胶黏剂、密封与表面处理业务",
+      "parent": null,
+      "kind": "portfolio",
+      "branch": "总览",
+      "description": "企业产品组合研究入口，不是一种胶水、配方、BOM或单个生产装置。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "brand",
+      "name": "A. 品牌与产品牌号",
+      "parent": "henkel",
+      "kind": "category",
+      "branch": "品牌/牌号",
+      "description": "公司商业品牌、样例牌号与化学体系，分类边不是物料消耗。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "loctite",
+      "name": "LOCTITE 乐泰（工业胶黏剂）",
+      "parent": "brand",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "品牌横跨瞬干、厌氧螺纹锁固、环氧等，不对应单一化学配方。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "401",
+      "name": "LOCTITE 401 瞬干胶",
+      "parent": "loctite",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "通用瞬干胶代表性牌号，选型资料支持固化类型，但不能推算精确原料比例。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "243",
+      "name": "LOCTITE 243 厌氧螺纹锁固剂",
+      "parent": "loctite",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "以双甲基丙烯酸酯体系为特征的厌氧固化胶。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ea9466",
+      "name": "LOCTITE EA 9466 双组分环氧胶",
+      "parent": "loctite",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "双组分室温固化环氧，明确依赖混合比与基材试验条件。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "technomelt",
+      "name": "TECHNOMELT 热熔胶",
+      "parent": "brand",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "覆盖EVA、聚烯烃和反应性PUR热熔，不能混为同一胶料。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "eva5669",
+      "name": "TECHNOMELT 3018322-000（5669）",
+      "parent": "technomelt",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "EVA单组分热熔胶；TDS列有典型应用温度与用途。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "supra",
+      "name": "TECHNOMELT Supra（聚烯烃热熔系列）",
+      "parent": "technomelt",
+      "kind": "family",
+      "branch": "品牌/牌号",
+      "description": "2026官方材料将其描述为相对传统EVA的聚烯烃基热熔技术。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pur9340",
+      "name": "TECHNOMELT PUR 9340",
+      "parent": "technomelt",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "反应型PUR热熔胶，固化方式包含湿气交联，非普通EVA物理冷却定型。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pur9015",
+      "name": "TECHNOMELT PUR 9015",
+      "parent": "technomelt",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "另一PUR热熔牌号，固化含物理冷却与湿气固化，不能混用9340的数值。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "aquence",
+      "name": "AQUENCE 水性胶",
+      "parent": "brand",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "汉高水性胶系列，不能据品牌泛化为单一PVAc或丙烯酸乳液。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "teroson",
+      "name": "TEROSON 密封/粘接材料",
+      "parent": "brand",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "覆盖多种密封、结构粘接与隔声方案；不只是传统胶。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ms940",
+      "name": "TEROSON MS 940",
+      "parent": "teroson",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "2026年官方推出的无异氰酸酯配方弹性胶/密封剂，按SMP相关聚合物体系研究。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "bonderite",
+      "name": "BONDERITE 表面处理体系（非全部是胶）",
+      "parent": "brand",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "主要是金属清洗、表面预处理与涂层处理，不可纳入所有胶黏剂吨数。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "bonderitezn",
+      "name": "BONDERITE M-AC ZN 表面调整剂",
+      "parent": "bonderite",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "description": "面向磷化前处理的钛系表面调整剂，不能当作直接粘接胶。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "consumer",
+      "name": "消费与专业品牌（非完整工业产品线）",
+      "parent": "brand",
+      "kind": "category",
+      "branch": "品牌/牌号",
+      "description": "Pritt、Pattex、Ceresit为消费/施工品牌体系；本次仅建立分类边。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pritt",
+      "name": "Pritt 固体胶等",
+      "parent": "consumer",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "品牌入口；未逐SKU获取完整配方。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pattex",
+      "name": "Pattex 百得",
+      "parent": "consumer",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "品牌入口；未逐SKU获取完整配方。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ceresit",
+      "name": "Ceresit 赛力特",
+      "parent": "consumer",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "description": "建筑化学/粘接密封产品组合；未逐SKU认证。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "chem",
+      "name": "B. 胶黏剂化学体系",
+      "parent": "henkel",
+      "kind": "category",
+      "branch": "化学体系",
+      "description": "是材料/反应机制视图，某配方可能同时包含多种聚合物与添加剂。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "cya",
+      "name": "氰基丙烯酸酯瞬干体系",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "典型瞬干胶单体系统，与高分子固化机理相关。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ethylca",
+      "name": "氰基丙烯酸乙酯（ECA）",
+      "parent": "cya",
+      "kind": "chemical",
+      "branch": "化学体系",
+      "description": "某些瞬干胶采用ECA；不能证明全部401版本的完整配方。",
+      "relation_type": "material_input"
+    },
+    {
+      "id": "anaerobic",
+      "name": "厌氧丙烯酸酯体系",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "厌氧固化，适用于螺纹锁固等场景。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "dimethacrylate",
+      "name": "双甲基丙烯酸酯（配方族）",
+      "parent": "anaerobic",
+      "kind": "monomer_family",
+      "branch": "化学体系",
+      "description": "TDS公开化学类别而非完整单体清单、浓度和来源。",
+      "relation_type": "material_input"
+    },
+    {
+      "id": "epoxy",
+      "name": "双组分环氧胶体系",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "环氧树脂组分及固化剂；EA 9466为示例。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "epoxyresin",
+      "name": "环氧树脂（一般类别）",
+      "parent": "epoxy",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "典型环氧树脂可能使用BPA或其他多元酚体系；特定EA9466配方未全部披露。",
+      "relation_type": "material_input"
+    },
+    {
+      "id": "hardener",
+      "name": "胺等环氧固化剂（配方族）",
+      "parent": "epoxy",
+      "kind": "chemical_family",
+      "branch": "化学体系",
+      "description": "固化剂具体成分须逐SKU查SDS；并非公开的EA9466精确配方。",
+      "relation_type": "material_input"
+    },
+    {
+      "id": "evahm",
+      "name": "EVA热熔体系",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "聚乙烯-醋酸乙烯酯共聚物基热熔；应用温度随SKU不同。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "evaresin",
+      "name": "EVA共聚树脂",
+      "parent": "evahm",
+      "kind": "material",
+      "branch": "化学体系",
+      "description": "由乙烯与醋酸乙烯酯共聚，胶黏剂配方可能还有增粘树脂和蜡。",
+      "relation_type": "material_input"
+    },
+    {
+      "id": "pohm",
+      "name": "聚烯烃热熔体系",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "Technomelt Supra所处技术方向之一。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "polyolefin",
+      "name": "聚烯烃树脂",
+      "parent": "pohm",
+      "kind": "material",
+      "branch": "化学体系",
+      "description": "PP/PE相关烯烃聚合物类别，具体牌号与比例未知。",
+      "relation_type": "material_input"
+    },
+    {
+      "id": "purhm",
+      "name": "PUR反应型热熔体系",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "受湿气反应条件影响，与EVA冷却定型不同。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "purprepoly",
+      "name": "聚氨酯预聚物（候选组分）",
+      "parent": "purhm",
+      "kind": "material",
+      "branch": "化学体系",
+      "description": "产业通用路径：多元醇和异氰酸酯；不能直接推断PUR9340原料商。",
+      "relation_type": "material_input"
+    },
+    {
+      "id": "waterbase",
+      "name": "水性分散体胶体系",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "AQUENCE水性胶技术的材料分类，配方可为不同乳液及功能添加剂。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pvac",
+      "name": "PVAc乳液（可能的水性胶基料）",
+      "parent": "waterbase",
+      "kind": "material",
+      "branch": "化学体系",
+      "description": "PVAc是通用水性胶体系之一；无证据证明任一指定AQUENCE SKU使用。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "smp",
+      "name": "硅烷改性聚合物（SMP）",
+      "parent": "chem",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "description": "无异氰酸酯弹性密封胶的一类技术路线，与传统PUR有别。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "silane",
+      "name": "端基硅烷改性聚合物",
+      "parent": "smp",
+      "kind": "material",
+      "branch": "化学体系",
+      "description": "工业SMP配方族；MS940具体聚合物包专有。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "formulation",
+      "name": "C. 典型添加剂与配方辅料",
+      "parent": "henkel",
+      "kind": "category",
+      "branch": "配方辅料",
+      "description": "仅为产业通用配方组件候选，不意味着任何特定SKU一定使用。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "tackifier",
+      "name": "增粘树脂",
+      "parent": "formulation",
+      "kind": "candidate_input",
+      "branch": "配方辅料",
+      "description": "热熔胶与压敏胶常见配方材料；具体松香/烃树脂取决于牌号",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "filler",
+      "name": "填料",
+      "parent": "formulation",
+      "kind": "candidate_input",
+      "branch": "配方辅料",
+      "description": "碳酸钙/二氧化硅/无机填料体系，规格和含量因SKU不同",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "plasticizer",
+      "name": "增塑剂",
+      "parent": "formulation",
+      "kind": "candidate_input",
+      "branch": "配方辅料",
+      "description": "弹性与流变配方辅料，需SDS或厂家配方确认",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "initiator",
+      "name": "引发/稳定体系",
+      "parent": "formulation",
+      "kind": "candidate_input",
+      "branch": "配方辅料",
+      "description": "丙烯酸/厌氧类固化及稳定系统，成分专有",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "wax",
+      "name": "工艺蜡",
+      "parent": "formulation",
+      "kind": "candidate_input",
+      "branch": "配方辅料",
+      "description": "部分热熔胶用以调节粘度和开放时间，非普遍必需",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "pigment",
+      "name": "色料/功能性添加剂",
+      "parent": "formulation",
+      "kind": "candidate_input",
+      "branch": "配方辅料",
+      "description": "外观、导热/电气等功能配方；牌号约束",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "packaging",
+      "name": "包装容器和混胶头",
+      "parent": "formulation",
+      "kind": "candidate_input",
+      "branch": "配方辅料",
+      "description": "双组分静态混合头、管、瓶、桶；另建包装供应链",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "feedstocks",
+      "name": "D. 更上游基础化工",
+      "parent": "henkel",
+      "kind": "category",
+      "branch": "基础化工",
+      "description": "原料路线为典型工业知识路径，不代表汉高自营生产或实际采购企业。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "bpa",
+      "name": "双酚A（典型环氧树脂路径）",
+      "parent": "feedstocks",
+      "kind": "chemical",
+      "branch": "基础化工",
+      "description": "BPA是部分环氧树脂的前体；不能将BPA视为所有EA9466原料。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "epi",
+      "name": "环氧氯丙烷",
+      "parent": "feedstocks",
+      "kind": "chemical",
+      "branch": "基础化工",
+      "description": "双酚A型环氧树脂工业链的重要前驱体，具体批次原料未核实。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "vinylacetate",
+      "name": "醋酸乙烯酯单体（VAM）",
+      "parent": "feedstocks",
+      "kind": "chemical",
+      "branch": "基础化工",
+      "description": "EVA/PVAc常见前体；不代表实际采购。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "ethylene",
+      "name": "乙烯",
+      "parent": "feedstocks",
+      "kind": "chemical",
+      "branch": "基础化工",
+      "description": "石化基础原料，EVA典型单体之一。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "propylene",
+      "name": "丙烯",
+      "parent": "feedstocks",
+      "kind": "chemical",
+      "branch": "基础化工",
+      "description": "聚烯烃和有机化学中间体前体。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "polyols",
+      "name": "多元醇",
+      "parent": "feedstocks",
+      "kind": "chemical_family",
+      "branch": "基础化工",
+      "description": "聚氨酯常见上游组分。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "isocyanates",
+      "name": "异氰酸酯体系",
+      "parent": "feedstocks",
+      "kind": "chemical_family",
+      "branch": "基础化工",
+      "description": "PUR类工艺常见上游，但MS940明确是无异氰酸酯配方。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "aceticacid",
+      "name": "醋酸",
+      "parent": "feedstocks",
+      "kind": "chemical",
+      "branch": "基础化工",
+      "description": "醋酸乙烯酯等工业合成的前体之一。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "methanol",
+      "name": "甲醇",
+      "parent": "feedstocks",
+      "kind": "chemical",
+      "branch": "基础化工",
+      "description": "硅烷等基础化工路线相关前体，非单一胶产品必然原料。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "crude",
+      "name": "原油/天然气上游",
+      "parent": "feedstocks",
+      "kind": "resource",
+      "branch": "基础化工",
+      "description": "基础石油/气化工原料来源，可用于多条聚合物链；仅为资源级关联。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "process",
+      "name": "E. 制造设备与验证",
+      "parent": "henkel",
+      "kind": "category",
+      "branch": "设备/测试",
+      "description": "混配、分散、脱泡、计量、固化、质控过程；不表示汉高指定厂采购。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "reactors",
+      "name": "聚合反应器及温控",
+      "parent": "process",
+      "kind": "process",
+      "branch": "设备/测试",
+      "description": "原料聚合与部分胶液制备装备，实际工厂型号未核实",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "mixers",
+      "name": "真空混合与分散设备",
+      "parent": "process",
+      "kind": "process",
+      "branch": "设备/测试",
+      "description": "高黏度树脂、填料、添加剂分散混合",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "degas",
+      "name": "真空脱泡和过滤",
+      "parent": "process",
+      "kind": "process",
+      "branch": "设备/测试",
+      "description": "微气泡与杂质控制，工艺参数需工厂资料",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "dispense",
+      "name": "计量涂布/点胶设备",
+      "parent": "process",
+      "kind": "process",
+      "branch": "设备/测试",
+      "description": "双组分混合头、热熔胶泵、点胶机器人",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "qc",
+      "name": "流变、热分析与粘接测试",
+      "parent": "process",
+      "kind": "process",
+      "branch": "设备/测试",
+      "description": "黏度、剪切、剥离、Tg等测试条件",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "curing",
+      "name": "湿气/厌氧/室温/光固化",
+      "parent": "process",
+      "kind": "process",
+      "branch": "设备/测试",
+      "description": "固化机理与环境，必须按SKU定义",
+      "relation_type": "uses_equipment"
+    },
+    {
+      "id": "sectors",
+      "name": "F. 终端应用与反向追溯",
+      "parent": "henkel",
+      "kind": "category",
+      "branch": "下游应用",
+      "description": "官方披露覆盖的应用领域，不构成对任何具体客户的订单证明。",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "automotive",
+      "name": "汽车车身/动力总成/维修",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "胶黏剂、密封及预处理多种产品体系",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "electronics",
+      "name": "电子与半导体封装",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "导热/密封/结构粘接应用领域",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "packagingsector",
+      "name": "纸包装与过滤器",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "EVA/聚烯烃热熔和水性胶等不同体系",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "appliances",
+      "name": "家电与玻璃面板",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "PUR等装配粘接应用领域",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "furniture",
+      "name": "木工与家具层压",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "水性与PUR热熔等",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "construction",
+      "name": "建筑维修和密封",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "施工胶/密封剂业务，品牌及配方不同",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "rail",
+      "name": "轨道交通弹性密封",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "TEROSON MS940等产品类别，2026公告",
+      "relation_type": "associated_with"
+    },
+    {
+      "id": "aerospace",
+      "name": "航空航天",
+      "parent": "sectors",
+      "kind": "industry",
+      "branch": "下游应用",
+      "description": "集团披露涉足行业，不能证明SpaceX具体采购",
+      "relation_type": "associated_with"
+    }
+  ],
+  "materials": [
+    {
+      "id": "HNK_CYANO",
+      "name": "氰基丙烯酸酯类",
+      "node": "cya"
+    },
+    {
+      "id": "HNK_DIMETHACRYLATE",
+      "name": "双甲基丙烯酸酯类",
+      "node": "dimethacrylate"
+    },
+    {
+      "id": "HNK_EPOXY_RESIN",
+      "name": "环氧树脂类别",
+      "node": "epoxyresin"
+    },
+    {
+      "id": "HNK_EVA",
+      "name": "EVA共聚树脂",
+      "node": "evaresin"
+    },
+    {
+      "id": "HNK_POLYOLEFIN",
+      "name": "聚烯烃树脂",
+      "node": "polyolefin"
+    },
+    {
+      "id": "HNK_PUR",
+      "name": "聚氨酯预聚物族",
+      "node": "purprepoly"
+    },
+    {
+      "id": "HNK_PVAC",
+      "name": "PVAc乳液",
+      "node": "pvac"
+    },
+    {
+      "id": "HNK_SMP",
+      "name": "硅烷改性聚合物族",
+      "node": "smp"
+    },
+    {
+      "id": "HNK_VAM",
+      "name": "醋酸乙烯酯单体",
+      "node": "vinylacetate"
+    },
+    {
+      "id": "HNK_ETHYLENE",
+      "name": "乙烯",
+      "node": "ethylene"
+    },
+    {
+      "id": "HNK_PROPYLENE",
+      "name": "丙烯",
+      "node": "propylene"
+    },
+    {
+      "id": "HNK_BPA",
+      "name": "双酚A（胶黏剂路径）",
+      "node": "bpa"
+    },
+    {
+      "id": "HNK_EPI",
+      "name": "环氧氯丙烷",
+      "node": "epi"
+    }
+  ],
+  "companies": [
+    {
+      "id": "HENKEL_AG",
+      "zh": "汉高集团",
+      "en": "Henkel AG & Co. KGaA",
+      "geo": "Germany",
+      "website": "https://www.henkel.com"
+    }
+  ],
+  "company_material": [
+    {
+      "company": "HENKEL_AG",
+      "material": "HNK_CYANO",
+      "role": "product_formulation_family",
+      "source": "S06"
+    },
+    {
+      "company": "HENKEL_AG",
+      "material": "HNK_DIMETHACRYLATE",
+      "role": "product_formulation_family",
+      "source": "S04"
+    },
+    {
+      "company": "HENKEL_AG",
+      "material": "HNK_EPOXY_RESIN",
+      "role": "product_formulation_family",
+      "source": "S05"
+    },
+    {
+      "company": "HENKEL_AG",
+      "material": "HNK_EVA",
+      "role": "product_technology_family",
+      "source": "S07"
+    },
+    {
+      "company": "HENKEL_AG",
+      "material": "HNK_POLYOLEFIN",
+      "role": "product_technology_family",
+      "source": "S09"
+    },
+    {
+      "company": "HENKEL_AG",
+      "material": "HNK_PUR",
+      "role": "product_technology_family",
+      "source": "S08"
+    },
+    {
+      "company": "HENKEL_AG",
+      "material": "HNK_SMP",
+      "role": "product_technology_family",
+      "source": "S11"
+    }
+  ],
+  "company_relations": [],
+  "markets": [],
+  "shares": [],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Henkel Adhesive Technologies — Business and industrial brands",
+      "url": "https://www.henkel.com/our-businesses/adhesive-technologies",
+      "type": "official_company",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S02",
+      "title": "Henkel FY2025 Adhesive Technologies results (2026-03-11)",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2026-03-11-henkel-delivers-organic-growth-in-2025-and-increases-profitability-through-innovation-and-more-efficiency-2132514",
+      "type": "financial_release",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S03",
+      "title": "Henkel Q3 2026, nine-month segment performance (2026-11-10)",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2026-11-10-henkel-posts-very-strong-sales-growth-in-the-third-quarter-2274626",
+      "type": "financial_release",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S04",
+      "title": "LOCTITE 243 TDS (April 2025)",
+      "url": "https://datasheets.tdx.henkel.com/LOCTITE-243-en_GL.pdf",
+      "type": "manufacturer_tds",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S05",
+      "title": "LOCTITE EA 9466 TDS (March 2025)",
+      "url": "https://datasheets.tdx.henkel.com/LOCTITE-EA-9466-en_GL.pdf",
+      "type": "manufacturer_tds",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S06",
+      "title": "LOCTITE Instant Adhesives selection guide",
+      "url": "https://dm.henkel-dam.com/is/content/henkel/infographic-loctite-icb-en",
+      "type": "manufacturer_guide",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S07",
+      "title": "TECHNOMELT 3018322-000 (5669) EVA TDS (July 2022)",
+      "url": "https://datasheets.tdx.henkel.com/TECHNOMELT-3018322-000-5669-en_GL.pdf",
+      "type": "manufacturer_tds",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S08",
+      "title": "TECHNOMELT PUR 9340 TDS (October 2025)",
+      "url": "https://datasheets.tdx.henkel.com/TECHNOMELT-PUR-9340-en_GL.pdf",
+      "type": "manufacturer_tds",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S09",
+      "title": "Technomelt Supra anniversary and polyolefin chemistry (January 2026)",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2026-01-21-the-adhesive-that-drives-innovation-henkel-celebrates-25-years-of-technomelt-supra-2118192",
+      "type": "corporate_press_release",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S10",
+      "title": "AQUENCE water-based adhesives official brand",
+      "url": "https://www.henkel.com/our-businesses/aquence-23064",
+      "type": "official_product",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S11",
+      "title": "TEROSON MS 940 silane polymer adhesive (September 2026)",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2026-09-21-henkel-launches-new-adhesive-and-sealant-for-high-performance-bonding-in-rail-and-industrial-applications-2242040",
+      "type": "corporate_press_release",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S12",
+      "title": "BONDERITE M-AC ZN metal surface treatment TDS (January 2024)",
+      "url": "https://datasheets.tdx.henkel.com/BONDERITE-M-AC-ZN--en_GL.pdf",
+      "type": "manufacturer_tds",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S13",
+      "title": "Henkel Adhesive Technologies product uses and sectors",
+      "url": "https://www.henkel.com/our-businesses/adhesive-technologies",
+      "type": "official_company",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S14",
+      "title": "Henkel 2024 performance, product portfolio and customer scale",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2025-03-11-very-good-annual-results-2024-demonstrate-successful-implementation-of-purposeful-growth-agenda-2044256",
+      "type": "financial_release",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S15",
+      "title": "TECHNOMELT PUR 9015 TDS (March 2025)",
+      "url": "https://datasheets.tdx.henkel.com/TECHNOMELT-PUR-9015-en_GL.pdf",
+      "type": "manufacturer_tds",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S16",
+      "title": "TEROSON brand scope: bonding sealing coating",
+      "url": "https://www.henkel.com/our-businesses/teroson-23048",
+      "type": "official_product",
+      "checked_on": "2026-11-18"
+    },
+    {
+      "id": "S17",
+      "title": "Henkel Acoustics and Adhesives: BONDERITE pretreatment release (July 2024)",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2024-07-29-all-in-one-henkel-combines-metal-passivation-and-pretreatment-in-a-single-step-for-sustainable-efficiency-1974440",
+      "type": "corporate_press_release",
+      "checked_on": "2026-11-18"
+    }
+  ],
+  "opportunities": [],
+  "capacity": [],
+  "procurement": [],
+  "node_intelligence": [
+    {
+      "node_id": "243",
+      "description": "以双甲基丙烯酸酯体系为特征的厌氧固化胶。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S04"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "化学类型",
+          "value": "双甲基丙烯酸酯",
+          "source_id": "S04"
+        },
+        {
+          "label": "固化",
+          "value": "厌氧",
+          "source_id": "S04"
+        },
+        {
+          "label": "Brookfield粘度",
+          "value": "1300–3000 mPa·s",
+          "condition": "25°C，Spindle 3，20 rpm；2025版TDS",
+          "source_id": "S04"
+        }
+      ]
+    },
+    {
+      "node_id": "401",
+      "description": "通用瞬干胶代表性牌号，选型资料支持固化类型，但不能推算精确原料比例。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S06"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "参考粘度",
+          "value": "约100 mPa·s",
+          "condition": "Henkel瞬干胶选择图示；具体市场版本以本地TDS为准",
+          "source_id": "S06"
+        },
+        {
+          "label": "定位",
+          "value": "中粘度瞬干胶",
+          "source_id": "S06"
+        }
+      ],
+      "gaps": [
+        "现行区域SKU/SDS核查",
+        "客户认证、配方比例未公开"
+      ]
+    },
+    {
+      "node_id": "henkel",
+      "description": "企业产品组合研究入口，不是一种胶水、配方、BOM或单个生产装置。",
+      "kind": "portfolio",
+      "branch": "总览",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "updated_at": "2026-11-18",
+      "metrics": [
+        {
+          "label": "2025年胶黏剂业务销售额",
+          "value": 10667,
+          "unit": "百万欧元",
+          "scope": "Henkel Adhesive Technologies整个业务部门",
+          "period": "FY2025",
+          "source_id": "S02"
+        },
+        {
+          "label": "2026年前三季度销售额",
+          "value": 8561,
+          "unit": "百万欧元",
+          "scope": "整个Adhesive Technologies业务部门，1—9月",
+          "period": "2026Q1–Q3",
+          "source_id": "S03"
+        }
+      ],
+      "claims": [
+        {
+          "text": "2025年Adhesive Technologies销售额106.67亿欧元，2026年前三季度85.61亿欧元。",
+          "source_ids": [
+            "S02",
+            "S03"
+          ],
+          "status": "primary_reported"
+        }
+      ],
+      "gaps": [
+        "没有独立的汉高全部胶水SKU采购清单",
+        "不将部门销售额计算为市场份额"
+      ]
+    },
+    {
+      "node_id": "loctite",
+      "description": "品牌横跨瞬干、厌氧螺纹锁固、环氧等，不对应单一化学配方。",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S01"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "ea9466",
+      "description": "双组分室温固化环氧，明确依赖混合比与基材试验条件。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S05"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "体积混合比 A:B",
+          "value": "2:1",
+          "source_id": "S05"
+        },
+        {
+          "label": "工作寿命",
+          "value": "60 min",
+          "condition": "混合后典型条件，见TDS",
+          "source_id": "S05"
+        },
+        {
+          "label": "典型固化后Tg",
+          "value": "62°C",
+          "condition": "22°C固化7天，ASTM E1640",
+          "source_id": "S05"
+        }
+      ]
+    },
+    {
+      "node_id": "technomelt",
+      "description": "覆盖EVA、聚烯烃和反应性PUR热熔，不能混为同一胶料。",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S01",
+        "S09"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "eva5669",
+      "description": "EVA单组分热熔胶；TDS列有典型应用温度与用途。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S07"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "工艺技术",
+          "value": "EVA热熔胶",
+          "source_id": "S07"
+        },
+        {
+          "label": "应用温度",
+          "value": "130–150°C",
+          "source_id": "S07"
+        },
+        {
+          "label": "软化点",
+          "value": "105°C",
+          "condition": "ASTM E28",
+          "source_id": "S07"
+        }
+      ]
+    },
+    {
+      "node_id": "supra",
+      "description": "2026官方材料将其描述为相对传统EVA的聚烯烃基热熔技术。",
+      "kind": "family",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S09"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "pur9340",
+      "description": "反应型PUR热熔胶，固化方式包含湿气交联，非普通EVA物理冷却定型。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S08"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "应用温度",
+          "value": "100–140°C",
+          "condition": "典型工况，短时最高160°C",
+          "source_id": "S08"
+        },
+        {
+          "label": "固化",
+          "value": "湿气固化",
+          "source_id": "S08"
+        },
+        {
+          "label": "粘度",
+          "value": "7–13 Pa·s",
+          "condition": "130°C，旋转粘度计，5 rpm",
+          "source_id": "S08"
+        }
+      ]
+    },
+    {
+      "node_id": "pur9015",
+      "description": "另一PUR热熔牌号，固化含物理冷却与湿气固化，不能混用9340的数值。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S15"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "aquence",
+      "description": "汉高水性胶系列，不能据品牌泛化为单一PVAc或丙烯酸乳液。",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S10"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "teroson",
+      "description": "覆盖多种密封、结构粘接与隔声方案；不只是传统胶。",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S16"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "ms940",
+      "description": "2026年官方推出的无异氰酸酯配方弹性胶/密封剂，按SMP相关聚合物体系研究。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S11"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "bonderite",
+      "description": "主要是金属清洗、表面预处理与涂层处理，不可纳入所有胶黏剂吨数。",
+      "kind": "brand",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S12",
+        "S17"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "bonderitezn",
+      "description": "面向磷化前处理的钛系表面调整剂，不能当作直接粘接胶。",
+      "kind": "sku",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S12"
+      ],
+      "updated_at": "2026-11-18",
+      "facts": [
+        {
+          "label": "技术",
+          "value": "Surface treatment",
+          "source_id": "S12"
+        },
+        {
+          "label": "类型",
+          "value": "粉末型表面调整剂",
+          "source_id": "S12"
+        }
+      ]
+    },
+    {
+      "node_id": "consumer",
+      "description": "Pritt、Pattex、Ceresit为消费/施工品牌体系；本次仅建立分类边。",
+      "kind": "category",
+      "branch": "品牌/牌号",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S01"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "cya",
+      "description": "典型瞬干胶单体系统，与高分子固化机理相关。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S06"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "ethylca",
+      "description": "某些瞬干胶采用ECA；不能证明全部401版本的完整配方。",
+      "kind": "chemical",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [],
+      "updated_at": "2026-11-18",
+      "gaps": [
+        "不同地区401配方需以SDS和TDS确认"
+      ]
+    },
+    {
+      "node_id": "anaerobic",
+      "description": "厌氧固化，适用于螺纹锁固等场景。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S04"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "dimethacrylate",
+      "description": "TDS公开化学类别而非完整单体清单、浓度和来源。",
+      "kind": "monomer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S04"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "epoxy",
+      "description": "环氧树脂组分及固化剂；EA 9466为示例。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S05"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "epoxyresin",
+      "description": "典型环氧树脂可能使用BPA或其他多元酚体系；特定EA9466配方未全部披露。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S05"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "hardener",
+      "description": "固化剂具体成分须逐SKU查SDS；并非公开的EA9466精确配方。",
+      "kind": "chemical_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S05"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "evahm",
+      "description": "聚乙烯-醋酸乙烯酯共聚物基热熔；应用温度随SKU不同。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S07"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "evaresin",
+      "description": "由乙烯与醋酸乙烯酯共聚，胶黏剂配方可能还有增粘树脂和蜡。",
+      "kind": "material",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S07"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "pohm",
+      "description": "Technomelt Supra所处技术方向之一。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S09"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "polyolefin",
+      "description": "PP/PE相关烯烃聚合物类别，具体牌号与比例未知。",
+      "kind": "material",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S09"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "purhm",
+      "description": "受湿气反应条件影响，与EVA冷却定型不同。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S08"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "purprepoly",
+      "description": "产业通用路径：多元醇和异氰酸酯；不能直接推断PUR9340原料商。",
+      "kind": "material",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S08"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "waterbase",
+      "description": "AQUENCE水性胶技术的材料分类，配方可为不同乳液及功能添加剂。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S10"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "smp",
+      "description": "无异氰酸酯弹性密封胶的一类技术路线，与传统PUR有别。",
+      "kind": "polymer_family",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S11"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "silane",
+      "description": "工业SMP配方族；MS940具体聚合物包专有。",
+      "kind": "material",
+      "branch": "化学体系",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S11"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "isocyanates",
+      "description": "PUR类工艺常见上游，但MS940明确是无异氰酸酯配方。",
+      "kind": "chemical_family",
+      "branch": "基础化工",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S11"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "sectors",
+      "description": "官方披露覆盖的应用领域，不构成对任何具体客户的订单证明。",
+      "kind": "category",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S13"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "automotive",
+      "description": "胶黏剂、密封及预处理多种产品体系",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S13"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "electronics",
+      "description": "导热/密封/结构粘接应用领域",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S13"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "packagingsector",
+      "description": "EVA/聚烯烃热熔和水性胶等不同体系",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S07",
+        "S09"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "appliances",
+      "description": "PUR等装配粘接应用领域",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S15"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "furniture",
+      "description": "水性与PUR热熔等",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S08",
+        "S10"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "construction",
+      "description": "施工胶/密封剂业务，品牌及配方不同",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S16"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "rail",
+      "description": "TEROSON MS940等产品类别，2026公告",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S11"
+      ],
+      "updated_at": "2026-11-18"
+    },
+    {
+      "node_id": "aerospace",
+      "description": "集团披露涉足行业，不能证明SpaceX具体采购",
+      "kind": "industry",
+      "branch": "下游应用",
+      "review_status": "draft",
+      "evidence_status": "manufacturer_or_public_filing",
+      "source_ids": [
+        "S13"
+      ],
+      "updated_at": "2026-11-18"
+    }
+  ],
+  "product_classification_note": "Enterprise portfolio, not single adhesive SKU or actual bill-of-materials. Names of resin families describe chemistry. Only official TDS identifies SKU technology; downstream procurement not established.",
+  "data_governance": {
+    "source_independence": "Corporate sources largely Henkel; not independent competitor estimates.",
+    "market_shares": "No reliable same-scope vendor TOP3. Never infer from Henkel division sales.",
+    "business_relations": "No named upstream purchasing contracts in this release.",
+    "claims_status": "Draft; manufacturer-sourced."
+  },
+  "cross_links": [
+    {
+      "id": "CL001",
+      "from": "dimethacrylate",
+      "to": "243",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S04",
+      "note": "TDS声明为双甲基丙烯酸酯技术类型"
+    },
+    {
+      "id": "CL002",
+      "from": "epoxyresin",
+      "to": "ea9466",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S05",
+      "note": "TDS声明双组分环氧体系"
+    },
+    {
+      "id": "CL003",
+      "from": "hardener",
+      "to": "ea9466",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S05",
+      "note": "TDS声明A/B固化剂混合机制"
+    },
+    {
+      "id": "CL004",
+      "from": "evaresin",
+      "to": "eva5669",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S07",
+      "note": "TDS声明EVA热熔技术，不披露完整配方比例"
+    },
+    {
+      "id": "CL005",
+      "from": "purprepoly",
+      "to": "pur9340",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": "S08",
+      "note": "通用PUR工业类别；具体树脂预聚物尚未核实"
+    },
+    {
+      "id": "CL006",
+      "from": "purprepoly",
+      "to": "pur9015",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": "S15",
+      "note": "通用PUR工业类别，不代表具体树脂已获采购认证"
+    },
+    {
+      "id": "CL007",
+      "from": "silane",
+      "to": "ms940",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S11",
+      "note": "无异氰酸酯SMP技术类别，具体配方未披露"
+    },
+    {
+      "id": "CL008",
+      "from": "ethylca",
+      "to": "401",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": "S06",
+      "note": "瞬干胶通用化学族；401地区配方需要SDS"
+    },
+    {
+      "id": "CL009",
+      "from": "cya",
+      "to": "401",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S06",
+      "note": "LOCTITE 401为瞬干胶类别"
+    },
+    {
+      "id": "CL010",
+      "from": "ethylene",
+      "to": "evaresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "EVA一般化工单体路径，未验证汉高原料供应商"
+    },
+    {
+      "id": "CL011",
+      "from": "vinylacetate",
+      "to": "evaresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "EVA一般化工单体路径，未验证实际厂家和用量"
+    },
+    {
+      "id": "CL012",
+      "from": "vinylacetate",
+      "to": "pvac",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "PVAc一般工业前体，不证明指定AQUENCE配方"
+    },
+    {
+      "id": "CL013",
+      "from": "propylene",
+      "to": "polyolefin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "典型聚烯烃合成途径可能包括丙烯，不特定某一个牌号"
+    },
+    {
+      "id": "CL014",
+      "from": "bpa",
+      "to": "epoxyresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "典型双酚A环氧树脂路线，非EA9466公开配方确认"
+    },
+    {
+      "id": "CL015",
+      "from": "epi",
+      "to": "epoxyresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "典型环氧氯丙烷路线，非具体配方确证"
+    },
+    {
+      "id": "CL016",
+      "from": "polyols",
+      "to": "purprepoly",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "通用PUR预聚物路线，尚非特定产品进料名单"
+    },
+    {
+      "id": "CL017",
+      "from": "isocyanates",
+      "to": "purprepoly",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "通用PUR预聚物路线；不要误用于TEROSON MS940"
+    },
+    {
+      "id": "CL018",
+      "from": "evahm",
+      "to": "eva5669",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S07",
+      "note": "牌号属于EVA热熔技术家族"
+    },
+    {
+      "id": "CL019",
+      "from": "purhm",
+      "to": "pur9340",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S08",
+      "note": "牌号属于反应型PUR热熔家族"
+    },
+    {
+      "id": "CL020",
+      "from": "pohm",
+      "to": "supra",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "Technomelt Supra聚烯烃热熔技术分类"
+    },
+    {
+      "id": "CL021",
+      "from": "smp",
+      "to": "ms940",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S11",
+      "note": "TEROSON MS940与SMP技术相关"
+    },
+    {
+      "id": "CL022",
+      "from": "packagingsector",
+      "to": "eva5669",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S07",
+      "note": "纸与非织造/过滤器应用领域，不能作客户订单"
+    },
+    {
+      "id": "CL023",
+      "from": "rail",
+      "to": "ms940",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S11",
+      "note": "2026年官方宣布轨道交通行业应用方向"
+    }
+  ]
+}

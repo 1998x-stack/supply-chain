@@ -1,0 +1,70 @@
+{
+  "node_id": "ms940",
+  "product_slug": "henkel-adhesives",
+  "configuration_id": "portfolio_or_named_sku",
+  "name": "TEROSON MS 940",
+  "node_type": "sku",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name": "TEROSON MS 940",
+      "grade_or_scope": "sku",
+      "as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "轨道交通与工业弹性粘接",
+      "formulation": "isocyanate-free as marketed; exact polymer package proprietary",
+      "properties": []
+    },
+    "upstream": [
+      {
+        "name": "SMP聚合物技术族；确切单体和供应商待核实",
+        "relationship": "technical_family_only"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "轨道交通车窗/门/面板",
+        "relationship": "industry_application_not_confirmed_client"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Henkel AG & Co. KGaA",
+        "relationship": "brand_owner_and_product_marketer",
+        "source_ids": [
+          "S001"
+        ],
+        "confirmed_upstream_supplier": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "portfolio_and_supplier_conflation",
+        "state": "unknown",
+        "reason": "No actual raw-material supplier purchase contract is established by a manufacturer TDS."
+      }
+    ],
+    "open_questions": [
+      "公布TDS/SDS与具体性能测试条件了吗？",
+      "是否有指定轨交厂商采购公告？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "No independent page-level semantic review or adversarial corroboration"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "Official single-origin primary evidence. No verified current supplier/customer relationship."
+}

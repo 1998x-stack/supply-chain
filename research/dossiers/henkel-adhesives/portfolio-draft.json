@@ -1,0 +1,93 @@
+{
+  "node_id": "henkel",
+  "product_slug": "henkel-adhesives",
+  "configuration_id": "portfolio_or_named_sku",
+  "name": "汉高胶黏剂、密封与表面处理业务",
+  "node_type": "portfolio",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001"
+  ],
+  "sections": {
+    "identity": {
+      "name": "汉高胶黏剂、密封与表面处理业务",
+      "grade_or_scope": "portfolio",
+      "as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "企业胶黏剂、密封与涂层业务组合；涵盖工业与消费品牌而非单个BOM",
+      "not_a_single_sku": true,
+      "properties": [
+        {
+          "attribute": "business_unit_sales",
+          "value": 10667,
+          "unit": "million_EUR",
+          "grade": "Adhesive Technologies",
+          "test_condition": "FY2025; company-reported",
+          "source_id": "S001"
+        }
+      ]
+    },
+    "upstream": [
+      {
+        "name": "产品组合应沿具体SKU/配方分别研究",
+        "relationship": "technical_family_only"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "汽车",
+        "relationship": "industry_application_not_confirmed_client"
+      },
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "电子",
+        "relationship": "industry_application_not_confirmed_client"
+      },
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "包装",
+        "relationship": "industry_application_not_confirmed_client"
+      },
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "建筑与施工",
+        "relationship": "industry_application_not_confirmed_client"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Henkel AG & Co. KGaA",
+        "relationship": "brand_owner_and_product_marketer",
+        "source_ids": [
+          "S001"
+        ],
+        "confirmed_upstream_supplier": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "portfolio_and_supplier_conflation",
+        "state": "unknown",
+        "reason": "No actual raw-material supplier purchase contract is established by a manufacturer TDS."
+      }
+    ],
+    "open_questions": [
+      "各化学体系独立市场份额TOP3有何可比来源？",
+      "公司层面尚未确认具体上游化工商供应合同"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "No independent page-level semantic review or adversarial corroboration"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "Official single-origin primary evidence. No verified current supplier/customer relationship."
+}

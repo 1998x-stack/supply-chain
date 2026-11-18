@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "node_id": "eva5669",
+  "product_slug": "henkel-adhesives",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "TECHNOMELT 3018322-000 (5669) TDS July 2022",
+      "url": "https://datasheets.tdx.henkel.com/TECHNOMELT-3018322-000-5669-en_GL.pdf",
+      "publisher": "Henkel",
+      "origin_group": "henkel_primary",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Technology EVA. Application Temperature 130 to 150°C. Cure Physical Setting. Softening Point °C 105",
+      "notes": "Brief curated literal excerpt; not complete PDF text. Human semantic review pending."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "该产品以EVA热熔技术表述，并通过物理冷却定型。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "Physical Setting",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "其2022 TDS标示应用温度130–150°C。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "130 to 150°C",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "One manufacturer-origin source for this draft; full PDF page and semantics require independent review.",
+    "No buyer/supplier commercial contracting evidence is asserted."
+  ]
+}

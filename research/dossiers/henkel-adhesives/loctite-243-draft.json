@@ -1,0 +1,90 @@
+{
+  "node_id": "243",
+  "product_slug": "henkel-adhesives",
+  "configuration_id": "portfolio_or_named_sku",
+  "name": "LOCTITE 243 厌氧螺纹锁固剂",
+  "node_type": "sku",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name": "LOCTITE 243 厌氧螺纹锁固剂",
+      "grade_or_scope": "sku",
+      "as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "螺纹锁固/密封",
+      "chemistry": "Dimethacrylate ester",
+      "cure": "anaerobic",
+      "properties": [
+        {
+          "attribute": "viscosity_brookfield",
+          "value": "1300–3000",
+          "unit": "mPa·s",
+          "grade": "LOCTITE 243",
+          "test_condition": "25°C; RVT spindle 3; 20 rpm",
+          "source_id": "S001"
+        }
+      ]
+    },
+    "upstream": [
+      {
+        "name": "双甲基丙烯酸酯聚合物/单体配方族，准确成分以SDS为准",
+        "relationship": "technical_family_only"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "机械紧固件",
+        "relationship": "industry_application_not_confirmed_client"
+      },
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "泵/齿轮箱",
+        "relationship": "industry_application_not_confirmed_client"
+      },
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "汽车维修",
+        "relationship": "industry_application_not_confirmed_client"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Henkel AG & Co. KGaA",
+        "relationship": "brand_owner_and_product_marketer",
+        "source_ids": [
+          "S001"
+        ],
+        "confirmed_upstream_supplier": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "portfolio_and_supplier_conflation",
+        "state": "unknown",
+        "reason": "No actual raw-material supplier purchase contract is established by a manufacturer TDS."
+      }
+    ],
+    "open_questions": [
+      "2026地区TDS/SDS是否有后续版本？",
+      "实际上游甲基丙烯酸酯供应商及采购合同？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "No independent page-level semantic review or adversarial corroboration"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "Official single-origin primary evidence. No verified current supplier/customer relationship."
+}

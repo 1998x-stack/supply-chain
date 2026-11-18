@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "node_id": "ms940",
+  "product_slug": "henkel-adhesives",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Henkel MS 940 release September 2026",
+      "url": "https://www.henkel.com/press-and-media/press-releases-and-kits/2026-09-21-henkel-launches-new-adhesive-and-sealant-for-high-performance-bonding-in-rail-and-industrial-applications-2242040",
+      "publisher": "Henkel",
+      "origin_group": "henkel_primary",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Teroson MS 940, a new adhesive and sealant formulated without isocyanates for demanding elastic bonding in rail and industrial applications. Based on a new polymer package",
+      "notes": "Brief curated literal excerpt; not complete PDF text. Human semantic review pending."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "TEROSON MS940在2026官方发布中描述为无异氰酸酯配方的弹性胶/密封剂。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "formulated without isocyanates",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "MS940被汉高定位于轨道交通及工业弹性粘接场景。",
+      "status": "supported",
+      "analysis": "Manufacturer filing or TDS supports this strictly scoped statement; no independent market share or procurement inference.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "rail and industrial applications",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "One manufacturer-origin source for this draft; full PDF page and semantics require independent review.",
+    "No buyer/supplier commercial contracting evidence is asserted."
+  ]
+}

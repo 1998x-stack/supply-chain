@@ -13,6 +13,8 @@ from research_cli import audit_dossier,audit_ledger
 
 def ingest(db_path: Path,slug: str="eyewear"):
     db=sqlite3.connect(db_path);db.execute("PRAGMA foreign_keys=ON")
+    prefix="EYE" if slug=="eyewear" else slug.replace("-","_").upper()
+    product_id="PRODUCT:EYEWEAR" if slug=="eyewear" else "PRODUCT:"+prefix
     dossier_dir=ROOT/"research"/"dossiers"/slug
     ledger_dir=ROOT/"research"/"ledgers"/slug
     ledgers={}
@@ -33,10 +35,10 @@ def ingest(db_path: Path,slug: str="eyewear"):
                 raise ValueError("Invalid dossier "+str(path)+": "+repr(qa["errors"]))
             ledger=ledgers.get(nid)
             if ledger is None:raise ValueError("Missing ledger "+nid)
-            entity_id="NODE:EYE:"+nid
+            entity_id=("NODE:EYE:" if slug=="eyewear" else "NODE:"+slug+":")+nid
             if db.execute("SELECT COUNT(*) FROM entity WHERE entity_id=?",(entity_id,)).fetchone()[0]!=1:
                 raise ValueError("Missing graph entity for "+nid)
-            ds_id="DOS:EYE:"+nid
+            ds_id="DOS:"+prefix+":"+nid
             status={"reviewable_draft":"reviewable","draft":"draft","publishable":"publishable",
                     "disputed":"disputed","reviewable":"reviewable"}.get(doc.get("review_state"))
             if status is None:raise ValueError("Invalid research state "+str(doc.get("review_state")))
@@ -47,13 +49,13 @@ def ingest(db_path: Path,slug: str="eyewear"):
                (dossier_id,entity_id,product_id,version,as_of_date,status,weighted_field_coverage,
                 semantic_reviewer,reviewed_at,file_path)
                VALUES (?,?,?,?,?,?,?,?,?,?)""",
-               (ds_id,entity_id,"PRODUCT:EYEWEAR",doc.get("as_of",""),doc.get("as_of",""),
+               (ds_id,entity_id,product_id,doc.get("as_of",""),doc.get("as_of",""),
                 status,qa.get("field_coverage_percent"),semantic.get("reviewer"),
                 semantic.get("reviewed_at"),str(path.relative_to(ROOT))))
             stats["dossiers"]+=1
             local_sources={}
             for src in ledger.get("sources",[]):
-                id_local=src["id"];sid="RS:EYE:"+nid+":"+id_local
+                id_local=src["id"];sid="RS:"+prefix+":"+nid+":"+id_local
                 local_sources[id_local]=sid
                 db.execute("""INSERT INTO source
                    (source_id,title,url,publisher,published_on,accessed_on,source_type)
@@ -65,7 +67,7 @@ def ingest(db_path: Path,slug: str="eyewear"):
             for cid in doc.get("claim_ids",[]):
                 claim=claims.get(cid)
                 if claim is None:raise ValueError("Missing claim "+nid+"/"+cid)
-                rcid="RC:EYE:"+nid+":"+cid
+                rcid="RC:"+prefix+":"+nid+":"+cid
                 db.execute("""INSERT INTO research_claim
                    (claim_id,entity_id,dossier_id,claim_text,claim_type,evidence_status,
                     analysis,semantic_review_status)
@@ -94,7 +96,7 @@ def ingest(db_path: Path,slug: str="eyewear"):
                 db.execute("""INSERT INTO research_observation
                     (observation_id,entity_id,dossier_id,observation_type,metric,value_num,value_text,unit,grade,test_condition,source_id,origin_field)
                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
-                    ("OBS:EYE:"+nid+":TECH:"+str(i),entity_id,ds_id,"technical_spec",p["attribute"],
+                    ("OBS:"+prefix+":"+nid+":TECH:"+str(i),entity_id,ds_id,"technical_spec",p["attribute"],
                      value if numeric else None,None if numeric else json.dumps(value,ensure_ascii=False),
                      p.get("unit"),p.get("grade"),p.get("test_condition"),local_sources[sid],
                      "sections.technical.properties["+str(i-1)+"]"))
@@ -109,7 +111,7 @@ def ingest(db_path: Path,slug: str="eyewear"):
                     (observation_id,entity_id,dossier_id,observation_type,metric,value_num,value_text,unit,
                      geography,observation_year,denominator,source_id,origin_field)
                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                    ("OBS:EYE:"+nid+":MARKET:"+str(i),entity_id,ds_id,
+                    ("OBS:"+prefix+":"+nid+":MARKET:"+str(i),entity_id,ds_id,
                      "market_share" if m.get("share") is not None else "production_or_capacity",
                      m["metric"],value if numeric else None,
                      None if numeric else json.dumps(value,ensure_ascii=False),
@@ -120,7 +122,7 @@ def ingest(db_path: Path,slug: str="eyewear"):
                 db.execute("""INSERT INTO research_gap
                    (gap_id,entity_id,dossier_id,question,priority,blocking,status,evidence_needed)
                    VALUES (?,?,?,?,?,?,?,?)""",
-                   ("GAP:EYE:"+nid+":"+str(i).zfill(2),entity_id,ds_id,q,"P1",0,"open",
+                   ("GAP:"+prefix+":"+nid+":"+str(i).zfill(2),entity_id,ds_id,q,"P1",0,"open",
                     "Further primary-source research and semantic review"))
                 stats["gaps"]+=1
         problems=db.execute("PRAGMA foreign_key_check").fetchall()

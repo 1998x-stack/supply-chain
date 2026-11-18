@@ -11,8 +11,8 @@ const num = value=>Number(value).toLocaleString('zh-CN');
 const fetchJSON=async(path)=>{const r=await fetch(path);if(!r.ok)throw new Error('HTTP '+r.status+' · '+path);return r.json();};
 async function fetchCompressed(path){const r=await fetch(path);if(!r.ok)throw new Error('HTTP '+r.status+' · '+path);if(!('DecompressionStream' in window))throw new Error('浏览器不支持gzip解码，请更新浏览器');const b=await r.blob();const txt=await new Response(b.stream().pipeThrough(new DecompressionStream('gzip'))).text();return JSON.parse(txt);}
 function unpack(x){
- const fields={n:['id','name','parent','kind','branch','description'],m:['id','name','node'],c:['id','zh','en','website'],cm:['company','material','role'],r:['upstream','downstream','material','type','source','scope'],mk:['id','name','geo','year','metric','scope','material'],s:['market','company','label','pct','rank','source'],o:['material','candidate','benchmark','topic','gap'],src:['id','title','url'],pc:['buyer','rank','pct','disclosed'],identity:['id','canonical','state','labelKey']};
- const data={};for(const [k,f] of Object.entries(fields))data[k]=(x[k]||[]).map(row=>Object.fromEntries(f.map((v,i)=>[v,row[i]])));data.research=x.research||[];return data;
+ const fields={n:['id','name','parent','kind','branch','description','relationType'],m:['id','name','node'],c:['id','zh','en','website'],cm:['company','material','role'],r:['upstream','downstream','material','type','source','scope'],mk:['id','name','geo','year','metric','scope','material'],s:['market','company','label','pct','rank','source'],o:['material','candidate','benchmark','topic','gap'],src:['id','title','url'],pc:['buyer','rank','pct','disclosed'],identity:['id','canonical','state','labelKey'],xl:['from','to','type','status','source','note']};
+ const data={};for(const [k,f] of Object.entries(fields))data[k]=(x[k]||[]).map(row=>Object.fromEntries(f.map((v,i)=>[v,row[i]])));data.research=x.research||[];data.insights=x.insights||[];return data;
 }
 async function loadProduct(slug){if(state.products.has(slug))return state.products.get(slug);const spec=state.catalog.products.find(p=>p.slug===slug);if(!spec)throw new Error('产品不存在：'+slug);const d=unpack(await fetchCompressed('./data/'+slug+'.json.gz'));const nodes=d.n.map(n=>Object.assign({},n,{product:slug,globalId:slug+':'+n.id}));const product={spec,data:d,nodes,byId:new Map(nodes.map(n=>[n.id,n])),children:new Map()};for(const n of nodes){if(n.parent){const arr=product.children.get(n.parent)||[];arr.push(n);product.children.set(n.parent,arr);}}
  state.products.set(slug,product);return product;}
@@ -53,22 +53,24 @@ function renderResearchDossier(record){
  return html+'</div>';
 }
 
-function showDetail(node){if(!node)return;const p=state.product,d=p.data;const identity=(d.identity||[]).find(r=>r.id===node.id);const matches=identity?.canonical?d.m.filter(m=>'MAT:'+m.id===identity.canonical):[];const matIds=new Set(matches.map(m=>m.id));const companyMatches=d.cm.filter(cm=>matIds.has(cm.material));const markets=d.mk.filter(m=>matIds.has(m.material));const upstream=(p.children.get(node.id)||[]).slice(0,20);const downstream=ancestors(p,node.id).slice(1);const sourceIds=new Set([...markets.map(m=>{const s=d.s.find(x=>x.market===m.id);return s&&s.source;}).filter(Boolean),...d.r.filter(r=>matIds.has(r.material)).map(r=>r.source)]);
-let html='<div class="small">NODE / '+esc(node.id)+' · '+esc(p.spec.title)+'</div><h2>'+esc(node.name)+'</h2><div class="pills"><span class="pill">'+esc(node.kind||'材料/工艺')+'</span><span class="pill">'+esc(node.branch||'未分类')+'</span><span class="pill">技术路径</span></div><p>'+esc(node.description||'该节点来自产品技术供应链树。尚无独立、可核实的量化描述。')+'</p>';
-html+='<div class="fact"><label>实体身份与审核状态</label><div class="small">'+esc(identity?.canonical||('NODE:EYE:'+node.id))+' · '+esc(identity?.state==='curated_exact'?'已校对材料身份（不代表采购关系）':'暂定独立节点；待人工同一性复核')+'</div></div>';
-if(matches.length)html+='<h3>标准材料实体</h3>'+matches.map(m=>'<div class="fact"><label>跨产品唯一标识</label><b>'+esc(m.id)+' · '+esc(m.name)+'</b></div>').join('');
-html+='<h3>技术上游 / 下游</h3>'+(upstream.length?'<div class="small">再往上游（'+upstream.length+'）</div>'+upstream.map(n=>'<a class="linkline" href="#" data-node="'+esc(n.id)+'">↑ '+esc(n.name)+'</a>').join(''):'<div class="empty">该技术树中尚无更上游节点</div>')+(downstream.length?'<div class="small">下游路径（最近6级）</div>'+downstream.slice(0,6).map(n=>'<a class="linkline" href="#" data-node="'+esc(n.id)+'">↓ '+esc(n.name)+'</a>').join(''):'');
-const linkedSlugs=new Set([p.spec.slug]);for(const m of matches){(state.reverseIndex?.material_to_products?.[m.id]||[]).forEach(slug=>linkedSlugs.add(slug));}
-html+='<h3>反向查找下游产品（技术关联）</h3>'+Array.from(linkedSlugs).map(slug=>{const spec=state.catalog.products.find(pr=>pr.slug===slug);return spec?'<a class="linkline" href="#/products/'+esc(slug)+'">↗ '+esc(spec.title)+' · '+esc(spec.category)+'</a>':'';}).join('')+'<p class="small">按全局material_id关联产品。出现于技术图谱不等于实际销售或供货。</p>';
-if(companyMatches.length)html+='<h3>相关企业（不等于实际供货）</h3>'+companyMatches.map(cm=>{const c=d.c.find(v=>v.id===cm.company);return c?'<div class="fact"><a href="#" data-company="'+esc(c.id)+'"><b>'+esc(c.zh||c.en)+' ↗</b></a><div class="small">'+esc(cm.role)+'</div>'+(c.website?'<a class="linkline" href="'+esc(safeLink(c.website))+'" target="_blank" rel="noopener">公司网站 ↗</a>':'')+'</div>':'';}).join('');
-if(markets.length)html+='<h3>市场份额 / 统计口径</h3>'+markets.map(m=>'<div class="fact"><b>'+esc(m.name)+' · '+m.year+'</b><p class="small">'+esc(m.geo)+' / '+esc(m.metric)+'<br>'+esc(m.scope)+'</p>'+d.s.filter(s=>s.market===m.id&&s.pct!==null).sort((a,b)=>Number(a.rank||99)-Number(b.rank||99)).slice(0,9).map(s=>'<div class="marketline">'+esc(s.label)+' <b style="float:right">'+esc(s.pct)+'%</b><div class="bar"><div style="width:'+Math.min(100,Math.max(0,Number(s.pct)))+'%"></div></div></div>').join('')+'</div>').join('');
-const relations=d.r.filter(r=>matIds.has(r.material));if(relations.length)html+='<h3>企业合作证据</h3>'+relations.map(r=>{const up=d.c.find(c=>c.id===r.upstream),down=d.c.find(c=>c.id===r.downstream);return '<div class="fact"><b>'+esc(up?.zh||r.upstream)+' → '+esc(down?.zh||r.downstream)+'</b><p class="small">'+esc(r.type)+' · '+esc(r.scope||'')+'</p></div>';}).join('');
-const opportunities=d.o.filter(o=>matIds.has(o.material));if(opportunities.length)html+='<h3>国产替代线索（未完成验证）</h3>'+opportunities.map(o=>'<div class="fact"><b>'+esc(o.topic)+'</b><p class="small">待验证：'+esc(o.gap)+'</p></div>').join('');
-if(sourceIds.size)html+='<h3>公开证据</h3>'+Array.from(sourceIds).map(id=>{const s=d.src.find(v=>v.id===id);return s?'<a class="linkline" href="'+esc(safeLink(s.url))+'" target="_blank" rel="noopener">'+esc(s.title)+' ↗</a>':'';}).join('');
-for(const record of (d.research||[]).filter(v=>v.node_id===node.id))html+=renderResearchDossier(record);
-html+='<h3>反向追溯与证据限制</h3><p class="small">技术树可追溯材料到成品的结构关系；供应商关系必须额外有采购或公开合作证据。此页面不将材料领域内公司自动推断为本成品的供应商。</p>';
-$('#detail').innerHTML=html;$('#detail').querySelectorAll('[data-company]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showCompanyDetail(a.getAttribute('data-company'));}));
-$('#detail').querySelectorAll('[data-node]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const id=a.getAttribute('data-node');let parent=p.byId.get(id)?.parent;while(parent){state.collapsed.delete(parent);parent=p.byId.get(parent)?.parent;}state.selected=p.byId.get(id);drawTree();showDetail(state.selected);const l=state.layout.find(n=>n.id===id);if(l){state.viewport.x=l.x-180;state.viewport.y=l.y-250;state.viewport.w=900;state.viewport.h=560;setView();}}));}
+function showDetail(node){
+ if(!node)return;
+ const p=state.product;
+ const target=$('#detail');
+ target.innerHTML=window.SupplyNodePanel.render({node,product:p,reverse:state.reverseIndex,catalog:state.catalog});
+ window.SupplyNodePanel.bind(target,{
+  onCompany:companyId=>showCompanyDetail(companyId),
+  onNode:id=>{
+   const targetNode=p.byId.get(id);
+   if(!targetNode)return;
+   let parent=targetNode.parent;
+   while(parent){state.collapsed.delete(parent);parent=p.byId.get(parent)?.parent;}
+   state.selected=targetNode;drawTree();showDetail(state.selected);
+   const entry=state.layout.find(n=>n.id===id);
+   if(entry){state.viewport.x=entry.x-180;state.viewport.y=entry.y-250;state.viewport.w=900;state.viewport.h=560;setView();}
+  }
+ });
+}
 async function showCompanyDetail(companyId){
  const p=state.product;if(!p)return;const d=p.data;const company=d.c.find(c=>c.id===companyId);if(!company)return;
  const materialIds=new Set((state.reverseIndex?.company_to_materials?.[companyId]||[]));

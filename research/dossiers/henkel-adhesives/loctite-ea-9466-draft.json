@@ -1,0 +1,96 @@
+{
+  "node_id": "ea9466",
+  "product_slug": "henkel-adhesives",
+  "configuration_id": "portfolio_or_named_sku",
+  "name": "LOCTITE EA 9466 双组分环氧胶",
+  "node_type": "sku",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002"
+  ],
+  "sections": {
+    "identity": {
+      "name": "LOCTITE EA 9466 双组分环氧胶",
+      "grade_or_scope": "sku",
+      "as_of": "2026-11-18"
+    },
+    "technical": {
+      "purpose": "通用工业结构粘接",
+      "technology": "two-component epoxy",
+      "properties": [
+        {
+          "attribute": "mix_ratio_by_volume",
+          "value": "2:1",
+          "unit": "resin:hardener",
+          "grade": "EA 9466",
+          "test_condition": "March 2025 TDS",
+          "source_id": "S001"
+        },
+        {
+          "attribute": "working_life",
+          "value": 60,
+          "unit": "minutes",
+          "grade": "EA 9466",
+          "test_condition": "mixed; manufacturer typical",
+          "source_id": "S001"
+        }
+      ]
+    },
+    "upstream": [
+      {
+        "name": "环氧树脂配方族",
+        "relationship": "technical_family_only"
+      },
+      {
+        "name": "配套固化剂；BPA/ECH路线不等于具体合同",
+        "relationship": "technical_family_only"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "金属",
+        "relationship": "industry_application_not_confirmed_client"
+      },
+      {
+        "product": "Henkel Adhesive Technologies",
+        "application": "塑料",
+        "relationship": "industry_application_not_confirmed_client"
+      }
+    ],
+    "companies": [
+      {
+        "name": "Henkel AG & Co. KGaA",
+        "relationship": "brand_owner_and_product_marketer",
+        "source_ids": [
+          "S001"
+        ],
+        "confirmed_upstream_supplier": false
+      }
+    ],
+    "market": [],
+    "risk": [
+      {
+        "type": "portfolio_and_supplier_conflation",
+        "state": "unknown",
+        "reason": "No actual raw-material supplier purchase contract is established by a manufacturer TDS."
+      }
+    ],
+    "open_questions": [
+      "指定地区SDS包含哪些公开组分？",
+      "实际BPA型树脂供应商是否公开？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "No independent page-level semantic review or adversarial corroboration"
+  },
+  "sources": [
+    "S001"
+  ],
+  "notes": "Official single-origin primary evidence. No verified current supplier/customer relationship."
+}
