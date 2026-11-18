@@ -73,3 +73,7 @@ deep-search证据JSON需要包含sources和claims及原文content；本仓库aud
 - 不可将已批准但旧年份数据自动升级为今年数据。提供版本/发布日期标注。
 - 每周/每月自动重查属于可选独立自动化任务；仓库的CI不会主动触发LLM/商业搜索API。
 - 提交前运行 tests、build_site、research_cli validate-skills 和证据账本审计。测试通过仅代表代码及结构健康。
+
+## Cross-platform skill mirrors
+
+Canonical: .agents/skills. macOS/Linux Git checkout supports symlinked skill directories. Windows without symlink privileges may run python tools/sync_skill_mirrors.py --copy to materialize identical copies; the validator accepts byte-identical copies. Running --check is read-only. --symlink restores links. The copy command refuses overwriting divergent local edits; back them up first. Pi can discover both .agents and .pi, and may show duplicate names depending on its version; prefer the canonical entry.

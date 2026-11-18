@@ -28,3 +28,6 @@ jobs:
         run: |
           python scripts/research_cli.py audit-ledger --input research/ledgers/eyewear/pc-optical-ledger.json
           python scripts/research_cli.py audit-dossier --input research/dossiers/eyewear/pc-optical-draft.json
+
+      - name: Validate cross-platform skill mirror portability
+        run: python tools/sync_skill_mirrors.py --check

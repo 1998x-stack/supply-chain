@@ -141,8 +141,12 @@ def validate_skills():
             if not (md.parent/file).is_file():errors.append(slug+" missing "+file)
         for host in (".codex",".claude",".pi"):
             link=ROOT/host/"skills"/slug
-            if not link.is_dir() or not (link/"SKILL.md").is_file() or link.resolve()!=md.parent.resolve():
-                errors.append(host+" broken or divergent skill "+slug)
+            if not link.is_dir() or not (link/"SKILL.md").is_file():
+                errors.append(host+" missing or broken skill "+slug)
+            elif link.resolve()!=md.parent.resolve():
+                canonical={str(p.relative_to(md.parent)):p.read_bytes() for p in md.parent.rglob("*") if p.is_file()}
+                mirrored={str(p.relative_to(link)):p.read_bytes() for p in link.rglob("*") if p.is_file()}
+                if canonical!=mirrored:errors.append(host+" divergent skill copy "+slug)
     return result("skills",errors,[],skill_count=len(skills))
 
 def main():
