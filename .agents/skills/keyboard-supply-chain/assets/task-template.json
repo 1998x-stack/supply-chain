@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "task_type": "keyboard_node_deep_search",
+  "product_slug": "keyboard",
+  "configuration_id": "mechanical_usb",
+  "node_id": "mx_gold_contacts",
+  "priority": "P0",
+  "research_questions": [
+    "该SKU实际触点材料与电镀结构是什么？",
+    "哪些企业生产该特定部件？",
+    "是否有经年报或采购公告证明的OEM供货？"
+  ],
+  "sources_to_check": [
+    {
+      "type": "manufacturer_tds",
+      "url": "https://www.cherry.de/en-us/product/mx2a-red"
+    },
+    {
+      "type": "independent_standard",
+      "url": null
+    }
+  ],
+  "negative_evidence": [
+    "不同MX轴/中国机械轴并非全部采用同结构"
+  ],
+  "unknowns": [
+    "真实采购合同",
+    "同口径TOP3"
+  ],
+  "outputs": [
+    "research/ledgers/keyboard/<slug>-ledger.json",
+    "research/dossiers/keyboard/<slug>-draft.json"
+  ],
+  "guardrails": [
+    "Do not claim gold thickness without source",
+    "Do not merge alternatives into one BOM",
+    "Do not mark approved without independent human review"
+  ]
+}
