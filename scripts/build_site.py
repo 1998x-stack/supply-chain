@@ -155,7 +155,7 @@ def convert_atlas_v1(g):
         if xlink.get('from') not in known_nodes or xlink.get('to') not in known_nodes:
             raise ValueError('Cross link references unknown nodes')
         if xlink.get('from')==xlink.get('to'):raise ValueError('Self cross link')
-        if xlink.get('relation_type') not in ('associated_with','material_input','processed_into','uses_equipment'):
+        if xlink.get('relation_type') not in ('associated_with','material_input','processed_into','uses_equipment','component_of'):
             raise ValueError('Unsupported cross link relation')
         if xlink.get('evidence_status') not in ('technological','hypothesis','verified','unknown','disputed'):
             raise ValueError('Invalid evidence status')

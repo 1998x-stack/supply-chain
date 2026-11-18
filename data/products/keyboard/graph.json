@@ -2368,15 +2368,6 @@
       "note": "机械接点轴是可选键盘构型，Cherry只是代表，不等于整机采购"
     },
     {
-      "id": "KBX002",
-      "from": "cherry_mx_red",
-      "to": "mx_system",
-      "relation_type": "associated_with",
-      "evidence_status": "technological",
-      "source_id": "S01",
-      "note": "具体产品SKU属于机械接点轴类别"
-    },
-    {
       "id": "KBX003",
       "from": "mx_gold_contacts",
       "to": "cherry_mx_red",
@@ -2411,15 +2402,6 @@
       "evidence_status": "technological",
       "source_id": "S03",
       "note": "霍尔方案是磁轴键盘可选核心技术"
-    },
-    {
-      "id": "KBX007",
-      "from": "gateron_ks20",
-      "to": "hall_system",
-      "relation_type": "associated_with",
-      "evidence_status": "technological",
-      "source_id": "S02",
-      "note": "Gateron磁轴示例"
     },
     {
       "id": "KBX008",
@@ -2503,33 +2485,6 @@
       "note": "ABS键帽的注塑材料类别"
     },
     {
-      "id": "KBX017",
-      "from": "doubleshot",
-      "to": "keycap_system",
-      "relation_type": "associated_with",
-      "evidence_status": "technological",
-      "source_id": "S09",
-      "note": "双色或三色注塑工艺属于键帽制作而非原料"
-    },
-    {
-      "id": "KBX018",
-      "from": "fr4",
-      "to": "pcb_stack",
-      "relation_type": "associated_with",
-      "evidence_status": "technological",
-      "source_id": "S08",
-      "note": "FR4为PCB常见材料族，具体板厂可选其他级别"
-    },
-    {
-      "id": "KBX019",
-      "from": "copper_foil",
-      "to": "pcb_stack",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "常规覆铜板技术原料；具体PCB工艺待研究"
-    },
-    {
       "id": "KBX020",
       "from": "matrix",
       "to": "controller",
@@ -2537,15 +2492,6 @@
       "evidence_status": "technological",
       "source_id": "S04",
       "note": "矩阵扫描是普通触点键盘控制器常见固件工作"
-    },
-    {
-      "id": "KBX021",
-      "from": "diodes",
-      "to": "matrix",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "许多设计用二极管防鬼键，是否采用取决于矩阵架构"
     },
     {
       "id": "KBX022",
@@ -2575,15 +2521,6 @@
       "note": "BLE无线键盘使用HOGP协议类别"
     },
     {
-      "id": "KBX025",
-      "from": "nrf52840",
-      "to": "ble_soc",
-      "relation_type": "associated_with",
-      "evidence_status": "technological",
-      "source_id": "S07",
-      "note": "Nordic候选SoC并非已确认供应给特定键盘厂"
-    },
-    {
       "id": "KBX026",
       "from": "ble_soc",
       "to": "ble_wireless",
@@ -2611,87 +2548,6 @@
       "note": "可充电无线构型之一；也可使用AA/AAA一次性电池"
     },
     {
-      "id": "KBX029",
-      "from": "pbt_caps",
-      "to": "keycap_system",
-      "relation_type": "associated_with",
-      "evidence_status": "technological",
-      "source_id": "S09",
-      "note": "PBT材质键帽方案，和ABS可替代"
-    },
-    {
-      "id": "KBX030",
-      "from": "abs_caps",
-      "to": "keycap_system",
-      "relation_type": "associated_with",
-      "evidence_status": "technological",
-      "source_id": "S09",
-      "note": "ABS材质键帽方案，和PBT可替代"
-    },
-    {
-      "id": "KBX031",
-      "from": "pta",
-      "to": "pbt_resin",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "PBT常用工业聚合原料路线，不代表特定键帽品牌上游采购"
-    },
-    {
-      "id": "KBX032",
-      "from": "bdo",
-      "to": "pbt_resin",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "PBT常用工业聚合原料路线，需调查生产企业"
-    },
-    {
-      "id": "KBX033",
-      "from": "styrene",
-      "to": "abs_resin",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "ABS基本化工路线，仅技术关联"
-    },
-    {
-      "id": "KBX034",
-      "from": "acrylonitrile",
-      "to": "abs_resin",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "ABS基本化工路线，仅技术关联"
-    },
-    {
-      "id": "KBX035",
-      "from": "butadiene",
-      "to": "abs_resin",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "ABS基本化工路线，仅技术关联"
-    },
-    {
-      "id": "KBX036",
-      "from": "bpa",
-      "to": "pc_resin",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "BPA型PC路线可能适用，不能推断键帽PC供应合同"
-    },
-    {
-      "id": "KBX037",
-      "from": "siloxane",
-      "to": "silicone",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "硅橡胶常见聚合原料方向，具体配方未知"
-    },
-    {
       "id": "KBX038",
       "from": "quartz",
       "to": "siloxane",
@@ -2699,42 +2555,6 @@
       "evidence_status": "hypothesis",
       "source_id": null,
       "note": "二氧化硅至有机硅的一般资源路径"
-    },
-    {
-      "id": "KBX039",
-      "from": "copper_concentrate",
-      "to": "copper",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "矿产或回收铜的资源路径，未识别产品厂商"
-    },
-    {
-      "id": "KBX040",
-      "from": "bauxite",
-      "to": "aluminum",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "铝土矿至氧化铝至电解铝的一般工业路径"
-    },
-    {
-      "id": "KBX041",
-      "from": "rare_earth_ore",
-      "to": "neodymium_magnet",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "稀土永磁材料的资源类路径，不证明Gateron的实际磁体选型"
-    },
-    {
-      "id": "KBX042",
-      "from": "polysilicon",
-      "to": "semiconductor_si",
-      "relation_type": "associated_with",
-      "evidence_status": "hypothesis",
-      "source_id": null,
-      "note": "半导体硅资源链，晶圆制造与具体Fab尚未核实"
     },
     {
       "id": "KBX043",
