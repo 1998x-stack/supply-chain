@@ -22,7 +22,7 @@ window.SupplyNodePanel=(()=>{
  function facts(insight){return [...(insight?.facts||[]),...(insight?.metrics||[])];}
  function factCards(rows){
   if(!rows.length)return empty('暂无可公开核实的量化指标。待补充同口径来源与测试条件。');
-  return '<div class="sc-kpi-grid">'+rows.map(x=>'<article class="sc-kpi"><span class="sc-kpi-label">'+e(x.label)+'</span><strong>'+e(x.value)+ (x.unit?' <small>'+e(x.unit)+'</small>':'')+'</strong><div class="sc-kpi-meta">'+e(x.period||x.condition||x.scope||'')+'</div>'+tagSource(x.source_id)+'</article>').join('')+'</div>';
+  return '<div class="sc-kpi-grid">'+rows.map(x=>'<article class="sc-kpi"><span class="sc-kpi-label">'+e(x.label)+'</span><strong>'+e(x.value)+ (x.unit?' <small>'+e(x.unit)+'</small>':'')+'</strong><div class="sc-kpi-meta">'+e([x.period,x.scope,x.condition].filter(Boolean).join(' · '))+'</div>'+tagSource(x.source_id)+'</article>').join('')+'</div>';
  }
  function renderValues(value){
   if(value==null||value===''||(Array.isArray(value)&&!value.length))return empty('该维度暂无已整理数据。');
@@ -51,7 +51,7 @@ window.SupplyNodePanel=(()=>{
   const {insight,dossier,node}=ctx;
   const sec=dossier?.sections||{};
   const upstream=sec.upstream||[],downstream=sec.downstream||[];
-  return '<section><h3>技术参数 / 测试条件</h3>'+factCards(facts(insight))+
+  return '<section><h3>技术参数 / 测试条件</h3>'+factCards(insight?.facts||[])+
      (sec.technical?'<h4>节点技术研究</h4>'+renderValues(sec.technical):'')+
      (sec.identity?'<h4>牌号、身份与标准</h4>'+renderValues(sec.identity):'')+'</section>'+
      '<section><h3>工艺投入与应用</h3><p class="sc-note">此处是技术类属或工艺候选，不是企业采购清单。</p>'+
