@@ -39,3 +39,10 @@
 - 使用 `scripts/build_priority.py` 输出P0/P1/P2研究队列，产品里所有未知的市场排名、厂家产能、客户认证必须标记待核实。
 - 研究批次新增档案需通过 `scripts/audit_eyewear.py`，并将结构化数据入库；机器只能验证引用结构，不能宣称语义审阅完成。
 - 本规则可被所有host端（Codex、Pi、Claude）加载，优先遵循规范源 `.agents/skills/`。
+ 
+## 跨产品研究与节点面板 V3（Henkel 胶黏剂）
+- 企业产品组合≠单个产品：先标记portfolio/brand/SKU/chemistry/processing/application，不能把所有分支统一解释为BOM。
+- 面板数据字段详见 docs/NODE_PANEL_DESIGN.md，未完成审核显示研究草稿，数值保留source_id、unit、period、scope、condition。
+- node_intelligence数据使用 scripts/validate_intelligence.py 校验；请勿将年收入、厂商自报产能、国家矿产产量显示为市场TOP3。
+- 新产品CI应包含产品注册、类型化边、跨产品材料索引、证据来源与前端脚本校验；对旧测试中“只含眼镜”等硬编码进行更新。
+- 产品/品牌技术能力 ≠ 企业实际原材料采购，汉高的上游采购商必须有直接披露证据。
