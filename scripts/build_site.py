@@ -35,6 +35,7 @@ def compact(x,research=None,resolution=None):
     return {
      'research':research or [],
      'insights':x.get('node_intelligence',[]),
+     'xl':[[r['from'],r['to'],r['relation_type'],r['evidence_status'],r.get('source_id'),r.get('note','')] for r in x.get('cross_links',[])],
      'identity':[[r['view_node_id'],r['canonical_material_entity_id'],r['identity_state'],r['label_key']] for r in (resolution or {}).get('view_nodes',[])],
      'n':[[t['node_id'],t['name'],t['parent_id'],t['kind'],t['branch'],t['description'] or '',t.get('relation_type','material_input')] for t in x['tree_node']],
      'm':[[v['material_id'],v['name'],v['representative_node_id']] for v in x['material']],
@@ -120,7 +121,7 @@ def discover_products(root=ROOT):
 
 def convert_atlas_v1(g):
     # Public schema uses human-readable objects; internal compatibility shape is the v2 dataset.
-    x={k:[] for k in ('tree_node','material','company','company_material','company_relation','market','market_share','substitution_opportunity','source','procurement_concentration','capacity_observation','company_kpi','node_intelligence')}
+    x={k:[] for k in ('tree_node','material','company','company_material','company_relation','market','market_share','substitution_opportunity','source','procurement_concentration','capacity_observation','company_kpi','node_intelligence','cross_links')}
     for n in g.get('nodes',[]):
         x['tree_node'].append({'node_id':n['id'],'name':n['name'],'parent_id':n.get('parent'), 'kind':n.get('kind','材料'), 'branch':n.get('branch','未分类'), 'description':n.get('description',''), 'depth':0,'relation_type':n.get('relation_type','material_input')})
     by_id={n['node_id']:n for n in x['tree_node']}
@@ -132,6 +133,7 @@ def convert_atlas_v1(g):
             seen.add(parent);n['depth']+=1;parent=by_id[parent]['parent_id']
     if sum(n['parent_id'] is None for n in x['tree_node'])!=1:raise ValueError('Exactly one root required')
     x['node_intelligence']=g.get('node_intelligence',[])
+    x['cross_links']=g.get('cross_links',[])
     known_sources={src['id'] for src in g.get('sources',[])}
     known_nodes={n['node_id'] for n in x['tree_node']}
     seen_insights=set()
@@ -145,6 +147,19 @@ def convert_atlas_v1(g):
             for item in insight.get(field,[]):
                 if item.get('source_id') not in known_sources or not item.get('label'):
                     raise ValueError('Invalid '+field+' source or label in '+vid)
+    link_ids=set()
+    for xlink in x['cross_links']:
+        if xlink.get('id') in link_ids:raise ValueError('Duplicate cross link')
+        link_ids.add(xlink.get('id'))
+        if xlink.get('from') not in known_nodes or xlink.get('to') not in known_nodes:
+            raise ValueError('Cross link references unknown nodes')
+        if xlink.get('from')==xlink.get('to'):raise ValueError('Self cross link')
+        if xlink.get('relation_type') not in ('associated_with','material_input','processed_into','uses_equipment'):
+            raise ValueError('Unsupported cross link relation')
+        if xlink.get('evidence_status') not in ('technological','hypothesis','verified','unknown','disputed'):
+            raise ValueError('Invalid evidence status')
+        if xlink.get('source_id') and xlink['source_id'] not in known_sources:
+            raise ValueError('Missing cross link evidence source')
     for m in g.get('materials',[]):x['material'].append({'material_id':m['id'],'name':m['name'],'representative_node_id':m.get('node')})
     for c in g.get('companies',[]):x['company'].append({'company_id':c['id'],'name_zh':c.get('zh',''),'name_en':c.get('en',c.get('zh',c['id'])),'official_website':c.get('website'), 'geo':c.get('geo')})
     for c in g.get('company_material',[]):x['company_material'].append({'company_id':c['company'],'material_id':c['material'],'role':c.get('role','industry_participant'), 'source_id':c['source']})
@@ -283,6 +298,13 @@ def add_additional_products(products,out):
             else:
                 db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id) VALUES (?,?,?,?,?,?)',
                            ('ROOT:'+slug,node_id(n['node_id']),product_id,'component_of','technological',product_id))
+        for xlink in x.get('cross_links',[]):
+            linktype=xlink['relation_type'];status=xlink.get('evidence_status','hypothesis')
+            edge_id='XL:'+slug+':'+xlink['id']
+            db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id,notes) VALUES (?,?,?,?,?,?,?)',
+              (edge_id,node_id(xlink['from']),node_id(xlink['to']),linktype,status,product_id,xlink.get('note','')))
+            if xlink.get('source_id') in sources:
+                db.execute('INSERT INTO edge_source(edge_id,source_id) VALUES (?,?)',(edge_id,sources[xlink['source_id']]))
         for m in x['material']:
             mid=material_id(m['material_id'])
             old=db.execute('SELECT name_zh FROM entity WHERE entity_id=?',(mid,)).fetchone()

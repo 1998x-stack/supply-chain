@@ -79,6 +79,7 @@ window.SupplyNodePanel=(()=>{
  }
  function renderTrace(ctx){
   const {product,node,data,reverse,catalog,matIds}=ctx;
+  const cross=(data.xl||[]).filter(x=>x.from===node.id||x.to===node.id);
   const children=(product.children.get(node.id)||[]);
   const ancestor=[];let id=node.parent;while(id&&ancestor.length<25){const item=product.byId.get(id);if(!item)break;ancestor.push(item);id=item.parent;}
   const branch=(title,list)=>'<section><h3>'+title+'</h3>'+(list.length?
@@ -86,8 +87,14 @@ window.SupplyNodePanel=(()=>{
   const all=new Set([product.spec.slug]);for(const mid of matIds)
     for(const slug of (reverse?.material_to_products?.[mid]||[]))all.add(slug);
   const products=[...all].map(slug=>catalog.products.find(p=>p.slug===slug)).filter(Boolean);
+  const connections=cross.length?'<section><h3>跨分支材料与技术关联</h3>'+
+    cross.map(x=>{const other=product.byId.get(x.from===node.id?x.to:x.from);
+      return '<div class="sc-record"><a href="#" data-node="'+e(other?.id)+'">'+e(other?.name||'关联节点')+' ↗</a>'+
+        '<div class="sc-header-pills">'+badge(x.type)+badge(x.status,x.status==='hypothesis'?'draft':'muted')+'</div>'+
+        '<p>'+e(x.note||'')+'</p>'+(x.source?'<small>来源：'+e(x.source)+'</small>':'<small>尚未独立验证</small>')+'</div>';
+    }).join('')+'</section>':'';
   return '<div class="sc-explain">边的类型决定含义：分类≠原料，原料≠企业采购，行业应用≠指定客户订单。</div>'+
-    branch('下一层节点（仅按树状图）',children)+branch('向成品/业务入口回溯',ancestor)+
+    connections+branch('下一层节点（仅按树状图）',children)+branch('向成品/业务入口回溯',ancestor)+
     '<section><h3>跨产品反向查询</h3>'+products.map(p=>'<a class="sc-trace-link" href="#/products/'+e(p.slug)+'"><span>'+e(p.icon)+' '+e(p.title)+'</span><small>技术关联</small></a>').join('')+'</section>';
  }
  function renderEvidence(ctx){

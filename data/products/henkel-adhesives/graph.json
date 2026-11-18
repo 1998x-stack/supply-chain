@@ -1560,5 +1560,214 @@
     "market_shares": "No reliable same-scope vendor TOP3. Never infer from Henkel division sales.",
     "business_relations": "No named upstream purchasing contracts in this release.",
     "claims_status": "Draft; manufacturer-sourced."
-  }
+  },
+  "cross_links": [
+    {
+      "id": "CL001",
+      "from": "dimethacrylate",
+      "to": "243",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S04",
+      "note": "TDS声明为双甲基丙烯酸酯技术类型"
+    },
+    {
+      "id": "CL002",
+      "from": "epoxyresin",
+      "to": "ea9466",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S05",
+      "note": "TDS声明双组分环氧体系"
+    },
+    {
+      "id": "CL003",
+      "from": "hardener",
+      "to": "ea9466",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S05",
+      "note": "TDS声明A/B固化剂混合机制"
+    },
+    {
+      "id": "CL004",
+      "from": "evaresin",
+      "to": "eva5669",
+      "relation_type": "material_input",
+      "evidence_status": "technological",
+      "source_id": "S07",
+      "note": "TDS声明EVA热熔技术，不披露完整配方比例"
+    },
+    {
+      "id": "CL005",
+      "from": "purprepoly",
+      "to": "pur9340",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": "S08",
+      "note": "通用PUR工业类别；具体树脂预聚物尚未核实"
+    },
+    {
+      "id": "CL006",
+      "from": "purprepoly",
+      "to": "pur9015",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": "S15",
+      "note": "通用PUR工业类别，不代表具体树脂已获采购认证"
+    },
+    {
+      "id": "CL007",
+      "from": "silane",
+      "to": "ms940",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S11",
+      "note": "无异氰酸酯SMP技术类别，具体配方未披露"
+    },
+    {
+      "id": "CL008",
+      "from": "ethylca",
+      "to": "401",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": "S06",
+      "note": "瞬干胶通用化学族；401地区配方需要SDS"
+    },
+    {
+      "id": "CL009",
+      "from": "cya",
+      "to": "401",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S06",
+      "note": "LOCTITE 401为瞬干胶类别"
+    },
+    {
+      "id": "CL010",
+      "from": "ethylene",
+      "to": "evaresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "EVA一般化工单体路径，未验证汉高原料供应商"
+    },
+    {
+      "id": "CL011",
+      "from": "vinylacetate",
+      "to": "evaresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "EVA一般化工单体路径，未验证实际厂家和用量"
+    },
+    {
+      "id": "CL012",
+      "from": "vinylacetate",
+      "to": "pvac",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "PVAc一般工业前体，不证明指定AQUENCE配方"
+    },
+    {
+      "id": "CL013",
+      "from": "propylene",
+      "to": "polyolefin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "典型聚烯烃合成途径可能包括丙烯，不特定某一个牌号"
+    },
+    {
+      "id": "CL014",
+      "from": "bpa",
+      "to": "epoxyresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "典型双酚A环氧树脂路线，非EA9466公开配方确认"
+    },
+    {
+      "id": "CL015",
+      "from": "epi",
+      "to": "epoxyresin",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "典型环氧氯丙烷路线，非具体配方确证"
+    },
+    {
+      "id": "CL016",
+      "from": "polyols",
+      "to": "purprepoly",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "通用PUR预聚物路线，尚非特定产品进料名单"
+    },
+    {
+      "id": "CL017",
+      "from": "isocyanates",
+      "to": "purprepoly",
+      "relation_type": "associated_with",
+      "evidence_status": "hypothesis",
+      "source_id": null,
+      "note": "通用PUR预聚物路线；不要误用于TEROSON MS940"
+    },
+    {
+      "id": "CL018",
+      "from": "evahm",
+      "to": "eva5669",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S07",
+      "note": "牌号属于EVA热熔技术家族"
+    },
+    {
+      "id": "CL019",
+      "from": "purhm",
+      "to": "pur9340",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S08",
+      "note": "牌号属于反应型PUR热熔家族"
+    },
+    {
+      "id": "CL020",
+      "from": "pohm",
+      "to": "supra",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S09",
+      "note": "Technomelt Supra聚烯烃热熔技术分类"
+    },
+    {
+      "id": "CL021",
+      "from": "smp",
+      "to": "ms940",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S11",
+      "note": "TEROSON MS940与SMP技术相关"
+    },
+    {
+      "id": "CL022",
+      "from": "packagingsector",
+      "to": "eva5669",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S07",
+      "note": "纸与非织造/过滤器应用领域，不能作客户订单"
+    },
+    {
+      "id": "CL023",
+      "from": "rail",
+      "to": "ms940",
+      "relation_type": "associated_with",
+      "evidence_status": "technological",
+      "source_id": "S11",
+      "note": "2026年官方宣布轨道交通行业应用方向"
+    }
+  ]
 }
