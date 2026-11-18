@@ -85,8 +85,8 @@ class ResearchCliTests(unittest.TestCase):
         args=argparse.Namespace(product="eyewear")
         b=research_cli.seed_backlog(args)
         self.assertEqual(b["count"],382)
-        self.assertEqual(b["dossier_count"],8)
-        self.assertEqual(b["unreviewed_count"],374)
+        self.assertEqual(b["dossier_count"],16)
+        self.assertEqual(b["unreviewed_count"],366)
         self.assertTrue(all(n["verified_claims"]==0 for n in b["nodes"]))
         self.assertTrue(all(n["priority"]=="unrated" for n in b["nodes"]))
 

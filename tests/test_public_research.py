@@ -12,7 +12,7 @@ class PublicResearchTests(unittest.TestCase):
         seed=build_site.unpack_seed()
         node_ids={x['node_id'] for x in seed['tree_node']}
         dossiers=build_site.read_public_research('eyewear',node_ids)
-        self.assertEqual(len(dossiers),8)
+        self.assertEqual(len(dossiers),16)
         d=next(x for x in dossiers if x['node_id']=='N0032')
         self.assertEqual(d['node_id'],'N0032')
         self.assertEqual(d['semantic_review_status'],'pending')
@@ -31,7 +31,7 @@ class PublicResearchTests(unittest.TestCase):
         x=build_site.unpack_seed()
         r=build_site.read_public_research('eyewear',{n['node_id'] for n in x['tree_node']})
         body=build_site.compact(x,r)
-        self.assertEqual(len(body['research']),8)
+        self.assertEqual(len(body['research']),16)
         self.assertIn('N0032',{r['node_id'] for r in body['research']})
         self.assertTrue(all(r['semantic_review_status']=='pending' for r in body['research']))
         self.assertEqual(len(body['n']),382)
