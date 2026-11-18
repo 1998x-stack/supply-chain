@@ -319,8 +319,9 @@ def main():
     catalog={'version':1,'stats':{'nodes':sum(len(x['tree_node']) for _,x in products),'companies':len({c['company_id'] for _,x in products for c in x['company']}),'sources':sum(len(x['source']) for _,x in products)},'products':[]}
     for meta,x in products:
         slug=meta['slug']
-        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,read_public_research(slug,{n['node_id'] for n in x['tree_node']})),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
-        catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node'])})
+        research=read_public_research(slug,{n['node_id'] for n in x['tree_node']})
+        (d/(slug+'.json.gz')).write_bytes(gzip.compress(json.dumps(compact(x,research),separators=(',',':'),ensure_ascii=False).encode('utf-8'),compresslevel=9,mtime=0))
+        catalog['products'].append({'slug':slug,'title':meta['title'],'category':meta['category'],'icon':meta['icon'],'description':meta['description'],'nodes':len(x['tree_node']),'research_dossiers':len(research)})
     (d/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2),encoding='utf-8')
     (d/'reverse_index.json').write_text(json.dumps(reverse,ensure_ascii=False,indent=2),encoding='utf-8')
     (dist/'.nojekyll').write_text('',encoding='utf-8')
