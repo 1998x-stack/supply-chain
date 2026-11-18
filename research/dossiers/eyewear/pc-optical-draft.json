@@ -1,0 +1,147 @@
+{
+  "node_id": "N0032",
+  "canonical_entity_id": "MAT:PC_OPT",
+  "product_slug": "eyewear",
+  "configuration_id": "generic_polycarbonate_lens",
+  "name": "光学级PC聚碳酸酯树脂",
+  "node_type": "material",
+  "as_of": "2026-11-18",
+  "review_state": "reviewable_draft",
+  "claim_ids": [
+    "C001",
+    "C002",
+    "C003",
+    "C004"
+  ],
+  "sections": {
+    "identity": {
+      "name_en": "Ophthalmic-grade polycarbonate resin",
+      "aliases": [
+        "lens-quality PC",
+        "光学级PC"
+      ],
+      "family": "polycarbonate",
+      "grade_scope": "ophthalmic; do not conflate with all PC grades",
+      "existing_market_material_id": "PC_GEN"
+    },
+    "technical": {
+      "purpose": "用于矫正、防护与太阳镜等镜片的透明耐冲击树脂体系",
+      "properties": [
+        {
+          "attribute": "transmittance",
+          "value": ">89",
+          "unit": "percent",
+          "condition": "Covestro Makrolon lens-grade, wall thickness 1mm, manufacturer description",
+          "source_id": "S001"
+        }
+      ],
+      "sample_grades": [
+        {
+          "company": "SABIC",
+          "grade": "LEXAN OQ3420",
+          "property": "11 MFR; designed for ophthalmic lenses",
+          "source_id": "S002"
+        }
+      ],
+      "qualification_status": "unknown for each downstream lens brand"
+    },
+    "upstream": [
+      {
+        "name": "双酚A及相关聚碳酸酯聚合中间体",
+        "evidence_status": "research_required",
+        "remarks": "需逐条核实生产工艺、料号、当前供应商及是否现场自产/外采；不能由一般PC工艺推导企业采购"
+      }
+    ],
+    "downstream": [
+      {
+        "product": "eyewear",
+        "component": "PC聚碳酸酯镜片",
+        "relation": "technological",
+        "source_ids": [
+          "S001",
+          "S002"
+        ]
+      }
+    ],
+    "companies": [
+      {
+        "name": "Covestro",
+        "relationship": "material_manufacturer",
+        "source_ids": [
+          "S001"
+        ],
+        "commercial_source_id": null,
+        "confirmed_lens_brand_customer": false
+      },
+      {
+        "name": "SABIC",
+        "relationship": "material_manufacturer",
+        "source_ids": [
+          "S002"
+        ],
+        "commercial_source_id": null,
+        "confirmed_lens_brand_customer": false
+      }
+    ],
+    "market": [
+      {
+        "name": "Global PC resins, all grades",
+        "geography": "Global",
+        "year": 2024,
+        "metric": "capacity_share",
+        "denominator": "total worldwide all-grade PC production capacity",
+        "unit": "percent",
+        "company": "Covestro",
+        "share": 21.2,
+        "source_id": "S004",
+        "not_equivalent_to": "ophthalmic-grade market share",
+        "review_status": "needs_PDF_page_verification"
+      },
+      {
+        "name": "Global PC resins, all grades",
+        "geography": "Global",
+        "year": 2024,
+        "metric": "capacity_share",
+        "denominator": "total worldwide all-grade PC production capacity",
+        "unit": "percent",
+        "company": "SABIC",
+        "share": 18.5,
+        "source_id": "S004",
+        "not_equivalent_to": "ophthalmic-grade market share",
+        "review_status": "needs_PDF_page_verification"
+      }
+    ],
+    "risk": [
+      {
+        "type": "grade_qualification",
+        "state": "unknown",
+        "reason": "The grade's customer certification and actual glasses manufacturer procurement were not published in consulted evidence."
+      },
+      {
+        "type": "market_scope",
+        "state": "known_scope_mismatch",
+        "reason": "Global all-grade PC capacity shares are not optical/ophthalmic grade market shares."
+      }
+    ],
+    "open_questions": [
+      "全球/中国眼镜镜片专用PC牌号市场TOP3及其单独份额是什么？",
+      "哪些镜片企业公开确认采购了具体Makrolon或LEXAN牌号？",
+      "BPA→光学PC的具体技术路线、代表厂商及产能变化？",
+      "中国光学PC的客户认证与国产替代如何证明？",
+      "S004的PDF原文页码核验和S&P详细数据如何获取？"
+    ]
+  },
+  "semantic_review": {
+    "status": "pending",
+    "reviewer": null,
+    "reviewed_at": null,
+    "reason": "Human/original-page semantic approval is not complete."
+  },
+  "sources": [
+    "S001",
+    "S002",
+    "S003",
+    "S004"
+  ],
+  "notes": "Research sample, not a full supplier graph. Source text excerpts are short citation anchors only."
+}

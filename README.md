@@ -70,3 +70,7 @@ python3 -m unittest discover -s tests -v
 ~~~
 
 deep-search集成遵守其原始证据schema，但没有自动提供网络或LLM推理能力。Node coverage仅是字段完整度，不是事实正确率。复杂火箭示例是未核实的结构模板，不是SpaceX供应商清单。
+
+### 第一个真实节点研究样例
+
+眼镜/光学级PC档案：research/dossiers/eyewear/pc-optical-draft.json；证据账本：research/ledgers/eyewear/pc-optical-ledger.json；研究解读：research/dossiers/eyewear/pc-optical-report.md。此档案是 **REVIEWABLE DRAFT**，研究引用需要语义复核，PC全品类产能不代表光学级PC产能。其余展示节点仍需逐项研究。

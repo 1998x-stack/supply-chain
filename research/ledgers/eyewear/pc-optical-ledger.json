@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "node_id": "MAT:PC_OPT",
+  "product_slug": "eyewear",
+  "as_of": "2026-11-18",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://www.covestro.com/en/applications/eyewear",
+      "title": "Eyewear: Polycarbonates for optical applications",
+      "publisher": "Covestro",
+      "origin_group": "covestro_product",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "We offer Makrolon® polycarbonate grades formulated specifically for the optical/ophthalmic market.",
+      "notes": "Official product page. Excerpt only; not a saved full webpage. No specific customer disclosed."
+    },
+    {
+      "id": "S002",
+      "url": "https://www.sabic.com/en/products/polymers/polycarbonate-pc/lexan-resin",
+      "title": "LEXAN Resin product catalog",
+      "publisher": "SABIC",
+      "origin_group": "sabic_product",
+      "published_at": null,
+      "retrieved_at": "2026-11-18",
+      "content": "Designed for ophthalmic lenses. LEXAN™ OQ3420 resin is a 11 MFR polycarbonate.",
+      "notes": "Official grade listing excerpt; no specific customer disclosed."
+    },
+    {
+      "id": "S003",
+      "url": "https://www.spglobal.com/content/dam/spglobal/ci/en/documents/products/pdf/SP_Global_CEH_Polycarbonate_Resins_Abstract_andTOC_June_2025.pdf",
+      "title": "S&P Global Chemical Economics Handbook Polycarbonate Resins Abstract June 2025",
+      "publisher": "S&P Global",
+      "origin_group": "spglobal_ceh_pc",
+      "published_at": "2025-06",
+      "retrieved_at": "2026-11-18",
+      "content": "Covestro and SABIC Innovative Plastics are the two largest polycarbonate producers worldwide",
+      "notes": "Public abstract excerpt; covers all-grade global PC resin capacity, not optical grade specifically."
+    },
+    {
+      "id": "S004",
+      "url": "https://www.covestro.com/-/media/covestro/corporate/investors/annual-general-meeting/2026/en/covestro_agm_2026_transfer_report.pdf",
+      "title": "Covestro AGM 2026 Transfer Report, independent valuation section",
+      "publisher": "Covestro / PwC",
+      "origin_group": "spglobal_ceh_pc",
+      "published_at": "2026-03-26",
+      "retrieved_at": "2026-11-18",
+      "content": "with a 21.2% share of global capacity, and SABIC Innovative Plastics, with 18.5%",
+      "notes": "Page 30/para78 in PDF text preview, drawing on S&P CEH. PDF screenshot request returned 403, needs reviewer retrieval and original-page confirmation. NOT independent from S003."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Covestro markets Makrolon polycarbonate grades specifically formulated for optical or ophthalmic eyewear.",
+      "status": "supported",
+      "analysis": "Direct product description by Covestro establishes product offering, not actual supply to any specific lens OEM.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "Makrolon® polycarbonate grades formulated specifically for the optical/ophthalmic market",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C002",
+      "text": "SABIC lists LEXAN OQ3420 as a polycarbonate grade designed for ophthalmic lenses.",
+      "status": "supported",
+      "analysis": "Direct SABIC grade description; individual customer/eyewear brand procurement unknown.",
+      "evidence": [
+        {
+          "source_id": "S002",
+          "quote": "Designed for ophthalmic lenses",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C003",
+      "text": "2024 worldwide all-grade PC resin producers include Covestro and SABIC among the two largest.",
+      "status": "supported",
+      "analysis": "S&P original public CEH abstract supports top-two producer status; does not rank ophthalmic grade separately.",
+      "evidence": [
+        {
+          "source_id": "S003",
+          "quote": "the two largest polycarbonate producers worldwide",
+          "polarity": "supports"
+        }
+      ]
+    },
+    {
+      "id": "C004",
+      "text": "Covestro 21.2% and SABIC 18.5% were reported for 2024 global polycarbonate capacity, all grades, not optical-grade market.",
+      "status": "partially_supported",
+      "analysis": "2026 Covestro/PwC valuation PDF quotes S&P Global; original PDF page image retrieval failed (403). Treat as company report estimate requiring independent page check; not sufficient for optical-specific shares.",
+      "evidence": [
+        {
+          "source_id": "S004",
+          "quote": "with a 21.2% share of global capacity, and SABIC Innovative Plastics, with 18.5%",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ],
+  "research_limitations": [
+    "Original source excerpts are not archived full texts.",
+    "PDF page screenshot failed (403); verify source before promoting capacity share to approved.",
+    "No actual buyer-supplier transaction has been established.",
+    "S003 and S004 draw from the same upstream S&P source family, not independent confirmations."
+  ]
+}
