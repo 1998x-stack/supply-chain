@@ -16,9 +16,9 @@ REPO_ROOT=Path(__file__).resolve().parents[1]
 
 def make_command(args):
     if args.action=="search":
-        if not args.allow_network:
+        if not args.allow_network and not args.dry_run:
             raise ValueError("Search requires explicit --allow-network")
-        if not os.getenv("TAVILY_API_KEY"):
+        if not os.getenv("TAVILY_API_KEY") and not args.dry_run:
             raise ValueError("TAVILY_API_KEY is missing; connection and permission are required")
         plan=json.loads(Path(args.input).read_text(encoding="utf-8"))
         budget=plan.get("budget",{})

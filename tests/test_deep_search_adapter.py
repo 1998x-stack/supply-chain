@@ -22,7 +22,13 @@ class AdapterTests(unittest.TestCase):
    deep_search_adapter.make_command(self.args(action="audit"))
  def test_search_rejects_implicit_network(self):
   with self.assertRaises(ValueError):
-   deep_search_adapter.make_command(self.args(action="search"))
+   deep_search_adapter.make_command(self.args(action="search",dry_run=False))
+ def test_dry_run_search_needs_no_credentials(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   path=Path(tmp)/"plan.json"
+   path.write_text(json.dumps({"budget":{"max_queries":4}}))
+   cmd=deep_search_adapter.make_command(self.args(action="search",input=str(path),output="results.json",dry_run=True))
+   self.assertEqual(cmd[0],"search")
  def test_budget_rejected_before_search(self):
   with tempfile.TemporaryDirectory() as tmp:
    path=Path(tmp)/"plan.json"
