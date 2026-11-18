@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "system": "launch_vehicle_EXAMPLE_ONLY",
+  "product_slug": "illustrative-rocket",
+  "configuration_id": "EXAMPLE_UNVERIFIED",
+  "published": false,
+  "branches": [
+    {
+      "name": "Propulsion",
+      "subsystems": [
+        "engine",
+        "feed system",
+        "propellant storage"
+      ]
+    },
+    {
+      "name": "Avionics/GNC",
+      "subsystems": [
+        "flight computers",
+        "navigation sensors",
+        "telemetry"
+      ]
+    },
+    {
+      "name": "Structure",
+      "subsystems": [
+        "tanks",
+        "interstage",
+        "load-bearing frames"
+      ]
+    },
+    {
+      "name": "Thermal",
+      "subsystems": [
+        "thermal protection",
+        "thermal management"
+      ]
+    },
+    {
+      "name": "Ground infrastructure",
+      "subsystems": [
+        "test stands",
+        "launch support equipment"
+      ]
+    },
+    {
+      "name": "Software & verification",
+      "subsystems": [
+        "flight software",
+        "simulation",
+        "testing"
+      ]
+    }
+  ],
+  "disclaimer": "Educational system decomposition scaffold, NOT an actual SpaceX, SLS or Falcon BOM."
+}

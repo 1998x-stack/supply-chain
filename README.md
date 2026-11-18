@@ -54,3 +54,19 @@ python3 scripts/new_product.py smartphone --title 智能手机 --category electr
 把该产品的技术图谱、材料/企业和来源写入新目录的 graph.json，审核后将 product.json 中 published 改为 true。
 构建器会自动扫描已发布产品，生成分类主页、单产品交互图和 material_id → 产品反向索引。
 标准类别见 data/taxonomy/categories.json，完整规范见 docs/ADD_PRODUCT.md。
+
+## Research Agent Skills 研究体系
+
+已提供10个跨产品研究技能包，规范入口为 .agents/skills/<name>/SKILL.md，.claude/skills、.pi/skills和.codex/skills使用同步符号链接；Codex规范自动发现路径为.agents/skills。四类研究代理见.codex/agents和.claude/agents，详细流程参见 docs/RESEARCH_PIPELINE.md。
+
+研究工具运行：
+
+~~~bash
+python3 scripts/research_cli.py validate-skills
+python3 scripts/research_cli.py seed-backlog --product eyewear --output build/research/eyewear-backlog.json
+python3 scripts/research_cli.py plan --product eyewear --node "光学级PC材料" --output build/research/pc-plan.json
+python3 scripts/research_cli.py audit-ledger --input research/examples/ledger.json
+python3 -m unittest discover -s tests -v
+~~~
+
+deep-search集成遵守其原始证据schema，但没有自动提供网络或LLM推理能力。Node coverage仅是字段完整度，不是事实正确率。复杂火箭示例是未核实的结构模板，不是SpaceX供应商清单。

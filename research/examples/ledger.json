@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "sources": [
+    {
+      "id": "S001",
+      "url": "https://example.com/synthetic-one",
+      "title": "Synthetic example 1",
+      "publisher": "Fixture A",
+      "origin_group": "synthetic-a",
+      "published_at": null,
+      "retrieved_at": null,
+      "content": "Synthetic test fixture: a hypothetical material is a component of a fictional frame."
+    },
+    {
+      "id": "S002",
+      "url": "https://example.org/synthetic-two",
+      "title": "Synthetic example 2",
+      "publisher": "Fixture B",
+      "origin_group": "synthetic-b",
+      "published_at": null,
+      "retrieved_at": null,
+      "content": "Independent synthetic test fixture repeats that the fictional material is a component."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "text": "Only for tests: a fictional material is used in a fictional component.",
+      "status": "supported",
+      "analysis": "Fixture text contains a limited mock assertion only; not real-world evidence.",
+      "evidence": [
+        {
+          "source_id": "S001",
+          "quote": "a hypothetical material is a component of a fictional frame",
+          "polarity": "supports"
+        },
+        {
+          "source_id": "S002",
+          "quote": "the fictional material is a component",
+          "polarity": "supports"
+        }
+      ]
+    }
+  ]
+}

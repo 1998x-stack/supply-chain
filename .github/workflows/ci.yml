@@ -16,3 +16,10 @@ jobs:
       - run: python scripts/build_site.py
       - name: Validate frontend syntax
         run: node --check web/assets/app.js
+
+      - name: Validate research skills
+        run: python scripts/research_cli.py validate-skills
+      - name: Audit synthetic research fixtures
+        run: |
+          python scripts/research_cli.py audit-ledger --input research/examples/ledger.json
+          python scripts/research_cli.py audit-dossier --input research/examples/node-dossier.json
