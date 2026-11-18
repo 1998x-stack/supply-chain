@@ -64,7 +64,7 @@ window.SupplyNodePanel=(()=>{
   const companyRefs=(data.cm||[]).filter(x=>matIds.has(x.material));
   const sourcesById=new Map((data.src||[]).map(x=>[x.id,x]));
   let out='<section><h3>市场统计与可比口径</h3>';
-  if(markets.length)out+=markets.map(m=>'<article class="sc-record"><h4>'+e(m.name)+'</h4><p>区域：'+e(m.geo)+' · 期间：'+e(m.year)+'</p><p>指标：'+e(m.metric)+'</p><p>统计分母：'+e(m.scope)+'</p>'+data.s.filter(s=>s.market===m.id&&Number.isFinite(Number(s.pct))).map(s=>'<div class="sc-market"><span>'+e(s.label)+'</span><strong>'+e(s.pct)+'%</strong></div>').join('')+'</article>').join('');
+  if(markets.length)out+=markets.map(m=>'<article class="sc-record"><h4>'+e(m.name)+'</h4><p>区域：'+e(m.geo)+' · 期间：'+e(m.year)+'</p><p>指标：'+e(m.metric)+'</p><p>统计分母：'+e(m.scope)+'</p>'+data.s.filter(s=>s.market===m.id&&s.pct!==null&&s.pct!==undefined&&Number.isFinite(Number(s.pct))).map(s=>'<div class="sc-market"><span>'+e(s.label)+'</span><strong>'+e(s.pct)+'%</strong></div>').join('')+'</article>').join('');
   else out+=empty('没有可核实的同口径市场份额 TOP3；不从部门销售额或原料产能推算。');
   if(dossier?.sections?.market?.length)out+='<h4>研究档案中的原始统计观察</h4>'+renderValues(dossier.sections.market);
   if((insight?.metrics||[]).length)out+='<h4>其他数值（非市场份额）</h4>'+factCards(insight.metrics);
