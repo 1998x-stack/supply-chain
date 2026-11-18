@@ -17,8 +17,11 @@ def check_seed(x):
     for n in nodes:
         if n['parent_id']:assert n['parent_id'] in ids
     company={c['company_id'] for c in x['company']};materials={m['material_id'] for m in x['material']}
+    for n in x['tree_node']:
+        if n.get('relation_type','material_input') not in {'material_input','component_of','associated_with','processed_into','uses_equipment'}:
+            raise ValueError('Unsupported tree relation type: '+str(n.get('relation_type')))
     for s in x['market_share']:
-        assert 0<=s['share_pct']<=100
+        assert s['share_pct'] is None or 0<=s['share_pct']<=100
         assert s['company_id'] is None or s['company_id'] in company
     for r in x['company_relation']:
         assert r['upstream_company_id'] in company and r['downstream_company_id'] in company
@@ -31,8 +34,9 @@ def compact(x,research=None,resolution=None):
     # Array encoding reduces Pages payload size; unpacked using a versioned field dictionary in frontend.
     return {
      'research':research or [],
+     'insights':x.get('node_intelligence',[]),
      'identity':[[r['view_node_id'],r['canonical_material_entity_id'],r['identity_state'],r['label_key']] for r in (resolution or {}).get('view_nodes',[])],
-     'n':[[t['node_id'],t['name'],t['parent_id'],t['kind'],t['branch'],t['description'] or ''] for t in x['tree_node']],
+     'n':[[t['node_id'],t['name'],t['parent_id'],t['kind'],t['branch'],t['description'] or '',t.get('relation_type','material_input')] for t in x['tree_node']],
      'm':[[v['material_id'],v['name'],v['representative_node_id']] for v in x['material']],
      'c':[[v['company_id'],v['name_zh'],v['name_en'],v['official_website']] for v in x['company']],
      'cm':[[v['company_id'],v['material_id'],v['role']] for v in x['company_material']],
@@ -116,9 +120,9 @@ def discover_products(root=ROOT):
 
 def convert_atlas_v1(g):
     # Public schema uses human-readable objects; internal compatibility shape is the v2 dataset.
-    x={k:[] for k in ('tree_node','material','company','company_material','company_relation','market','market_share','substitution_opportunity','source','procurement_concentration','capacity_observation','company_kpi')}
+    x={k:[] for k in ('tree_node','material','company','company_material','company_relation','market','market_share','substitution_opportunity','source','procurement_concentration','capacity_observation','company_kpi','node_intelligence')}
     for n in g.get('nodes',[]):
-        x['tree_node'].append({'node_id':n['id'],'name':n['name'],'parent_id':n.get('parent'), 'kind':n.get('kind','材料'), 'branch':n.get('branch','未分类'), 'description':n.get('description',''), 'depth':0})
+        x['tree_node'].append({'node_id':n['id'],'name':n['name'],'parent_id':n.get('parent'), 'kind':n.get('kind','材料'), 'branch':n.get('branch','未分类'), 'description':n.get('description',''), 'depth':0,'relation_type':n.get('relation_type','material_input')})
     by_id={n['node_id']:n for n in x['tree_node']}
     if len(by_id)!=len(x['tree_node']):raise ValueError('Duplicate node id')
     for n in x['tree_node']:
@@ -127,6 +131,20 @@ def convert_atlas_v1(g):
             if parent not in by_id or parent in seen:raise ValueError('Cycle or missing parent: '+n['node_id'])
             seen.add(parent);n['depth']+=1;parent=by_id[parent]['parent_id']
     if sum(n['parent_id'] is None for n in x['tree_node'])!=1:raise ValueError('Exactly one root required')
+    x['node_intelligence']=g.get('node_intelligence',[])
+    known_sources={src['id'] for src in g.get('sources',[])}
+    known_nodes={n['node_id'] for n in x['tree_node']}
+    seen_insights=set()
+    for insight in x['node_intelligence']:
+        vid=insight['node_id']
+        if vid not in known_nodes or vid in seen_insights:raise ValueError('Invalid or duplicate node intelligence '+str(vid))
+        seen_insights.add(vid)
+        if not set(insight.get('source_ids',[])).issubset(known_sources):
+            raise ValueError('Unknown node intelligence source '+vid)
+        for field in ('facts','metrics'):
+            for item in insight.get(field,[]):
+                if item.get('source_id') not in known_sources or not item.get('label'):
+                    raise ValueError('Invalid '+field+' source or label in '+vid)
     for m in g.get('materials',[]):x['material'].append({'material_id':m['id'],'name':m['name'],'representative_node_id':m.get('node')})
     for c in g.get('companies',[]):x['company'].append({'company_id':c['id'],'name_zh':c.get('zh',''),'name_en':c.get('en',c.get('zh',c['id'])),'official_website':c.get('website'), 'geo':c.get('geo')})
     for c in g.get('company_material',[]):x['company_material'].append({'company_id':c['company'],'material_id':c['material'],'role':c.get('role','industry_participant'), 'source_id':c['source']})
@@ -261,7 +279,7 @@ def add_additional_products(products,out):
                        (product_id,n['node_id'],node_id(n['node_id']),n['parent_id'],n['depth'],n['name']))
             if n['parent_id']:
                 db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id) VALUES (?,?,?,?,?,?)',
-                           ('EDGE:'+slug+':'+n['node_id'],node_id(n['node_id']),node_id(n['parent_id']),'material_input','technological',product_id))
+                           ('EDGE:'+slug+':'+n['node_id'],node_id(n['node_id']),node_id(n['parent_id']),n.get('relation_type','material_input'),'technological',product_id))
             else:
                 db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id) VALUES (?,?,?,?,?,?)',
                            ('ROOT:'+slug,node_id(n['node_id']),product_id,'component_of','technological',product_id))
@@ -273,7 +291,7 @@ def add_additional_products(products,out):
             else:db.execute('INSERT INTO entity(entity_id,entity_type,name_zh) VALUES (?,?,?)',(mid,'material',m['name']))
             if m['representative_node_id']:
                 db.execute('INSERT INTO edge(edge_id,upstream_id,downstream_id,relation_type,evidence_status,context_product_id) VALUES (?,?,?,?,?,?)',
-                           ('ALIAS:'+slug+':'+m['material_id'],mid,node_id(m['representative_node_id']),'processed_into','technological',product_id))
+                           ('ALIAS:'+slug+':'+m['material_id'],mid,node_id(m['representative_node_id']),'associated_with','technological',product_id))
         for c in x['company']:
             cid=company_id(c['company_id'])
             old=db.execute('SELECT name_en FROM entity WHERE entity_id=?',(cid,)).fetchone()
