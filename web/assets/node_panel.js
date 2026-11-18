@@ -12,10 +12,11 @@ window.SupplyNodePanel=(()=>{
  function empty(text){return '<div class="sc-empty">'+e(text)+'</div>';}
  function badge(text,tone='muted'){return '<span class="sc-badge '+e(tone)+'">'+e(text)+'</span>';}
  function tagSource(id){return id?'<span class="sc-source-id">'+e(id)+'</span>':'';}
- function sources(insight,dossier,data){
+ function sources(insight,dossier,data,coverage){
   const ids=new Set([...(insight?.source_ids||[])]);
   for(const v of [...(insight?.facts||[]),...(insight?.metrics||[])])if(v.source_id)ids.add(v.source_id);
-  const own=(data.src||[]).filter(v=>ids.has(v.id)).map(v=>({id:v.id,title:v.title,url:v.url,publisher:'研究来源'}));
+  const related=new Set(coverage?.material_source_ids||[]);
+  const own=(data.src||[]).filter(v=>ids.has(v.id)||related.has(v.id)).map(v=>({id:v.id,title:v.title,url:v.url,publisher:related.has(v.id)?'规范材料相关来源（仅背景关联）':'研究来源'}));
   const fromDossier=(dossier?.sources||[]);
   const merged=new Map([...own,...fromDossier].map(v=>[v.id,v]));
   return [...merged.values()];
@@ -117,10 +118,11 @@ window.SupplyNodePanel=(()=>{
     '<section><h3>跨产品反向查询</h3>'+products.map(p=>'<a class="sc-trace-link" href="#/products/'+e(p.slug)+'"><span>'+e(p.icon)+' '+e(p.title)+'</span><small>技术关联</small></a>').join('')+'</section>';
  }
  function renderEvidence(ctx){
-  const {insight,dossier,data}=ctx, refs=sources(insight,dossier,data);
+  const {insight,dossier,data,coverage}=ctx, refs=sources(insight,dossier,data,coverage);
   const claims=[...(insight?.claims||[]),...(dossier?.claims||[])];
   let out='<section><h3>原子论断</h3>'+(claims.length?claims.map(c=>'<div class="sc-claim"><div>'+badge(c.status||'pending','draft')+(c.source_ids||[]).map(tagSource).join(' ')+'</div><p>'+e(c.text)+'</p><small>'+e(c.analysis||'')+'</small></div>').join(''):empty('尚无证据论断'))+'</section>';
-  out+='<section><h3>原始来源与位置</h3><p class="sc-note">查看厂商原文/TDS。多个汉高官网页面不是相互独立的市场验证来源。</p>';
+  out+='<section><h3>原始来源与位置</h3><p class="sc-note">查看厂商原文/TDS。多个同一集团网页不算独立第三方交叉核证。</p>';
+  if(coverage?.material_source_ids?.length)out+='<p class="sc-warn">以下部分来源来自已校对的标准材料对应的公司/市场记录，仅能作为该材料的背景，不证明当前镜片牌号或最终客户的具体采购。</p>';
   out+=refs.length?refs.map(s=>'<article class="sc-source"><div class="sc-source-top">'+tagSource(s.id)+badge(s.published_at||'日期未录入')+'</div><a href="'+link(s.url)+'" rel="noopener noreferrer" target="_blank">'+e(s.title||s.url)+' ↗</a><small>'+e(s.publisher||'官方或公开资料')+'</small></article>').join(''):empty('暂无附着在本节点的独立来源');
   return out+'</section>';
  }

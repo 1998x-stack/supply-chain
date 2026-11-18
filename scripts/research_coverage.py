@@ -110,6 +110,24 @@ def build_coverage(slug,seed,dossiers,identity=None):
     for m in seed.get("material",[]):
         if m.get("representative_node_id") in byid:
             material_by_node[m["representative_node_id"]].append(m["material_id"])
+    # Only explicitly curated exact identities may carry source-linked material data.
+    # Legacy representative_node_id is contextual and must NOT transfer identity.
+    source_ids={s["source_id"] for s in seed.get("source",[])}
+    material_sources=defaultdict(set)
+    def related_source(material_id,source_id):
+        if material_id and source_id in source_ids:
+            material_sources[material_id].add(source_id)
+    for row in seed.get("company_material",[]):
+        related_source(row.get("material_id"),row.get("source_id"))
+    market_to_material={m["market_id"]:m["material_id"] for m in seed.get("market",[])}
+    for market in seed.get("market",[]):
+        related_source(market.get("material_id"),market.get("source_id"))
+    for share in seed.get("market_share",[]):
+        related_source(market_to_material.get(share.get("market_id")),share.get("source_id"))
+    for row in seed.get("capacity_observation",[]):
+        related_source(row.get("material_id"),row.get("source_id"))
+    for row in seed.get("company_relation",[]):
+        related_source(row.get("material_id"),row.get("source_id"))
     counts=Counter()
     priority_counts=Counter()
     records=[]
@@ -118,10 +136,13 @@ def build_coverage(slug,seed,dossiers,identity=None):
         source_ids=set()
         if d:source_ids.update(s.get("id") for s in d.get("sources",[]) if s.get("id"))
         if hint:source_ids.update(hint.get("source_ids",[]))
+        material_id=curated.get(nid)
+        related_material_sources=sorted(material_sources.get(material_id[4:],set())) if material_id else []
+        source_ids.update(related_material_sources)
         approved=bool(d and d.get("review_state")=="publishable"
                       and d.get("semantic_review_status")=="approved")
         stage=("reviewed" if approved else "dossier_pending" if d else
-               "source_note" if hint and source_ids else
+               "source_note" if source_ids else
                "annotated" if hint else "structural_only")
         facet=classify(n,bool(n.get("parent_id")),bool(children[nid]))
         p=priority(slug,n,facet)
@@ -138,14 +159,15 @@ def build_coverage(slug,seed,dossiers,identity=None):
         record={
             "node_id":nid,"name":n["name"],"kind":n.get("kind"),"facet":facet,
             "branch":n.get("branch"),"priority":p,"stage":stage,
-            "has_dossier":bool(d),"has_source_note":bool(hint and source_ids),
+            "has_dossier":bool(d),"has_source_note":bool(source_ids),
             "approved":approved,"sources":len(source_ids),"claims":claims,
             "children":len(children[nid]),"path":path,
             "canonical_material":curated.get(nid),"contextual_material_ids":material_by_node.get(nid,[]),
+            "material_source_ids":related_material_sources,
             "questions":questions,
             "next_action":("browse_only" if facet=="navigation" else
                "refresh_or_update" if approved else "review_claims_and_sources" if d else
-               "expand_to_dossier" if hint and source_ids else
+               "expand_to_dossier" if source_ids else
                "collect_primary_evidence"),
         }
         records.append(record);counts[stage]+=1;priority_counts[p]+=1
