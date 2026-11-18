@@ -2,25 +2,41 @@
 // All views use stable, globally scoped entity IDs. A product tree is only one projection
 // of the material / company / product network, not a claim of actual procurement.
 const app = document.getElementById('app');
-const state = { catalog:null, reverseIndex:null, products:new Map(), datasets:new Map(), product:null, selected:null, collapsed:new Set(), viewport:{x:0,y:0,w:1300,h:800}, search:'', layout:[], drag:null, categories:'全部' };
+const state = { catalog:null, reverseIndex:null, products:new Map(), datasets:new Map(), product:null, selected:null, collapsed:new Set(), viewport:{x:0,y:0,w:1300,h:800}, search:'', layout:[], drag:null, categories:'全部', requestCounter:0 };
 const $ = (selector,root=document)=>root.querySelector(selector);
 const el = (name,attrs={},text='') => {const e=document.createElement(name);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);if(text)e.textContent=text;return e;};
 const esc = text=>String(text===undefined||text===null?'':text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeLink = url=>/^https:\/\//i.test(String(url||''))?url:'#';
 const num = value=>Number(value).toLocaleString('zh-CN');
-const fetchJSON=async(path)=>{const r=await fetch(path);if(!r.ok)throw new Error('HTTP '+r.status+' · '+path);return r.json();};
-async function fetchCompressed(path){const r=await fetch(path);if(!r.ok)throw new Error('HTTP '+r.status+' · '+path);if(!('DecompressionStream' in window))throw new Error('浏览器不支持gzip解码，请更新浏览器');const b=await r.blob();const txt=await new Response(b.stream().pipeThrough(new DecompressionStream('gzip'))).text();return JSON.parse(txt);}
+// Every Pages release can coexist with older browser/CDN cache entries.
+const cacheBust=path=>path+(path.includes('?')?'&':'?')+'sc_refresh='+Date.now().toString(36)+'_'+(++state.requestCounter);
+const fetchJSON=async(path)=>{const url=cacheBust(path);const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status+' · '+path);return r.json();};
+async function fetchCompressed(path){const url=cacheBust(path);const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status+' · '+path);if(!('DecompressionStream' in window))throw new Error('浏览器不支持gzip解码，请更新浏览器');const b=await r.blob();const txt=await new Response(b.stream().pipeThrough(new DecompressionStream('gzip'))).text();return JSON.parse(txt);}
+async function refreshCatalog(){
+ const [catalog,reverse]=await Promise.all([fetchJSON('./data/catalog.json'),fetchJSON('./data/reverse_index.json')]);
+ if(!catalog||!Array.isArray(catalog.products)||!catalog.products.every(p=>typeof p.slug==='string'))
+  throw new Error('供应链产品目录格式不正确，可能正在更新发布');
+ state.catalog=catalog;state.reverseIndex=reverse;
+ return catalog;
+}
 function unpack(x){
  const fields={n:['id','name','parent','kind','branch','description','relationType'],m:['id','name','node'],c:['id','zh','en','website'],cm:['company','material','role'],r:['upstream','downstream','material','type','source','scope'],mk:['id','name','geo','year','metric','scope','material'],s:['market','company','label','pct','rank','source'],o:['material','candidate','benchmark','topic','gap'],src:['id','title','url'],pc:['buyer','rank','pct','disclosed'],identity:['id','canonical','state','labelKey'],xl:['from','to','type','status','source','note']};
  const data={};for(const [k,f] of Object.entries(fields))data[k]=(x[k]||[]).map(row=>Object.fromEntries(f.map((v,i)=>[v,row[i]])));data.research=x.research||[];data.insights=x.insights||[];return data;
 }
-async function loadProduct(slug){if(state.products.has(slug))return state.products.get(slug);const spec=state.catalog.products.find(p=>p.slug===slug);if(!spec)throw new Error('产品不存在：'+slug);const d=unpack(await fetchCompressed('./data/'+slug+'.json.gz'));const nodes=d.n.map(n=>Object.assign({},n,{product:slug,globalId:slug+':'+n.id}));const product={spec,data:d,nodes,byId:new Map(nodes.map(n=>[n.id,n])),children:new Map()};for(const n of nodes){if(n.parent){const arr=product.children.get(n.parent)||[];arr.push(n);product.children.set(n.parent,arr);}}
+async function loadProduct(slug){if(state.products.has(slug))return state.products.get(slug);let spec=state.catalog.products.find(p=>p.slug===slug);if(!spec){
+ // A cached 1-product catalog can still be in the browser after deploying product #2.
+ await refreshCatalog();
+ spec=state.catalog.products.find(p=>p.slug===slug);
+}
+if(!spec)throw new Error('最新产品目录仍未包含 '+slug+'（版本 '+String(state.catalog.build_id||'未知')+'；当前 '+state.catalog.products.length+' 个产品）。请强制刷新网页，若仍失败请查看Pages发布记录。');const d=unpack(await fetchCompressed('./data/'+slug+'.json.gz'));const nodes=d.n.map(n=>Object.assign({},n,{product:slug,globalId:slug+':'+n.id}));const product={spec,data:d,nodes,byId:new Map(nodes.map(n=>[n.id,n])),children:new Map()};for(const n of nodes){if(n.parent){const arr=product.children.get(n.parent)||[];arr.push(n);product.children.set(n.parent,arr);}}
  state.products.set(slug,product);return product;}
 function route(){const match=location.hash.match(/^#\/products\/([a-z0-9-]+)/);if(match)openProduct(match[1]);else renderHome();}
 function renderHome(){state.product=null;const groups=['全部',...new Set(state.catalog.products.map(p=>p.category))];const visible=state.catalog.products.filter(p=>state.categories==='全部'||p.category===state.categories);
 app.innerHTML='<main class="wrap"><section class="hero"><div><div class="eyebrow">PRODUCT × MATERIAL × COMPANY × EVIDENCE</div><h1>从一个产品，追溯到<br>每一层供应链。</h1><p>以产品为入口，跨越零部件、精细化工、基础工业与自然资源。对每个材料节点，继续查看供应商、市场份额、证据与可能关联的下游产品。</p></div><div class="hero-box"><strong>统一产业链知识图谱</strong><div class="grid"><div class="metric"><b>'+num(state.catalog.stats.nodes)+'</b><small>产业链视图节点</small></div><div class="metric"><b>'+num(state.catalog.stats.companies)+'</b><small>公司实体</small></div><div class="metric"><b>'+num(state.catalog.products.length)+'</b><small>已收录产品</small></div><div class="metric"><b>'+num(state.catalog.stats.sources)+'</b><small>证据来源</small></div></div></div></section><h2>产品供应链目录</h2><div class="chips" id="categories"></div><div class="cards">'+visible.map(p=>'<article class="card"><span class="card-icon">'+esc(p.icon)+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.description)+'</p><div class="meta"><span>'+esc(p.category)+'</span><span>'+num(p.nodes)+'个技术节点 · '+num(p.research_dossiers||0)+'份节点研究档案 · 进入图谱 ↗</span></div><a class="whole" aria-label="打开'+esc(p.title)+'" href="#/products/'+encodeURIComponent(p.slug)+'"></a></article>').join('')+'</div><div class="notice">下一款产品只需按数据协议增加独立产品目录，已有材料与企业通过稳定实体ID复用。</div><footer class="footer">注：技术路径不等于已确认企业采购关系。市场份额必须同时注明年份、地理范围、分母与来源。</footer></main>';
 const target=$('#categories');groups.forEach(g=>{const b=el('button',{class:'chip'+(g===state.categories?' active':'')},g);b.addEventListener('click',()=>{state.categories=g;renderHome();});target.appendChild(b);});}
-async function openProduct(slug){app.innerHTML='<div class="loading" style="padding:38px">正在载入 '+esc(slug)+'…</div>';try{const p=await loadProduct(slug);state.product=p;state.selected=p.nodes[0];state.search='';state.collapsed=new Set(p.nodes.filter(n=>n.parent&&getDepth(p,n)>=3).map(n=>n.id));renderProduct();}catch(e){app.innerHTML='<div class="wrap"><h2>无法打开图谱</h2><p>'+esc(e.message)+'</p><a href="#/">返回首页</a></div>';}}
+async function openProduct(slug){app.innerHTML='<div class="loading" style="padding:38px">正在载入 '+esc(slug)+'…</div>';try{const p=await loadProduct(slug);state.product=p;state.selected=p.nodes[0];state.search='';state.collapsed=new Set(p.nodes.filter(n=>n.parent&&getDepth(p,n)>=3).map(n=>n.id));renderProduct();}catch(e){app.innerHTML='<div class="wrap"><h2>无法打开图谱</h2><p>'+esc(e.message)+'</p><p class="small">数据目录版本：'+esc(state.catalog?.build_id||'未获取')+'。若刚发布新产品，可能是浏览器或CDN保留了旧目录。</p><button id="forceRefresh" class="btn primary">重新加载最新版本</button> <a href="#/">返回首页</a></div>';
+ const btn=$('#forceRefresh');if(btn)btn.addEventListener('click',()=>{const url=new URL(location.href);url.searchParams.set('reload',String(Date.now()));location.assign(url.toString());});
+}}
 function getDepth(p,n){let d=0,x=n;while(x&&x.parent&&d<30){d++;x=p.byId.get(x.parent);}return d;}
 function descendants(p,id,cap=10000){const out=[],seen=new Set(),queue=[id];while(queue.length&&out.length<cap){const x=queue.shift();if(seen.has(x))continue;seen.add(x);out.push(x);(p.children.get(x)||[]).forEach(n=>queue.push(n.id));}return out;}
 function ancestors(p,id){const out=[],seen=new Set();let n=p.byId.get(id);while(n&&!seen.has(n.id)){seen.add(n.id);out.push(n);n=p.byId.get(n.parent);}return out;}
@@ -85,5 +101,5 @@ async function showCompanyDetail(companyId){
  const sh=d.s.filter(s=>s.company===companyId&&s.pct!==null);html+='<h3>市场份额（必须看统计口径）</h3>'+(sh.length?sh.map(s=>{const mk=d.mk.find(m=>m.id===s.market);return '<div class="fact"><b>'+esc(mk?.name)+' · '+esc(mk?.year)+'</b><p>'+esc(s.pct)+'%</p><div class="small">'+esc(mk?.geo)+' / '+esc(mk?.metric)+' / '+esc(mk?.scope)+'</div></div>';}).join(''):'<div class="empty">无可核实份额记录</div>');
  $('#detail').innerHTML=html;$('#backToNode').addEventListener('click',e=>{e.preventDefault();showDetail(state.selected);});
 }
-async function init(){try{const all=await Promise.all([fetchJSON('./data/catalog.json'),fetchJSON('./data/reverse_index.json')]);state.catalog=all[0];state.reverseIndex=all[1];window.addEventListener('hashchange',route);route();}catch(e){app.innerHTML='<main class="wrap"><h1>数据载入失败</h1><p>'+esc(e.message)+'</p><p>请通过 HTTP 服务器或 GitHub Pages 打开本项目，而不是直接打开本地 file:// 文件。</p></main>';}}
+async function init(){try{await refreshCatalog();window.addEventListener('hashchange',route);route();}catch(e){app.innerHTML='<main class="wrap"><h1>数据载入失败</h1><p>'+esc(e.message)+'</p><p>请通过 HTTP 服务器或 GitHub Pages 打开本项目，而不是直接打开本地 file:// 文件。</p></main>';}}
 init();
