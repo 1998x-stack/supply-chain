@@ -1,5 +1,46 @@
-# Supply Chain Intelligence
+# Supply Chain Atlas｜跨产品产业链知识图谱
 
-可扩展的多产品供应链图谱与情报数据库。
+[简体中文](README.md) · [架构](docs/ARCHITECTURE.md) · [数据模型](docs/DATA_MODEL.md) · [新增产品](docs/ADD_PRODUCT.md)
 
-仓库初始化中；完整代码通过 PR 提交。
+一个产品一个入口、全站共享材料与企业实体的供应链研究仓库。首个产品：**眼镜**，382个技术节点、42个企业实体、41条参考来源。技术树不等于企业采购关系。
+
+## 功能
+
+- 首页产品分类卡片，点击进入该产品供应链视图。
+- 产品树可以缩放、拖动、分层折叠、搜索并点选节点。
+- 节点详情显示上游/下游、标准材料ID、相关企业、市场份额与口径、技术替代研究和证据来源。
+- sqlite3 规范化数据库带完整外键约束；同一材料和企业统一ID，供多个产品复用。
+- GitHub Pages 静态托管，无服务器/API/访问令牌；源数据生成只读JSON快照。
+
+## 本地构建
+
+~~~bash
+python3 scripts/build_site.py
+python3 -m unittest discover -s tests -v
+python3 -m http.server 8000 --directory dist
+# http://localhost:8000/
+~~~
+
+构建结果：dist/ 为GitHub Pages静态网页；build/supply_chain.sqlite 为研究库。仅使用Python标准库和原生浏览器功能。
+
+## 数据目录
+
+- data/products/eyewear/intelligence_data.json.gz：前一阶段研究的源数据压缩快照；研究结论仍需按来源核实。
+- schema/001_core.sql：跨产品实体、产品视图、证据关系、市场份额和产能模型。
+- scripts/build_site.py：校验源数据、生成前端数据快照和规范化关系库。
+- web/：静态网站源码，不含服务器逻辑。
+- docs/：架构、Schema、数据治理、新产品注册流程。
+
+## GitHub Pages 发布
+
+Settings → Pages → Build and deployment → Source → **GitHub Actions**。然后把修改合并到 main，workflow 会校验、构建并发布 dist/。
+预期URL：https://1998x-stack.github.io/supply-chain/（仅在 Pages 配置与部署成功后可用）。
+
+## 统计口径与证据
+
+- 份额必须保存 geography / year / denominator / metric / source。
+- 匿名供应商维持匿名，不得与任一有名企业强行匹配。
+- 工艺层面的关系必须标记 technological，不得以此宣称商业供货。
+- 国产替代状态独立记录材料级别、认证和客户验证，不因总产能存在就判断已替代。
+
+> 非投资建议。数据和市场份额来源于公开资料及前期归集，部分企业合作关系为历史披露，发布日期不是持续供货的保证。
