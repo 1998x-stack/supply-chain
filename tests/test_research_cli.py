@@ -53,6 +53,13 @@ class ResearchCliTests(unittest.TestCase):
         self.assertNotEqual(r["semantic_review_status"],"approved")
         self.assertFalse(r["semantic_truth_verified"])
 
+    def test_publishable_requires_semantic_review(self):
+        d=research_cli.read(ROOT/"research/examples/node-dossier.json")
+        d["review_state"]="publishable"
+        r=research_cli.audit_dossier(d)
+        self.assertFalse(r["structure_valid"])
+        self.assertTrue(any("PUBLISHABLE" in e for e in r["errors"]))
+
     def test_market_denominator_and_share_range_block(self):
         d=research_cli.read(ROOT/"research/examples/node-dossier.json")
         d["sections"]["market"]=[{"geography":"Global","year":2025,"metric":"capacity",

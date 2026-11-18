@@ -83,6 +83,11 @@ def audit_dossier(d):
     if not d.get("claim_ids"):warnings.append("No evidence claim IDs")
     review=d.get("semantic_review") or {}
     if review.get("status")!="approved":warnings.append("Semantic review not approved; do not describe dossier as fact verified")
+    if str(d.get("review_state","")).lower()=="publishable":
+        if review.get("status")!="approved" or not review.get("reviewer") or not review.get("reviewed_at"):
+            errors.append("PUBLISHABLE requires approved semantic review with named reviewer and date")
+        if not d.get("claim_ids"):
+            errors.append("PUBLISHABLE requires linked claim IDs")
     if coverage<70:warnings.append("Low field completeness; completeness is NOT factual accuracy")
     return result("dossier",errors,warnings,node_id=d.get("node_id"),field_coverage_percent=coverage,
                   semantic_review_status=review.get("status","missing"))
