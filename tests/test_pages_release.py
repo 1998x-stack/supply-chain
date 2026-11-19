@@ -7,7 +7,7 @@ from verify_pages_release import audit_release
 class PagesReleaseValidatorTests(unittest.TestCase):
  def _fixture(self,root):
   (root/"data").mkdir(parents=True)
-  for asset in ("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css"):
+  for asset in ("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css","assets/ux_pro_max.css"):
    p=root/asset;p.parent.mkdir(parents=True,exist_ok=True);p.write_text("ok")
   products=[]
   for slug,n in [("eyewear",382),("henkel-adhesives",73),("keyboard",165)]:
@@ -23,7 +23,7 @@ class PagesReleaseValidatorTests(unittest.TestCase):
   data={"build_id":"unit-test-v1","products":products}
   (root/"data/catalog.json").write_text(json.dumps(data),encoding="utf-8")
   (root/"index.html").write_text(" ".join(x+"?v=unit-test-v1" for x in
-   ("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css")),encoding="utf-8")
+   ("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css","assets/ux_pro_max.css")),encoding="utf-8")
  def test_complete_release(self):
   with tempfile.TemporaryDirectory() as td:
    root=Path(td);self._fixture(root)
