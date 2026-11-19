@@ -56,12 +56,54 @@ if(selector){
   if(help)help.textContent=state.activeConfiguration?'构型高亮仅标记关键研究路径，非已核实的完整BOM。'+state.activeConfiguration.description:'';
  });
 }
-$('#search').addEventListener('input',e=>{state.search=e.target.value.trim().toLowerCase();if(state.search){for(const n of p.nodes.filter(n=>n.name.toLowerCase().includes(state.search))){for(const parent of ancestors(p,n.id).slice(1))state.collapsed.delete(parent.id);}}drawTree();if(state.search){const found=state.layout.find(n=>n.name.toLowerCase().includes(state.search));if(found){state.viewport.x=found.x-130;state.viewport.y=found.y-240;state.viewport.w=1000;state.viewport.h=620;setView();}}});$('#expand').onclick=()=>{state.collapsed.clear();drawTree();fit();};$('#collapse').onclick=()=>{state.collapsed=new Set(p.nodes.filter(n=>getDepth(p,n)>=2).map(n=>n.id));drawTree();fit();};$('#fit').onclick=fit;$('#zoomIn').onclick=()=>zoom(.75);$('#zoomOut').onclick=()=>zoom(1.3);
+
+ const searchInput=$('#search');
+ const updateSearch=()=>{
+  state.search=searchInput.value.trim().toLowerCase();
+  if(state.search){
+   for(const n of p.nodes.filter(n=>n.name.toLowerCase().includes(state.search)))
+    for(const parent of ancestors(p,n.id).slice(1))state.collapsed.delete(parent.id);
+  }
+  drawTree();updateSearchResults();
+ };
+ searchInput.addEventListener('input',updateSearch);
+ $('#clearSearch').addEventListener('click',()=>{searchInput.value='';updateSearch();searchInput.focus();});
+ $('#researchFocus').addEventListener('change',e=>{state.researchFocus=e.target.value;drawTree();});
+ $('#graphSearchResults').addEventListener('click',event=>{
+  const hit=event.target.closest('[data-hit]');if(hit)selectNode(hit.getAttribute('data-hit'));
+ });
+ $('#expand').onclick=()=>{state.collapsed.clear();drawTree();fit();};
+ $('#collapse').onclick=()=>{state.collapsed=new Set(p.nodes.filter(n=>getDepth(p,n)>=2).map(n=>n.id));drawTree();fit();};
+ $('#fit').onclick=fit;$('#zoomIn').onclick=()=>zoom(.75);$('#zoomOut').onclick=()=>zoom(1.3);
 const svg=$('#svg');svg.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY<0?.86:1.16,e.offsetX,e.offsetY);},{passive:false});svg.addEventListener('pointerdown',e=>{if(e.target.closest('.node'))return;svg.setPointerCapture(e.pointerId);state.drag={x:e.clientX,y:e.clientY,vx:state.viewport.x,vy:state.viewport.y};});svg.addEventListener('pointermove',e=>{if(!state.drag)return;const rect=svg.getBoundingClientRect();state.viewport.x=state.drag.vx-(e.clientX-state.drag.x)*state.viewport.w/rect.width;state.viewport.y=state.drag.vy-(e.clientY-state.drag.y)*state.viewport.h/rect.height;setView();});svg.addEventListener('pointerup',()=>state.drag=null);svg.addEventListener('pointercancel',()=>state.drag=null);
  drawTree();fit();showDetail(state.selected);}
 function setView(){const v=state.viewport;$('#svg').setAttribute('viewBox',[v.x,v.y,v.w,v.h].join(' '));}
 function fit(){const box=layoutTree(state.product);state.viewport={x:-25,y:-30,w:Math.max(900,box.width+70),h:Math.max(520,box.height+70)};setView();}
 function zoom(factor,x,y){const svg=$('#svg');const rect=svg.getBoundingClientRect();const v=state.viewport;const a=x===undefined?.5:x/rect.width,b=y===undefined?.5:y/rect.height;const w=Math.min(30000,Math.max(280,v.w*factor)),h=v.h*w/v.w;v.x+=(v.w-w)*a;v.y+=(v.h-h)*b;v.w=w;v.h=h;setView();}
+
+function stageOf(p,id){return (p.data.coverage||[]).find(x=>x.node_id===id)?.stage||'structural_only';}
+function updateSearchResults(){
+ const box=$('#graphSearchResults'),p=state.product;
+ if(!box||!p)return;
+ if(!state.search){box.hidden=true;box.innerHTML='';return;}
+ const matches=p.nodes.filter(n=>n.name.toLowerCase().includes(state.search));
+ const shown=matches.slice(0,12);
+ box.hidden=false;
+ box.innerHTML='<div class="graph-result-heading" role="status">'+matches.length+' 个节点匹配'+(matches.length>shown.length?' · 显示前 '+shown.length+' 项':'')+'</div>'+
+  (shown.length?'<ol>'+shown.map(n=>'<li><button type="button" class="graph-result" data-hit="'+esc(n.id)+'"><b>'+esc(n.name)+'</b><small>'+esc(ancestors(p,n.id).reverse().map(x=>x.name).join(' / '))+'</small></button></li>').join('')+'</ol>':
+   '<div class="graph-result-empty">未找到匹配节点。可尝试材料名称、工艺或部件关键词。</div>');
+}
+function selectNode(id,focusGraph=false){
+ const p=state.product,target=p?.byId.get(id);if(!target)return;
+ for(const n of ancestors(p,id))state.collapsed.delete(n.id);
+ state.selected=target;drawTree();showDetail(target);
+ const entry=state.layout.find(n=>n.id===id);
+ if(entry){state.viewport.x=entry.x-210;state.viewport.y=entry.y-220;state.viewport.w=880;state.viewport.h=550;setView();}
+ if(focusGraph){
+  const item=[...document.querySelectorAll('#viewport .node')].find(n=>n.getAttribute('data-node-id')===id);
+  item?.focus();
+ }
+}
 function drawTree(){const p=state.product;const {visible,tree}=layoutTree(p);state.layout=visible;const g=$('#viewport');g.innerHTML='';const svgNS='http://www.w3.org/2000/svg';const svgEl=(tag,attrs)=>{const x=document.createElementNS(svgNS,tag);Object.entries(attrs).forEach(([k,v])=>x.setAttribute(k,v));return x;};
 for(const n of visible){if(!n.parent||!tree.has(n.parent))continue;const parent=tree.get(n.parent);g.appendChild(svgEl('path',{class:'edge',d:'M'+(parent.x+214)+','+parent.y+' C'+(parent.x+243)+','+parent.y+' '+(n.x-26)+','+n.y+' '+n.x+','+n.y}));}
 for(const n of visible){const group=svgEl('g',{class:'node'+(state.selected?.id===n.id?' selected':'')+(state.activeConfiguration?.primary_nodes?.includes(n.id)?' config-primary':''),transform:'translate('+n.x+','+(n.y-23)+')',tabindex:'0',role:'button','aria-label':n.name});const r=svgEl('rect',{x:0,y:0,width:214,height:46,rx:8});group.append(r);const title=svgEl('text',{x:11,y:20});title.textContent=n.name.length>17?n.name.slice(0,16)+'…':n.name;group.append(title);const sub=svgEl('text',{class:'subtext',x:11,y:36});const stage=(p.data.coverage||[]).find(x=>x.node_id===n.id)?.stage;
