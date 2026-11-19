@@ -123,7 +123,7 @@ window.SupplyNodePanel=(()=>{
   let out='<section><h3>原子论断</h3>'+(claims.length?claims.map(c=>'<div class="sc-claim"><div>'+badge(c.status||'pending','draft')+(c.source_ids||[]).map(tagSource).join(' ')+'</div><p>'+e(c.text)+'</p><small>'+e(c.analysis||'')+'</small></div>').join(''):empty('尚无证据论断'))+'</section>';
   out+='<section><h3>原始来源与位置</h3><p class="sc-note">查看厂商原文/TDS。多个同一集团网页不算独立第三方交叉核证。</p>';
   if(coverage?.material_source_ids?.length)out+='<p class="sc-warn">以下部分来源来自已校对的标准材料对应的公司/市场记录，仅能作为该材料的背景，不证明当前镜片牌号或最终客户的具体采购。</p>';
-  out+=refs.length?refs.map(s=>'<article class="sc-source"><div class="sc-source-top">'+tagSource(s.id)+badge(s.published_at||'日期未录入')+'</div><a href="'+link(s.url)+'" rel="noopener noreferrer" target="_blank">'+e(s.title||s.url)+' ↗</a><small>'+e(s.publisher||'官方或公开资料')+'</small></article>').join(''):empty('暂无附着在本节点的独立来源');
+  out+=refs.length?refs.map(s=>'<article class="sc-source"><div class="sc-source-top">'+tagSource(s.id)+badge(s.published_at||'日期未录入')+'</div><a href="'+link(s.url)+'" rel="noopener noreferrer" target="_blank">'+e(s.title||s.url)+' ↗</a><small>'+e(s.publisher||'来源类型未标注')+'</small></article>').join(''):empty('暂无附着在本节点的独立来源');
   return out+'</section>';
  }
  function renderGaps(ctx){
@@ -162,29 +162,60 @@ window.SupplyNodePanel=(()=>{
   const insight=(data.insights||[]).find(v=>v.node_id===node.id);
   const coverage=(data.coverage||[]).find(v=>v.node_id===node.id);
   const state={...ctx,data,identity,dossier,insight,coverage,matIds:new Set(matches.map(x=>x.id))};
-  const tabs=TABS.map(([id,name],i)=>'<button class="sc-tab'+(i===0?' is-active':'')+'" data-sc-tab="'+id+'" role="tab" aria-selected="'+(i===0?'true':'false')+'">'+name+'</button>').join('');
+  const tabs=TABS.map(([id,name],i)=>'<button type="button" id="sc-tab-'+id+'" class="sc-tab'+(i===0?' is-active':'')+'" data-sc-tab="'+id+'" role="tab" aria-controls="sc-panel-'+id+'" tabindex="'+(i===0?'0':'-1')+'" aria-selected="'+(i===0?'true':'false')+'">'+name+'</button>').join('');
   const sections={summary:renderSummary,technical:renderTechnical,market:renderMarket,trace:renderTrace,evidence:renderEvidence,gaps:renderGaps};
-  const html=panelHeader(state)+'<nav class="sc-tabs" role="tablist" aria-label="节点研究内容">'+tabs+'</nav>'+
-    Object.entries(sections).map(([id,fn])=>'<div class="sc-tabpane" data-sc-panel="'+id+'" '+(id!=='summary'?'hidden':'')+'>'+fn(state)+'</div>').join('')+
+  const html=panelHeader(state)+'<nav class="sc-tabs" role="tablist" aria-label="节点研究内容" aria-orientation="horizontal">'+tabs+'</nav>'+
+    Object.entries(sections).map(([id,fn])=>'<div class="sc-tabpane" role="tabpanel" id="sc-panel-'+id+'" aria-labelledby="sc-tab-'+id+'" tabindex="0" data-sc-panel="'+id+'" '+(id!=='summary'?'hidden':'')+'>'+fn(state)+'</div>').join('')+
     '<footer class="sc-footer">数据快照 · '+e(insight?.updated_at||dossier?.as_of||'未记录')+' · 引用可打开原始来源。缺失项不补造数值。</footer>';
   return html;
  }
+ function activateTab(root,id,focus=false){
+  let selected=null;
+  root.querySelectorAll('[data-sc-tab]').forEach(button=>{
+   const active=button.getAttribute('data-sc-tab')===id;
+   button.classList.toggle('is-active',active);
+   button.setAttribute('aria-selected',active?'true':'false');
+   button.setAttribute('tabindex',active?'0':'-1');
+   if(active)selected=button;
+  });
+  root.querySelectorAll('[data-sc-panel]').forEach(panel=>{
+   panel.hidden=panel.getAttribute('data-sc-panel')!==id;
+  });
+  if(focus&&selected)selected.focus();
+ }
  function bind(root,actions){
-  root.addEventListener('click',event=>{
+  // Property handlers avoid accumulating delegated listeners across node selections.
+  root.onclick=event=>{
    const copy=event.target.closest('[data-sc-copy-task]');
    if(copy){
-     const content=root.querySelector('.sc-task-text')?.textContent||'';
-     if(typeof navigator!=='undefined'&&navigator.clipboard?.writeText){
-       navigator.clipboard.writeText(content).then(()=>{copy.textContent='研究任务已复制';},
-         ()=>{copy.textContent='复制失败，请手动选择文本';});
-     }else{copy.textContent='请手动选择文本复制';}
-     return;
+    const content=root.querySelector('.sc-task-text')?.textContent||'';
+    if(typeof navigator!=='undefined'&&navigator.clipboard?.writeText){
+     navigator.clipboard.writeText(content).then(()=>{copy.textContent='研究任务已复制';},
+      ()=>{copy.textContent='复制失败，请手动选择文本';});
+    }else{copy.textContent='请手动选择文本复制';}
+    return;
    }
    const tab=event.target.closest('[data-sc-tab]');
-   if(tab){const id=tab.getAttribute('data-sc-tab');root.querySelectorAll('[data-sc-tab]').forEach(b=>{const active=b.getAttribute('data-sc-tab')===id;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',active?'true':'false')});root.querySelectorAll('[data-sc-panel]').forEach(p=>p.hidden=p.getAttribute('data-sc-panel')!==id);return;}
+   if(tab){activateTab(root,tab.getAttribute('data-sc-tab'));return;}
    const hit=event.target.closest('[data-node],[data-company]');
-   if(hit){event.preventDefault();if(hit.dataset.node)actions.onNode(hit.dataset.node);else if(hit.dataset.company)actions.onCompany(hit.dataset.company);}
-  });
+   if(hit){
+    event.preventDefault();
+    if(hit.dataset.node)actions.onNode(hit.dataset.node);
+    else if(hit.dataset.company)actions.onCompany(hit.dataset.company);
+   }
+  };
+  root.onkeydown=event=>{
+   const tab=event.target.closest('[data-sc-tab]');
+   if(!tab)return;
+   if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;
+   const tabs=[...root.querySelectorAll('[data-sc-tab]')];
+   const index=tabs.indexOf(tab);
+   if(index<0)return;
+   event.preventDefault();
+   const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:
+    (index+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+   activateTab(root,tabs[next].getAttribute('data-sc-tab'),true);
+  };
  }
  return {render,bind};
 })();
