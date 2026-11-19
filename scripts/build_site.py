@@ -376,12 +376,12 @@ def main():
     # The client also cache-busts JSON requests to recover from an out-of-date catalog.
     source_hash=hashlib.sha256()
     for asset in ('index.html','assets/app.js','assets/node_panel.js',
-                  'assets/styles.css','assets/node_panel.css'):
+                  'assets/styles.css','assets/node_panel.css','assets/ux_pro_max.css'):
         source_hash.update((dist/asset).read_bytes())
     build_id=(os.environ.get('GITHUB_SHA') or source_hash.hexdigest())[:12]
     index_path=dist/'index.html'
     index=index_path.read_text(encoding='utf-8')
-    for asset in ('assets/app.js','assets/node_panel.js','assets/styles.css','assets/node_panel.css'):
+    for asset in ('assets/app.js','assets/node_panel.js','assets/styles.css','assets/node_panel.css','assets/ux_pro_max.css'):
         expected='./'+asset
         if expected not in index:raise ValueError('Missing versioned asset reference '+expected)
         index=index.replace(expected+'"',expected+'?v='+build_id+'"')
