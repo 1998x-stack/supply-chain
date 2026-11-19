@@ -104,12 +104,28 @@ function selectNode(id,focusGraph=false){
   item?.focus();
  }
 }
-function drawTree(){const p=state.product;const {visible,tree}=layoutTree(p);state.layout=visible;const g=$('#viewport');g.innerHTML='';const svgNS='http://www.w3.org/2000/svg';const svgEl=(tag,attrs)=>{const x=document.createElementNS(svgNS,tag);Object.entries(attrs).forEach(([k,v])=>x.setAttribute(k,v));return x;};
-for(const n of visible){if(!n.parent||!tree.has(n.parent))continue;const parent=tree.get(n.parent);g.appendChild(svgEl('path',{class:'edge',d:'M'+(parent.x+214)+','+parent.y+' C'+(parent.x+243)+','+parent.y+' '+(n.x-26)+','+n.y+' '+n.x+','+n.y}));}
-for(const n of visible){const group=svgEl('g',{class:'node'+(state.selected?.id===n.id?' selected':'')+(state.activeConfiguration?.primary_nodes?.includes(n.id)?' config-primary':''),transform:'translate('+n.x+','+(n.y-23)+')',tabindex:'0',role:'button','aria-label':n.name});const r=svgEl('rect',{x:0,y:0,width:214,height:46,rx:8});group.append(r);const title=svgEl('text',{x:11,y:20});title.textContent=n.name.length>17?n.name.slice(0,16)+'…':n.name;group.append(title);const sub=svgEl('text',{class:'subtext',x:11,y:36});const stage=(p.data.coverage||[]).find(x=>x.node_id===n.id)?.stage;
+function drawTree(){const p=state.product;const {visible,tree}=layoutTree(p);state.layout=visible;const onPath=new Set(state.selected?ancestors(p,state.selected.id).map(n=>n.id):[]);const g=$('#viewport');g.innerHTML='';const svgNS='http://www.w3.org/2000/svg';const svgEl=(tag,attrs)=>{const x=document.createElementNS(svgNS,tag);Object.entries(attrs).forEach(([k,v])=>x.setAttribute(k,v));return x;};
+for(const n of visible){if(!n.parent||!tree.has(n.parent))continue;const parent=tree.get(n.parent);g.appendChild(svgEl('path',{class:'edge'+(onPath.has(n.id)&&onPath.has(parent.id)?' on-path':''),d:'M'+(parent.x+214)+','+parent.y+' C'+(parent.x+243)+','+parent.y+' '+(n.x-26)+','+n.y+' '+n.x+','+n.y}));}
+for(const n of visible){const stage=stageOf(p,n.id);const group=svgEl('g',{class:'node'+(state.selected?.id===n.id?' selected':'')+(onPath.has(n.id)?' on-path':'')+' research-'+stage+(state.researchFocus!=='all'&&stage!==state.researchFocus&&state.selected?.id!==n.id?' is-muted':'')+(state.activeConfiguration?.primary_nodes?.includes(n.id)?' config-primary':''),'data-node-id':n.id,'aria-pressed':String(state.selected?.id===n.id),transform:'translate('+n.x+','+(n.y-23)+')',tabindex:'0',role:'button','aria-label':n.name});const r=svgEl('rect',{x:0,y:0,width:214,height:46,rx:8});group.append(r);const title=svgEl('text',{x:11,y:20});title.textContent=n.name.length>17?n.name.slice(0,16)+'…':n.name;group.append(title);const sub=svgEl('text',{class:'subtext',x:11,y:36});/* stage resolved earlier for style and label */
 sub.textContent=(n.kind||n.branch||'材料')+(stage==='reviewed'?' ✓':stage==='dossier_pending'?' · 档案':stage==='source_note'?' · 来源':'');group.append(sub);const count=(p.children.get(n.id)||[]).length;if(count){const flag=svgEl('text',{class:'badgecount',x:202,y:29,'text-anchor':'end'});flag.textContent=(state.collapsed.has(n.id)?'＋':'−')+count;group.append(flag);}if(state.search&&!n.name.toLowerCase().includes(state.search)){group.setAttribute('opacity','.23');}
-group.addEventListener('click',e=>{e.stopPropagation();state.selected=p.byId.get(n.id);drawTree();showDetail(state.selected);});group.addEventListener('dblclick',e=>{e.stopPropagation();if(state.collapsed.has(n.id))state.collapsed.delete(n.id);else state.collapsed.add(n.id);drawTree();});group.addEventListener('keydown',e=>{if(e.key==='Enter'){state.selected=p.byId.get(n.id);drawTree();showDetail(state.selected);}if(e.key===' '){e.preventDefault();if(state.collapsed.has(n.id))state.collapsed.delete(n.id);else state.collapsed.add(n.id);drawTree();}});g.appendChild(group);}
-$('#visibleCount').textContent=visible.length+' / '+p.nodes.length+' 个节点可见';$('#searchInfo').textContent=state.search?visible.filter(n=>n.name.toLowerCase().includes(state.search)).length+' 个当前可见匹配':'';}
+group.addEventListener('click',e=>{e.stopPropagation();state.selected=p.byId.get(n.id);drawTree();showDetail(state.selected);});
+ group.addEventListener('dblclick',e=>{e.stopPropagation();if(state.collapsed.has(n.id))state.collapsed.delete(n.id);else state.collapsed.add(n.id);drawTree();});
+ group.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){e.preventDefault();selectNode(n.id,true);return;}
+  if(e.key===' '){e.preventDefault();if(state.collapsed.has(n.id))state.collapsed.delete(n.id);else state.collapsed.add(n.id);drawTree();const el=[...document.querySelectorAll('#viewport .node')].find(x=>x.getAttribute('data-node-id')===n.id);el?.focus();return;}
+  const all=state.layout,index=all.findIndex(x=>x.id===n.id);
+  const next=e.key==='ArrowRight'?(p.children.get(n.id)||[]).find(x=>all.some(v=>v.id===x.id))?.id:
+   e.key==='ArrowLeft'?n.parent:
+   e.key==='ArrowDown'?all[Math.min(index+1,all.length-1)]?.id:
+   e.key==='ArrowUp'?all[Math.max(0,index-1)]?.id:null;
+  if(next&&index>=0){e.preventDefault();selectNode(next,true);}
+ });
+ g.appendChild(group);}
+$('#visibleCount').textContent=visible.length+' / '+p.nodes.length+' 个节点可见';
+ const count=state.researchFocus==='all'?p.nodes.length:p.nodes.filter(n=>stageOf(p,n.id)===state.researchFocus).length;
+ $('#researchFocusCount').textContent=state.researchFocus==='all'?'全部证据状态':'状态聚焦 '+count+' 个节点（其余淡化）';
+ $('#selectionPath').textContent=state.selected?'当前路径：'+ancestors(p,state.selected.id).reverse().map(n=>n.name).join(' / '):'';
+ $('#searchInfo').textContent=state.search?p.nodes.filter(n=>n.name.toLowerCase().includes(state.search)).length+' 个匹配节点':'';}
 function renderResearchDossier(record){
  const names={identity:'身份、规格和牌号',technical:'性能与试验条件',upstream:'原料与工艺',downstream:'技术下游应用',companies:'相关企业（不等于采购）',market:'市场份额及其分母',risk:'供应风险',open_questions:'未解决问题'};
  const verified=record.review_state==='publishable'&&record.semantic_review_status==='approved';
@@ -133,15 +149,7 @@ function showDetail(node){
  target.innerHTML=window.SupplyNodePanel.render({node,product:p,reverse:state.reverseIndex,catalog:state.catalog});
  window.SupplyNodePanel.bind(target,{
   onCompany:companyId=>showCompanyDetail(companyId),
-  onNode:id=>{
-   const targetNode=p.byId.get(id);
-   if(!targetNode)return;
-   let parent=targetNode.parent;
-   while(parent){state.collapsed.delete(parent);parent=p.byId.get(parent)?.parent;}
-   state.selected=targetNode;drawTree();showDetail(state.selected);
-   const entry=state.layout.find(n=>n.id===id);
-   if(entry){state.viewport.x=entry.x-180;state.viewport.y=entry.y-250;state.viewport.w=900;state.viewport.h=560;setView();}
-  }
+  onNode:id=>selectNode(id)
  });
 }
 async function showCompanyDetail(companyId){
@@ -158,5 +166,11 @@ async function showCompanyDetail(companyId){
  const sh=d.s.filter(s=>s.company===companyId&&s.pct!==null);html+='<h3>市场份额（必须看统计口径）</h3>'+(sh.length?sh.map(s=>{const mk=d.mk.find(m=>m.id===s.market);return '<div class="fact"><b>'+esc(mk?.name)+' · '+esc(mk?.year)+'</b><p>'+esc(s.pct)+'%</p><div class="small">'+esc(mk?.geo)+' / '+esc(mk?.metric)+' / '+esc(mk?.scope)+'</div></div>';}).join(''):'<div class="empty">无可核实份额记录</div>');
  $('#detail').innerHTML=html;$('#backToNode').addEventListener('click',e=>{e.preventDefault();showDetail(state.selected);});
 }
-async function init(){try{await refreshCatalog();window.addEventListener('hashchange',route);route();}catch(e){app.innerHTML='<main class="wrap"><h1>数据载入失败</h1><p>'+esc(e.message)+'</p><p>请通过 HTTP 服务器或 GitHub Pages 打开本项目，而不是直接打开本地 file:// 文件。</p></main>';}}
+async function init(){try{document.addEventListener('keydown',e=>{
+  if(!state.product)return;
+  const target=e.target;
+  const editing=target?.matches?.('input,textarea,select,[contenteditable="true"]');
+  if(e.key==='/'&&!editing){e.preventDefault();$('#search')?.focus();}
+  if(e.key==='Escape'&&target?.id==='search'&&target.value){target.value='';target.dispatchEvent(new Event('input'));}
+ });await refreshCatalog();window.addEventListener('hashchange',route);route();}catch(e){app.innerHTML='<main class="wrap"><h1>数据载入失败</h1><p>'+esc(e.message)+'</p><p>请通过 HTTP 服务器或 GitHub Pages 打开本项目，而不是直接打开本地 file:// 文件。</p></main>';}}
 init();
