@@ -5,7 +5,7 @@ import argparse,gzip,json,sys
 from pathlib import Path
 
 REQUIRED_PRODUCTS={"eyewear","henkel-adhesives","keyboard"}
-REQUIRED_ASSETS=("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css")
+REQUIRED_ASSETS=("assets/app.js","assets/node_panel.js","assets/styles.css","assets/node_panel.css","assets/ux_pro_max.css")
 
 def audit_release(root:Path):
     errors=[];report={}
